@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.xuri.sqfanli.view.ViewPagerTabHost
+                android:id="@+id/vp_vpager"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:layout_weight="1.0" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="#ccc" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bottom_bar_height"
+                android:background="#fff"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/layout_tab1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:id="@+id/iv_shouye"
+                        android:layout_width="@dimen/bottom_image_width"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/selector_shouye_tab_shouye" />
+
+                    <TextView
+                        android:id="@+id/tv_shouye"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="首页"
+                        android:textSize="@dimen/bottom_font_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_tab2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/bottom_image_width"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/selector_shouye_tab_shouye" />
+
+                    <TextView
+                        android:id="@+id/tv_huaqian"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="花钱"
+                        android:textColor="#333"
+                        android:textSize="@dimen/bottom_font_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_tab3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/bottom_image_width"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/selector_shouye_tab_shouye" />
+
+                    <TextView
+                        android:id="@+id/tv_fenlei"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="分类"
+                        android:textColor="#333"
+                        android:textSize="@dimen/bottom_font_size" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

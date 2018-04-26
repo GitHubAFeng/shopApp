@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:clickable="true"
+    android:id="@+id/shaixuan_root_layout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_zonghe"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp40"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="综合"
+            android:textColor="#ff6742" />
+
+        <TextView
+            android:id="@+id/tv_xiaoliang"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp40"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="销量"
+            android:textColor="#555" />
+
+        <LinearLayout
+            android:id="@+id/layout_jiage"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp40"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_jiage"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="价格"
+                android:textColor="#555" />
+
+            <ImageView
+                android:id="@+id/iv_jiage"
+                android:layout_width="@dimen/dp6"
+                android:layout_height="@dimen/dp12"
+                android:layout_marginLeft="@dimen/dp5"
+                android:src="@drawable/ic_result_disable" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_shaixuan"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp40"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_shaixuan"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="筛选"
+                android:textColor="#555" />
+
+            <ImageView
+                android:layout_width="@dimen/dp12"
+                android:layout_height="@dimen/dp12"
+                android:layout_marginLeft="@dimen/dp5"
+                android:src="@drawable/ic_discover_screen" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="#EFEFEF" />
+
+</LinearLayout>

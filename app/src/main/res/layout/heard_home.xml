@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <!--搜索-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/titleBar_height"
+        android:background="#FFFFFF">
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:padding="@dimen/dp2"
+            android:src="@drawable/nv" />
+
+        <LinearLayout
+            android:id="@+id/layout_sousuo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp35"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/iv_msg"
+            android:layout_toRightOf="@+id/photo"
+            android:background="#fff"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingRight="@dimen/dp10">
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/et_keyword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_corner"
+                    android:gravity="center_vertical"
+                    android:hint="搜你想搜的"
+                    android:imeActionLabel="搜索"
+                    android:paddingLeft="@dimen/dp38"
+                    android:textColor="#a6a6a6" />
+
+                <ImageView
+                    android:layout_width="@dimen/dp38"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/dp10"
+                    android:src="@drawable/sousuo" />
+
+            </FrameLayout>
+
+            <!--<TextView-->
+            <!--android:layout_width="@dimen/dp70"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@drawable/taobaosousuoanniu"-->
+            <!--android:gravity="center"-->
+            <!--android:text="搜索"-->
+            <!--android:textColor="#fff" />-->
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_msg"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:padding="@dimen/dp5"
+            android:src="@drawable/bike" />
+
+    </RelativeLayout>
+
+    <!--轮播-->
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#FFFFFF"
+        app:indicator_drawable_selected="@drawable/indicator_drawable_selected" />
+
+    <!--按钮组-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="#FFFFFF">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp" />
+
+    </RelativeLayout>
+
+    <!--今日必买-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="今日必买"
+                android:textColor="#8C8C8C"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="BEST PICKS"
+                android:textColor="#E5E5E5"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="9.9超划算"
+                        android:textColor="#FF717A"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/hot_pinkage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="小白鞋清洁剂"
+                        android:textColor="#D6D6D6"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/hot_todfaddishmg"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/shangpintupian_moren"
+                        />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#EDEDED" />
+
+                <LinearLayout
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="排行榜"
+                        android:textColor="#F17D66"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/hot_rankingname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="超高性价比商品"
+                        android:textColor="#D6D6D6"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/hot_rankingimg"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/shangpintupian_moren"
+                        />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#EDEDED" />
+
+                <LinearLayout
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="品牌优选"
+                        android:textColor="#CC45E9"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/hot_todupdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="为您推荐优质好货"
+                        android:textColor="#D6D6D6"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:id="@+id/hot_todupdateimg"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/shangpintupian_moren"
+                        />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="#EDEDED" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+    <!--标头-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:background="#FFFFFF"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:padding="@dimen/dp5"
+            android:src="@drawable/home_star" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="精选口碑好货"
+            android:textColor="#363636"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

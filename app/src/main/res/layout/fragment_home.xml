@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--商品列表-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/layout_refresh"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#eee"
+                    />
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+            <!--筛选-->
+            <!--<include layout="@layout/common_header_shaixuan_layout"-->
+            <!--android:visibility="gone"/>-->
+
+            <ImageView
+                android:id="@+id/iv_xiangshang"
+                android:layout_width="@dimen/dp55"
+                android:layout_height="@dimen/dp55"
+                android:layout_gravity="right|bottom"
+                android:layout_marginBottom="@dimen/dp40"
+                android:layout_marginRight="@dimen/dp3"
+                android:src="@drawable/xiangshang" />
+
+        </FrameLayout>
+
+        <!--加载更多-->
+        <LinearLayout
+            android:id="@+id/layout_loadMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp10"
+            android:paddingTop="@dimen/dp10">
+
+            <ProgressBar
+                android:layout_width="@dimen/dp20"
+                android:layout_height="@dimen/dp20" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:text="加载中"
+                android:textSize="12sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--侧边小广告-->
+    <ImageView
+        android:id="@+id/meiri_hongbao_iv"
+        android:layout_width="@dimen/dp55"
+        android:layout_height="@dimen/dp55"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dp120"
+        android:layout_marginRight="@dimen/dp5"
+        android:src="@drawable/meiri_hongbao_float_window"
+        android:visibility="invisible" />
+</RelativeLayout>
+
