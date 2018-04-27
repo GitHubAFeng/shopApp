@@ -1,4 +1,4 @@
-package com.xuri.sqfanli.callback;
+package com.xuri.sqfanli.api.base;
 
 /**
  * Created by AFeng on 2018/4/26.

@@ -14,7 +14,7 @@ import com.umeng.analytics.MobclickAgent;
 import org.xutils.x;
 
 public abstract class BaseFragment extends Fragment {
-
+    protected String TAG;
     public Context context;
     public View view;
     public LayoutInflater inflater;
@@ -45,12 +45,15 @@ public abstract class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         context = getActivity();
         inflater = LayoutInflater.from(context);
+        TAG = this.getClass().getSimpleName();
     }
 
     public abstract int getLayoutRes();
 
-    public void initView() {
+    public abstract void initView();
 
+    public void toast(String text) {
+        Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
 }

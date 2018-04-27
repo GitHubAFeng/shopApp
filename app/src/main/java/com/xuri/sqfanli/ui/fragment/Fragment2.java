@@ -8,4 +8,9 @@ public class Fragment2 extends BaseFragment {
     public int getLayoutRes() {
         return R.layout.fragment_two;
     }
+
+    @Override
+    public void initView() {
+
+    }
 }

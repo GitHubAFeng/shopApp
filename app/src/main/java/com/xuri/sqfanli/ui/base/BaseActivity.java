@@ -11,28 +11,28 @@ import org.xutils.x;
 
 public abstract class BaseActivity extends Activity {
     public Context context;
+    protected String TAG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
         setContentView(getLayoutRes());
-        String className = this.getClass().getSimpleName();
+        TAG = this.getClass().getSimpleName();
         x.view().inject(this);
         initView();
-        MobclickAgent.onEvent(context, className);
+        MobclickAgent.onEvent(context, TAG); //友盟用户分析
     }
 
     /**
      * 设置布局资源
      */
     public abstract int getLayoutRes();
+
     /**
      * 初始化界面
      */
-    public void initView() {
-
-    }
+    public abstract void initView();
 
     public void toast(String text) {
         Toast.makeText(BaseActivity.this, text, Toast.LENGTH_SHORT).show();

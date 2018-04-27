@@ -1,8 +1,7 @@
-package com.xuri.sqfanli.ui.base;
+package com.xuri.sqfanli.bean;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 
 import com.xuri.sqfanli.util.SettingConfig;

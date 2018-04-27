@@ -18,12 +18,13 @@ import java.util.List;
 
 /**
  * Created by AFeng on 2018/4/26.
+ * 商品列表
  */
 
-public class Adapter_home_goodslist extends BaseQuickAdapter<Shop, BaseViewHolder> {
+public class AdapterHomeGoodslist extends BaseQuickAdapter<Shop, BaseViewHolder> {
 
 
-    public Adapter_home_goodslist(int layoutResId, @Nullable List<Shop> data) {
+    public AdapterHomeGoodslist(int layoutResId, @Nullable List<Shop> data) {
         super(layoutResId, data);
     }
 

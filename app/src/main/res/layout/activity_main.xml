@@ -25,6 +25,7 @@
                 android:layout_height="1px"
                 android:background="#ccc" />
 
+            <!--底部选项卡-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bottom_bar_height"
@@ -99,6 +100,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="分类"
+                        android:textColor="#333"
+                        android:textSize="@dimen/bottom_font_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_tab4"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/bottom_image_width"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/selector_shouye_tab_shouye" />
+
+                    <TextView
+                        android:id="@+id/tv_my"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我的"
                         android:textColor="#333"
                         android:textSize="@dimen/bottom_font_size" />
                 </LinearLayout>

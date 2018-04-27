@@ -4,10 +4,10 @@
     android:width="1dp"
     android:color="#eeeeee"></stroke>
 <corners
-    android:bottomLeftRadius="@dimen/dp20"
-    android:bottomRightRadius="20dp"
-    android:topRightRadius="20dp"
-    android:topLeftRadius="@dimen/dp20"
+    android:bottomLeftRadius="15dp"
+    android:bottomRightRadius="15dp"
+    android:topRightRadius="15dp"
+    android:topLeftRadius="15dp"
     />
 <solid android:color="#eeeeee" />
 

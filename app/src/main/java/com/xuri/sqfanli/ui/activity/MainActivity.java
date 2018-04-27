@@ -3,7 +3,9 @@ package com.xuri.sqfanli.ui.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,6 +15,8 @@ import com.xuri.sqfanli.ui.base.BaseFragmentActivity;
 import com.xuri.sqfanli.ui.fragment.Fragment2;
 import com.xuri.sqfanli.ui.fragment.Fragment3;
 import com.xuri.sqfanli.ui.fragment.FragmentHome;
+import com.xuri.sqfanli.ui.fragment.FragmentMy;
+import com.xuri.sqfanli.util.StatusBarUtil;
 import com.xuri.sqfanli.view.ViewPagerTabHost;
 
 import org.xutils.view.annotation.ViewInject;
@@ -29,12 +33,18 @@ public class MainActivity extends BaseFragmentActivity {
     private LinearLayout layout_tab2;
     @ViewInject(R.id.layout_tab3)
     private LinearLayout layout_tab3;
+    @ViewInject(R.id.layout_tab4)
+    private LinearLayout layout_tab4;
     @ViewInject(R.id.tv_shouye)
     private TextView tv_shouye;
     @ViewInject(R.id.tv_huaqian)
     private TextView tv_huaqian;
     @ViewInject(R.id.tv_fenlei)
     private TextView tv_fenlei;
+    @ViewInject(R.id.tv_my)
+    private TextView tv_my;
+    @ViewInject(R.id.toolbar)
+    private Toolbar toolbar;
 
     private List<BaseFragment> views;
     private LinearLayout[] layout_tabs;
@@ -47,13 +57,16 @@ public class MainActivity extends BaseFragmentActivity {
 
     @Override
     public void initView() {
-        layout_tabs = new LinearLayout[]{layout_tab1, layout_tab2, layout_tab3};
-        tv_titles = new TextView[]{tv_shouye, tv_huaqian, tv_fenlei};
+        initBar();
+
+        layout_tabs = new LinearLayout[]{layout_tab1, layout_tab2, layout_tab3, layout_tab4};
+        tv_titles = new TextView[]{tv_shouye, tv_huaqian, tv_fenlei, tv_my};
 
         views = new ArrayList<BaseFragment>();
         views.add(new FragmentHome());
         views.add(new Fragment2());
         views.add(new Fragment3());
+        views.add(new FragmentMy());
         MyViewPagerAdapter adapter = new MyViewPagerAdapter(getSupportFragmentManager(), views);
         viewPager.setData_TabsLayout(layout_tabs);
         viewPager.setData_titleViews(tv_titles);
@@ -62,6 +75,13 @@ public class MainActivity extends BaseFragmentActivity {
         viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
 
         layout_tab1.setActivated(true);
+    }
+
+    void initBar() {
+        //自定义状态栏颜色
+//        StatusBarUtil.setTranslucent(this);
+        StatusBarUtil.setColorNoTranslucent(this, ContextCompat.getColor(this, R.color.white));
+
     }
 
     public class MyViewPagerAdapter extends FragmentPagerAdapter {

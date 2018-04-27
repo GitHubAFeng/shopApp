@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.xuri.sqfanli.R;
 import com.xuri.sqfanli.bean.ShopType;
-import com.xuri.sqfanli.callback.Callback_string;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,12 +20,12 @@ import org.xutils.x;
 
 /**
  * Created by AFeng on 2018/4/24.
+ * 首页头部分类按钮
  */
 
-public class btnsAdapter extends RecyclerView.Adapter<btnsAdapter.MyViewHolder> {
+public class AdapterHomeBtns extends RecyclerView.Adapter<AdapterHomeBtns.MyViewHolder> {
 
     JSONArray data;
-    Callback_string callback;
     ImageOptions imageOptions;
 
     public ImageOptions getImageOptions() {
@@ -49,10 +48,6 @@ public class btnsAdapter extends RecyclerView.Adapter<btnsAdapter.MyViewHolder> 
             this.data = new JSONArray();
         }
         this.data = ja_data;
-    }
-
-    public void setData(Callback_string callback) {
-        this.callback = callback;
     }
 
 

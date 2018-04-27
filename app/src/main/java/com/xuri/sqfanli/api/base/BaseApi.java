@@ -1,9 +1,8 @@
-package com.xuri.sqfanli.api;
+package com.xuri.sqfanli.api.base;
 
 import android.util.Log;
 
 import com.xuri.sqfanli.MyAPP;
-import com.xuri.sqfanli.callback.CallBackApi;
 import com.xuri.sqfanli.util.SettingConfig;
 
 import org.xutils.common.Callback;
@@ -20,14 +19,14 @@ public class BaseApi {
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                SettingConfig.getInstance(MyAPP.getInstance()).setStringPreference(localDataKey, result);
+                SettingConfig.getInstance().setStringPreference(localDataKey, result);
                 callBackApi.onSuccess(result);
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 System.err.println("--------------onError:" + ex.getMessage());
-                Log.e("getAdvFromServer", "onError: " + ex.getMessage());
+                Log.e("HttpPost", "onError: " + ex.getMessage());
             }
 
             @Override

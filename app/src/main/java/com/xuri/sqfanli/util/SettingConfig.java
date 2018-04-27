@@ -3,6 +3,8 @@ package com.xuri.sqfanli.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.xuri.sqfanli.MyAPP;
+
 public class SettingConfig {
 
     public static final String SETTING_FILE = "settings";
@@ -14,6 +16,13 @@ public class SettingConfig {
     public static SettingConfig getInstance(Context context) {
         if (sInstance == null) {
             sInstance = new SettingConfig(context.getApplicationContext());
+        }
+        return sInstance;
+    }
+
+    public static SettingConfig getInstance() {
+        if (sInstance == null) {
+            sInstance = new SettingConfig(MyAPP.getInstance());
         }
         return sInstance;
     }

@@ -1,72 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFF"
     android:orientation="vertical">
 
-    <!--商品列表-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <FrameLayout
+        <!--标题-->
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/titleBar_height"
+            android:background="#FFFFFF"
+            app:contentInsetStart="0.0dp"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ToolbarStyle">
+
+            <!--搜索-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/photo"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:padding="@dimen/dp2"
+                    android:src="@drawable/nv" />
+
+                <LinearLayout
+                    android:id="@+id/layout_sousuo"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/iv_msg"
+                    android:layout_toRightOf="@+id/photo"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_corner"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp10"
+                    android:paddingRight="@dimen/dp10">
+
+                    <ImageView
+                        android:layout_width="@dimen/dp25"
+                        android:layout_height="@dimen/dp25"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/dp5"
+                        android:src="@drawable/sousuo" />
+
+                    <TextView
+                        android:id="@+id/et_keyword"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:hint="教你便宜买好货"
+                        android:imeActionLabel="搜索"
+                        android:paddingLeft="@dimen/dp10"
+                        android:textColor="#a6a6a6"
+                        android:textSize="@dimen/sp12" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_msg"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:padding="@dimen/dp5"
+                    android:src="@drawable/bike" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
+        <!--标题结束-->
+
+
+        <!--商品分类Tab-->
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/main_tab"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="#FFF"
+            android:visibility="visible"
+            app:tl_indicator_anim_enable="true"
+            app:tl_indicator_bounce_enable="true"
+            app:tl_indicator_color="#FF5E6F"
+            app:tl_indicator_height="1dp"
+            app:tl_indicator_width="10dp"
+            app:tl_textAllCaps="true"
+            app:tl_textBold="BOTH"
+            app:tl_textSelectColor="#FF5E6F"
+            app:tl_textUnselectColor="#0D0D0D"
+            app:tl_textsize="10sp" />
+
+        <!--商品内容导航条-->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/main_viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/layout_refresh"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#eee"
-                    />
-
-            </android.support.v4.widget.SwipeRefreshLayout>
-
-            <!--筛选-->
-            <!--<include layout="@layout/common_header_shaixuan_layout"-->
-            <!--android:visibility="gone"/>-->
-
-            <ImageView
-                android:id="@+id/iv_xiangshang"
-                android:layout_width="@dimen/dp55"
-                android:layout_height="@dimen/dp55"
-                android:layout_gravity="right|bottom"
-                android:layout_marginBottom="@dimen/dp40"
-                android:layout_marginRight="@dimen/dp3"
-                android:src="@drawable/xiangshang" />
-
-        </FrameLayout>
-
-        <!--加载更多-->
-        <LinearLayout
-            android:id="@+id/layout_loadMore"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/dp10"
-            android:paddingTop="@dimen/dp10">
-
-            <ProgressBar
-                android:layout_width="@dimen/dp20"
-                android:layout_height="@dimen/dp20" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp5"
-                android:text="加载中"
-                android:textSize="12sp"
-                android:visibility="gone" />
-        </LinearLayout>
+            android:layout_weight="1" />
 
     </LinearLayout>
 
