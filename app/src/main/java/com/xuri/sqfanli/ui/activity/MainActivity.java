@@ -12,8 +12,8 @@ import com.xuri.sqfanli.ui.base.BaseFragment;
 import com.xuri.sqfanli.ui.base.BaseFragmentActivity;
 import com.xuri.sqfanli.ui.fragment.Fragment2;
 import com.xuri.sqfanli.ui.fragment.Fragment3;
-import com.xuri.sqfanli.ui.fragment.FragmentHome;
-import com.xuri.sqfanli.ui.fragment.FragmentMy;
+import com.xuri.sqfanli.ui.fragment.HomeFragment;
+import com.xuri.sqfanli.ui.fragment.MyFragment;
 import com.xuri.sqfanli.view.ViewPagerTabHost;
 
 import org.xutils.view.annotation.ViewInject;
@@ -60,10 +60,10 @@ public class MainActivity extends BaseFragmentActivity {
         tv_titles = new TextView[]{tv_shouye, tv_huaqian, tv_fenlei, tv_my};
 
         views = new ArrayList<BaseFragment>();
-        views.add(new FragmentHome());
+        views.add(new HomeFragment());
         views.add(new Fragment2());
         views.add(new Fragment3());
-        views.add(new FragmentMy());
+        views.add(new MyFragment());
         MyViewPagerAdapter adapter = new MyViewPagerAdapter(getSupportFragmentManager(), views);
         viewPager.setData_TabsLayout(layout_tabs);
         viewPager.setData_titleViews(tv_titles);

@@ -28,7 +28,7 @@ import java.util.List;
  * 首页
  */
 
-public class FragmentGoodsList extends BaseFragment {
+public class GoodsListFragment extends BaseFragment {
 
     AdapterGoodsList home_adapter;
 

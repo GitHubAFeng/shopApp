@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#F4F3F8" />
+    <size android:height="1dp" />
+</shape>
+
+    <!--分隔线 使用方法-->
+    <!--android:divider="@drawable/shape_divider"-->
+    <!--android:showDividers="end"-->
+
+    <!--android:showDividers = "middle|end|beginning|none"-->
+    <!--middle 在每一项中间添加分割线-->
+    <!--end 在整体的最后一项添加分割线-->
+    <!--beginning 在整体的最上方添加分割线-->
+    <!--none 无-->

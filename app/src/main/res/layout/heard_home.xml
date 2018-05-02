@@ -36,14 +36,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/dp10"
         android:background="#FFFFFF"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginBottom="@dimen/dp10"
+            android:paddingTop="@dimen/dp10"
             android:orientation="horizontal">
 
             <TextView
@@ -60,139 +62,30 @@
                 android:layout_marginLeft="5dp"
                 android:text="HOT"
                 android:textColor="#FF7275"
-                android:textStyle="bold"
-                android:textSize="12sp" />
-        </LinearLayout>
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.xuri.sqfanli.view.timeout.TimeViewComm
+                android:id="@+id/home_time"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                android:layout_marginRight="@dimen/dp10"
+                android:layout_weight="1"
+                android:gravity="right"
+                app:tvc_backgroundColor="#fff"
+                app:tvc_textColor="#939393"
+                app:tvc_radius="0dp"
+                app:tvc_spaceColor="#939393"
+                app:tvc_setDrawable_sub="@drawable/boder_yuan"
+                app:tvc_textSize="10sp" />
 
-                <LinearLayout
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="9.9超划算"
-                        android:textColor="#FF717A"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/hot_pinkage"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="小白鞋清洁剂"
-                        android:textColor="#D6D6D6"
-                        android:textSize="12sp" />
-
-                    <ImageView
-                        android:id="@+id/hot_todfaddishmg"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/shangpintupian_moren" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:background="#EDEDED" />
-
-                <LinearLayout
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="排行榜"
-                        android:textColor="#F17D66"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/hot_rankingname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="超高性价比商品"
-                        android:textColor="#D6D6D6"
-                        android:textSize="12sp" />
-
-                    <ImageView
-                        android:id="@+id/hot_rankingimg"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/shangpintupian_moren" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:background="#EDEDED" />
-
-                <LinearLayout
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="品牌优选"
-                        android:textColor="#CC45E9"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/hot_todupdate"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="为您推荐优质好货"
-                        android:textColor="#D6D6D6"
-                        android:textSize="12sp" />
-
-                    <ImageView
-                        android:id="@+id/hot_todupdateimg"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:src="@drawable/shangpintupian_moren" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:background="#EDEDED" />
-
-
-            </LinearLayout>
         </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/home_rv_hot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="2dp" />
 
     </LinearLayout>
     <!--表头-->
@@ -200,9 +93,9 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:layout_marginTop="10dp"
-        android:paddingLeft="10dp"
         android:background="#FFFFFF"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="10dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -218,8 +111,8 @@
             android:layout_marginLeft="5dp"
             android:text="NEW"
             android:textColor="#FF7275"
-            android:textStyle="bold"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

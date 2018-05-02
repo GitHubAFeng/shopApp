@@ -16,6 +16,7 @@ import java.io.Serializable;
 public abstract class BaseFragmentActivity extends FragmentActivity {
     public Context context;
     protected String TAG;
+    protected boolean mIsLoadedData = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,12 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
         this.startActivity(intent);
     }
 
+    public void goToActivity(Class<?> target) {
+        Intent intent = new Intent();
+        intent.setClass(this, target);
+        this.startActivity(intent);
+    }
+
     /**
      * 接收 来自 源Activity 的数据对象
      *
@@ -72,6 +79,22 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
             Log.e(TAG, "getSerializDataByKey: " + e.getMessage());
         }
         return null;
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!mIsLoadedData) {
+            mIsLoadedData = true;
+            onLazyLoadOnce();
+        }
+    }
+
+    /**
+     * 懒加载一次。如果只想在对用户可见时才加载数据，并且只加载一次数据，在子类中重写该方法
+     */
+    protected void onLazyLoadOnce() {
     }
 
 

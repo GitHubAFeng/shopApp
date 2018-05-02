@@ -53,15 +53,18 @@ public class HomeApi extends BaseApi {
     }
 
 
-    public String getHotFromServer(int sex, CallBackApi callBackApi) {
-        String key = "sys/appHotEventsList" + sex;
-        String result = SettingConfig.getInstance().getStringPreference(key, "");
-
-        String url = Constant.host + "sys/appHotEventsList";
+    public String getHotFromServer(int pageNum, int sex, CallBackApi callBackApi) {
+        String key = "shop/appShop";
+//        String key = "sys/appHotEventsList";
+        String local_key = key + sex;
+        String result = SettingConfig.getInstance().getStringPreference(local_key, "");
+        String url = Constant.host + key;
+        String shoptype = sex == 1 ? "102" : "103"; //男102  女103
         RequestParams params = new RequestParams(url);
-        super.HttpPost(params, key, callBackApi);
+        params.addParameter("page.curPage", pageNum);
+        params.addParameter("shop.ctype", shoptype);
+        super.HttpPost(params, local_key, callBackApi);
         return result;
-
     }
 
 

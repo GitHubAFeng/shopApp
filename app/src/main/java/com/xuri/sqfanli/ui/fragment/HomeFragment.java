@@ -31,7 +31,7 @@ import java.util.List;
  * 首页
  */
 
-public class FragmentHome extends BaseFragment {
+public class HomeFragment extends BaseFragment {
 
     AdapterHomeViewPager adapterHomeViewPager;
     int userSex = 1; //男1  女2
@@ -122,9 +122,9 @@ public class FragmentHome extends BaseFragment {
                 for (int i = 0; i < data.size(); i++) {
                     mViewPagerTitles.add(data.get(i).getName());
                     if (i == 0) {
-                        mViewPagerFragments.add(new FragmentHomeGoodsList());
+                        mViewPagerFragments.add(new HomeGoodsListFragment());
                     } else {
-                        mViewPagerFragments.add(new FragmentGoodsList());
+                        mViewPagerFragments.add(new GoodsListFragment());
                     }
                 }
                 adapterHomeViewPager.notifyDataSetChanged();
@@ -147,9 +147,9 @@ public class FragmentHome extends BaseFragment {
             for (int i = 0; i < data.size(); i++) {
                 mViewPagerTitles.add(data.get(i).getName());
                 if (i == 0) {
-                    mViewPagerFragments.add(new FragmentHomeGoodsList());
+                    mViewPagerFragments.add(new HomeGoodsListFragment());
                 } else {
-                    mViewPagerFragments.add(new FragmentGoodsList());
+                    mViewPagerFragments.add(new GoodsListFragment());
                 }
             }
             adapterHomeViewPager.notifyDataSetChanged();
@@ -180,6 +180,7 @@ public class FragmentHome extends BaseFragment {
     }
 
 
+    //事件侦听
     @Override
     public void onStart() {
         super.onStart();
