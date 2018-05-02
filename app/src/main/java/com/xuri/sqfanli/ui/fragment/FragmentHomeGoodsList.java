@@ -3,6 +3,7 @@ package com.xuri.sqfanli.ui.fragment;
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,14 +14,16 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xuri.sqfanli.R;
+import com.xuri.sqfanli.adapter.AdapterHomeGoodsList;
 import com.xuri.sqfanli.adapter.AdapterHomeBtns;
-import com.xuri.sqfanli.adapter.AdapterHomeGoodslist;
 import com.xuri.sqfanli.api.HomeApi;
 import com.xuri.sqfanli.api.base.CallBackApi;
 import com.xuri.sqfanli.bean.Adv;
 import com.xuri.sqfanli.bean.HotGoods;
 import com.xuri.sqfanli.bean.Shop;
+import com.xuri.sqfanli.event.MessageEvent;
 import com.xuri.sqfanli.ui.base.BaseFragment;
+import com.xuri.sqfanli.util.StatusBarUtil;
 import com.xuri.sqfanli.view.PagerLayoutManager.PagerGridLayoutManager;
 import com.xuri.sqfanli.view.PagerLayoutManager.PagerGridSnapHelper;
 import com.xuri.sqfanli.view.xImageLoader;
@@ -28,6 +31,7 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.xutils.image.ImageOptions;
@@ -45,7 +49,7 @@ import java.util.List;
 public class FragmentHomeGoodsList extends BaseFragment {
 
     View headerView;
-    AdapterHomeGoodslist home_adapter;
+    AdapterHomeGoodsList home_adapter;
     private PagerGridLayoutManager mLayoutManager;
     private AdapterHomeBtns mAdapterHomeBtns;
     boolean isLoading = false;
@@ -55,6 +59,8 @@ public class FragmentHomeGoodsList extends BaseFragment {
     List<String> images = new ArrayList<>(); //轮播图片
     int scrollY = 0; //用于向上按钮
     HomeApi homeApi = new HomeApi();
+
+    Boolean is_show_tab = false;  //分类tab是否显示
 
     private Banner banner;
     private RecyclerView btnRv;
@@ -78,7 +84,7 @@ public class FragmentHomeGoodsList extends BaseFragment {
 
     @Override
     public int getLayoutRes() {
-        return R.layout.fragment_goodslist;
+        return R.layout.fragment_home_goodslist;
     }
 
     @Override
@@ -88,6 +94,7 @@ public class FragmentHomeGoodsList extends BaseFragment {
         if (headerView == null) {
             headerView = View.inflate(getContext(), R.layout.heard_home, null);
         }
+        StatusBarUtil.setTranslucentForImageView(getActivity(), 0, null);
 
         initBanner();
         initBtn();
@@ -113,11 +120,17 @@ public class FragmentHomeGoodsList extends BaseFragment {
                 super.onScrolled(recyclerView, dx, dy);
                 scrollY = scrollY + dy;
 
-//                if (scrollY > 1000) {
-//                    iv_xiangshang.setVisibility(View.VISIBLE);
-//                } else {
-//                    iv_xiangshang.setVisibility(View.GONE);
-//                }
+                if (scrollY > 500) {
+                    if (!is_show_tab) {
+                        EventBus.getDefault().post(new MessageEvent("VISIBLE"));
+                        is_show_tab = true;
+                    }
+                } else {
+                    if (is_show_tab) {
+                        EventBus.getDefault().post(new MessageEvent("GONE"));
+                        is_show_tab = false;
+                    }
+                }
 
                 if (scrollY > 2500) {
                     iv_xiangshang.setVisibility(View.VISIBLE);
@@ -133,13 +146,12 @@ public class FragmentHomeGoodsList extends BaseFragment {
         layout_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                onDataRefresh();
             }
         });
 
-        //头部
-        home_adapter = new AdapterHomeGoodslist(R.layout.item_shangpin_home, shoplistDatas);
-        home_adapter.addHeaderView(headerView);
+        home_adapter = new AdapterHomeGoodsList(R.layout.item_home_goods, shoplistDatas);
+        home_adapter.addHeaderView(headerView); //头部
 
         home_adapter.setEnableLoadMore(true);
         home_adapter.setUpFetchEnable(true);
@@ -174,7 +186,7 @@ public class FragmentHomeGoodsList extends BaseFragment {
 
         });
 
-        rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setAdapter(home_adapter);
         //添加单元格分隔线
 //        rv.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -388,5 +400,92 @@ public class FragmentHomeGoodsList extends BaseFragment {
 
     }
 
+    //下拉刷新
+    void onDataRefresh() {
+        if (!layout_refresh.isRefreshing()) {
+            layout_refresh.setRefreshing(true);
+        }
+
+        //按钮组
+        homeApi.getTypeFromServer(userSex, new CallBackApi() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONArray ja = new JSONArray(result);
+                    mAdapterHomeBtns.setData(ja);
+                    mAdapterHomeBtns.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+        //轮播
+        homeApi.getAdvFromServer(userSex, new CallBackApi() {
+            @Override
+            public void onSuccess(String result) {
+                Adv adv = new Gson().fromJson(result, Adv.class);
+                images.clear();
+                for (int i = 0; i < adv.getMainAdvList().size(); i++) {
+                    images.add(adv.getMainAdvList().get(i).getAdvImg());
+                }
+                //设置图片集合
+                banner.setImages(images);
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+        //热门
+        homeApi.getHotFromServer(userSex, new CallBackApi() {
+            @Override
+            public void onSuccess(String result) {
+                HotGoods hot = new Gson().fromJson(result, HotGoods.class);
+                ImageOptions imageOptions = new ImageOptions.Builder()
+                        .setLoadingDrawableId(R.drawable.shangpintupian_moren)
+                        .setUseMemCache(true)
+                        .build();
+
+                hot_pinkage.setText(hot.getPinkage());
+                hot_rankingname.setText(hot.getRankingName());
+                hot_todupdate.setText(hot.getTodUpdate());
+                x.image().bind(hot_todfaddishmg, hot.getTodFaddishImg(), imageOptions);
+                x.image().bind(hot_rankingimg, hot.getRankingImg(), imageOptions);
+                x.image().bind(hot_todupdateimg, hot.getTodUpdateImg(), imageOptions);
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+        //商品
+        homeApi.getGoodsFromServer(1, userSex, new CallBackApi() {
+            @Override
+            public void onSuccess(String result) {
+                List<Shop> datas = new Gson().fromJson(result, new TypeToken<List<Shop>>() {
+                }.getType());
+                shoplistDatas.clear();
+                shoplistDatas.addAll(datas);
+                home_adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFinished() {
+                layout_refresh.setRefreshing(false);
+            }
+        });
+    }
 
 }

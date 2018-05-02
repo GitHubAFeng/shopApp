@@ -2,7 +2,8 @@ package com.xuri.sqfanli.ui.fragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.view.View;
+import android.view.animation.TranslateAnimation;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -14,8 +15,12 @@ import com.xuri.sqfanli.api.HomeApi;
 import com.xuri.sqfanli.api.UserApi;
 import com.xuri.sqfanli.api.base.CallBackApi;
 import com.xuri.sqfanli.bean.ShopType;
+import com.xuri.sqfanli.event.MessageEvent;
 import com.xuri.sqfanli.ui.base.BaseFragment;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -30,7 +35,8 @@ public class FragmentHome extends BaseFragment {
 
     AdapterHomeViewPager adapterHomeViewPager;
     int userSex = 1; //男1  女2
-
+    int left = 0;  //tab的x坐标
+    int top = 0;   //tab的y坐标
     HomeApi homeApi = new HomeApi();
     UserApi userApi = new UserApi();
 
@@ -41,23 +47,26 @@ public class FragmentHome extends BaseFragment {
     ViewPager mMainViewPager;
     @ViewInject(R.id.main_tab)
     SlidingTabLayout mMainTabLayout;
-
+//    @ViewInject(R.id.toolbar)
+//    private Toolbar toolbar;
 
     @Override
     public int getLayoutRes() {
         return R.layout.fragment_home;
     }
 
+
     @Override
     public void initView() {
 
         initViewPager();
         appUpdateUser();
-
     }
 
     //滑动页面
     void initViewPager() {
+        left = mMainTabLayout.getLeft();
+        top = mMainTabLayout.getTop();
 
         adapterHomeViewPager = new AdapterHomeViewPager(getFragmentManager(), mViewPagerFragments, mViewPagerTitles);
         mMainViewPager.setAdapter(adapterHomeViewPager);
@@ -82,6 +91,11 @@ public class FragmentHome extends BaseFragment {
 
             @Override
             public void onPageSelected(int position) {
+                if (position != 0) {
+                    mMainTabLayout.setVisibility(View.VISIBLE);
+                } else {
+                    mMainTabLayout.setVisibility(View.GONE);
+                }
                 mMainTabLayout.setCurrentTab(position);
             }
 
@@ -110,7 +124,7 @@ public class FragmentHome extends BaseFragment {
                     if (i == 0) {
                         mViewPagerFragments.add(new FragmentHomeGoodsList());
                     } else {
-                        mViewPagerFragments.add(new Fragment2());
+                        mViewPagerFragments.add(new FragmentGoodsList());
                     }
                 }
                 adapterHomeViewPager.notifyDataSetChanged();
@@ -135,7 +149,7 @@ public class FragmentHome extends BaseFragment {
                 if (i == 0) {
                     mViewPagerFragments.add(new FragmentHomeGoodsList());
                 } else {
-                    mViewPagerFragments.add(new Fragment2());
+                    mViewPagerFragments.add(new FragmentGoodsList());
                 }
             }
             adapterHomeViewPager.notifyDataSetChanged();
@@ -143,6 +157,13 @@ public class FragmentHome extends BaseFragment {
         }
 
     }
+
+    void showTabAnim() {
+        TranslateAnimation translate = new TranslateAnimation(left, left, top + 50, top);
+        translate.setDuration(1000);
+        mMainTabLayout.startAnimation(translate);
+    }
+
 
     void appUpdateUser() {
         userApi.updateUserByUserName("", new CallBackApi() {
@@ -157,5 +178,29 @@ public class FragmentHome extends BaseFragment {
             }
         });
     }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        if (event.getMessage().equals("VISIBLE")) {
+            showTabAnim();
+            mMainTabLayout.setVisibility(View.VISIBLE);
+        } else {
+            mMainTabLayout.setVisibility(View.GONE);
+        }
+    }
+
 
 }

@@ -2,12 +2,16 @@ package com.xuri.sqfanli.ui.base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
 
 import org.xutils.x;
+
+import java.io.Serializable;
 
 public abstract class BaseActivity extends Activity {
     public Context context;
@@ -33,6 +37,43 @@ public abstract class BaseActivity extends Activity {
      * 初始化界面
      */
     public abstract void initView();
+
+
+    /**
+     * 传递数据对象到新启动的Activity
+     *
+     * @param target 要启动的Activity
+     * @param key    键值
+     * @param event  要传递的对象，必须Serializable化
+     */
+    public void goToActivity(Class<?> target, String key, Serializable event) {
+
+        Intent intent = new Intent();
+        intent.setClass(this, target);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(key, event);
+        intent.putExtras(bundle);
+        this.startActivity(intent);
+    }
+
+    /**
+     * 接收 来自 源Activity 的数据对象
+     *
+     * @param key
+     * @return
+     */
+    public Object getSerializDataByKey(String key) {
+
+        try {
+            Intent intent = this.getIntent();
+            return intent.getSerializableExtra(key);
+        } catch (NullPointerException e) {
+            Log.e(TAG, "getSerializDataByKey: " + e.getMessage());
+        } catch (Exception e) {
+            Log.e(TAG, "getSerializDataByKey: " + e.getMessage());
+        }
+        return null;
+    }
 
     public void toast(String text) {
         Toast.makeText(BaseActivity.this, text, Toast.LENGTH_SHORT).show();

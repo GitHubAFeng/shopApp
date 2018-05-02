@@ -7,17 +7,51 @@
     android:background="#FFF"
     android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <!--标题-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--商品分类Tab-->
+            <com.flyco.tablayout.SlidingTabLayout
+                android:id="@+id/main_tab"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginTop="50dp"
+                android:background="#FFF"
+                android:visibility="gone"
+                app:tl_indicator_anim_enable="true"
+                app:tl_indicator_bounce_enable="true"
+                app:tl_indicator_color="#FF5E6F"
+                app:tl_indicator_height="1dp"
+                app:tl_indicator_width="10dp"
+                app:tl_textAllCaps="true"
+                app:tl_textBold="BOTH"
+                app:tl_textSelectColor="#FF5E6F"
+                app:tl_textUnselectColor="#0D0D0D"
+                app:tl_textsize="10sp" />
+
+            <!--商品内容导航条-->
+            <android.support.v4.view.ViewPager
+                android:id="@+id/main_viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <!--标题开始-->
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/titleBar_height"
-            android:background="#FFFFFF"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/titleBar_height"
             app:contentInsetStart="0.0dp"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -35,6 +69,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:padding="@dimen/dp2"
+                    android:visibility="invisible"
                     android:src="@drawable/nv" />
 
                 <LinearLayout
@@ -55,7 +90,7 @@
                         android:layout_height="@dimen/dp25"
                         android:layout_gravity="center"
                         android:padding="@dimen/dp5"
-                        android:src="@drawable/sousuo" />
+                        android:src="@drawable/home_search" />
 
                     <TextView
                         android:id="@+id/et_keyword"
@@ -78,6 +113,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
                     android:padding="@dimen/dp5"
+                    android:visibility="invisible"
                     android:src="@drawable/bike" />
 
             </RelativeLayout>
@@ -85,32 +121,8 @@
         <!--标题结束-->
 
 
-        <!--商品分类Tab-->
-        <com.flyco.tablayout.SlidingTabLayout
-            android:id="@+id/main_tab"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:background="#FFF"
-            android:visibility="visible"
-            app:tl_indicator_anim_enable="true"
-            app:tl_indicator_bounce_enable="true"
-            app:tl_indicator_color="#FF5E6F"
-            app:tl_indicator_height="1dp"
-            app:tl_indicator_width="10dp"
-            app:tl_textAllCaps="true"
-            app:tl_textBold="BOTH"
-            app:tl_textSelectColor="#FF5E6F"
-            app:tl_textUnselectColor="#0D0D0D"
-            app:tl_textsize="10sp" />
+    </FrameLayout>
 
-        <!--商品内容导航条-->
-        <android.support.v4.view.ViewPager
-            android:id="@+id/main_viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-    </LinearLayout>
 
     <!--侧边小广告-->
     <ImageView

@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <!--轮播-->
+        <com.youth.banner.Banner
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            app:indicator_drawable_selected="@drawable/indicator_drawable_selected" />
 
-    <!--轮播-->
-    <com.youth.banner.Banner
-        android:id="@+id/banner"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="#FFFFFF"
-        app:indicator_drawable_selected="@drawable/indicator_drawable_selected" />
+        <!--按钮组-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="@dimen/dp170"
+            android:background="@drawable/shape_corner_home">
 
-    <!--按钮组-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="#FFFFFF">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="2dp" />
+        </RelativeLayout>
 
-    </RelativeLayout>
+    </FrameLayout>
 
     <!--今日必买-->
     <LinearLayout
@@ -45,18 +49,19 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="今日必买"
-                android:textColor="#8C8C8C"
-                android:textSize="14sp"
+                android:text="今日必抢"
+                android:textColor="#585858"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="BEST PICKS"
-                android:textColor="#E5E5E5"
-                android:textSize="14sp" />
+                android:text="HOT"
+                android:textColor="#FF7275"
+                android:textStyle="bold"
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -100,8 +105,7 @@
                         android:layout_height="70dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="5dp"
-                        android:src="@drawable/shangpintupian_moren"
-                        />
+                        android:src="@drawable/shangpintupian_moren" />
 
                 </LinearLayout>
 
@@ -139,8 +143,7 @@
                         android:layout_height="70dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="5dp"
-                        android:src="@drawable/shangpintupian_moren"
-                        />
+                        android:src="@drawable/shangpintupian_moren" />
 
                 </LinearLayout>
 
@@ -178,8 +181,7 @@
                         android:layout_height="70dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="5dp"
-                        android:src="@drawable/shangpintupian_moren"
-                        />
+                        android:src="@drawable/shangpintupian_moren" />
 
                 </LinearLayout>
 
@@ -193,32 +195,31 @@
         </LinearLayout>
 
     </LinearLayout>
-    <!--标头-->
+    <!--表头-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:background="#FFFFFF"
+        android:layout_height="20dp"
         android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:background="#FFFFFF"
         android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:padding="@dimen/dp5"
-            android:src="@drawable/home_star" />
-
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="精选口碑好货"
-            android:textColor="#363636"
-            android:textSize="18sp"
+            android:text="独家最新"
+            android:textColor="#585858"
+            android:textSize="12sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="NEW"
+            android:textColor="#FF7275"
+            android:textStyle="bold"
+            android:textSize="12sp" />
 
     </LinearLayout>
 

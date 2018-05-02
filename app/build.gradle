@@ -44,7 +44,8 @@ dependencies {
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.38'
     //选项卡
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
-
+    //事件
+    compile 'org.greenrobot:eventbus:3.1.1'
 
     implementation files('libs/jr.jar')
 }

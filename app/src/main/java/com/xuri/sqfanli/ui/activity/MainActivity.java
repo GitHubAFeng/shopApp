@@ -3,9 +3,7 @@ package com.xuri.sqfanli.ui.activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,7 +14,6 @@ import com.xuri.sqfanli.ui.fragment.Fragment2;
 import com.xuri.sqfanli.ui.fragment.Fragment3;
 import com.xuri.sqfanli.ui.fragment.FragmentHome;
 import com.xuri.sqfanli.ui.fragment.FragmentMy;
-import com.xuri.sqfanli.util.StatusBarUtil;
 import com.xuri.sqfanli.view.ViewPagerTabHost;
 
 import org.xutils.view.annotation.ViewInject;
@@ -43,17 +40,17 @@ public class MainActivity extends BaseFragmentActivity {
     private TextView tv_fenlei;
     @ViewInject(R.id.tv_my)
     private TextView tv_my;
-    @ViewInject(R.id.toolbar)
-    private Toolbar toolbar;
 
     private List<BaseFragment> views;
     private LinearLayout[] layout_tabs;
     private TextView[] tv_titles;
 
+
     @Override
     public int getLayoutRes() {
         return R.layout.activity_main;
     }
+
 
     @Override
     public void initView() {
@@ -79,9 +76,8 @@ public class MainActivity extends BaseFragmentActivity {
 
     void initBar() {
         //自定义状态栏颜色
-//        StatusBarUtil.setTranslucent(this);
-        StatusBarUtil.setColorNoTranslucent(this, ContextCompat.getColor(this, R.color.white));
-
+//        StatusBarUtil.setTranslucent(this); //透明
+//        StatusBarUtil.setColorNoTranslucent(this, ContextCompat.getColor(this, R.color.white)); //白色
     }
 
     public class MyViewPagerAdapter extends FragmentPagerAdapter {

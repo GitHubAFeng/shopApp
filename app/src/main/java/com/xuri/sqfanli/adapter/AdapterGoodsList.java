@@ -21,19 +21,23 @@ import java.util.List;
  * 商品列表
  */
 
-public class AdapterHomeGoodslist extends BaseQuickAdapter<Shop, BaseViewHolder> {
+public class AdapterGoodsList extends BaseQuickAdapter<Shop, BaseViewHolder> {
 
 
-    public AdapterHomeGoodslist(int layoutResId, @Nullable List<Shop> data) {
+    public AdapterGoodsList(int layoutResId, @Nullable List<Shop> data) {
         super(layoutResId, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, Shop item) {
+        String title = item.getItemtitle();
+        if (title.length() > 18) {
+            title = title.substring(0, 18);
+            title = title + "...";
+        }
 
         x.image().bind((ImageView) helper.getView(R.id.iv), item.getItempic());
-        Log.d("convert", "convert: "+item.getItemtitle());
-        helper.setText(R.id.tv_jiage, item.getItemtitle());
+        helper.setText(R.id.tv_title, title);
         helper.setText(R.id.tv_jiage, item.getItemendprice());
 
         ImageView baoyouIconIv = helper.getView(R.id.baoyou_icon_iv);
