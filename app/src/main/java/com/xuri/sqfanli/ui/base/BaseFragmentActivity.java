@@ -2,12 +2,18 @@ package com.xuri.sqfanli.ui.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentActivity;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
+import com.xuri.sqfanli.ui.activity.MainActivity;
 
 import org.xutils.x;
 
@@ -39,6 +45,47 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
      */
     public abstract void initView();
 
+    //region 封装转场动画
+    protected void initAnim(AnimType type) {
+        //        explode：从场景的中心移入或移出
+        //        slide：从场景的边缘移入或移出
+        //        fade：调整透明度产生渐变效果
+
+        // 转场动画
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            switch (type) {
+                case explode:
+                    Explode explode = new Explode();
+                    explode.setDuration(500);
+                    getWindow().setExitTransition(explode);  //退出一个Activity的效果
+                    getWindow().setEnterTransition(explode);   //进入一个Activity的效果
+                    break;
+                case slide:
+                    Slide slide = new Slide();
+                    slide.setDuration(500);
+                    getWindow().setExitTransition(slide);  //退出一个Activity的效果
+                    getWindow().setEnterTransition(slide);   //进入一个Activity的效果
+                    break;
+                case fade:
+                    Fade fade = new Fade();
+                    fade.setDuration(500);
+                    getWindow().setExitTransition(fade);  //退出一个Activity的效果
+                    getWindow().setEnterTransition(fade);   //进入一个Activity的效果
+                    break;
+            }
+        }
+    }
+
+    protected enum AnimType {
+        explode, slide, fade
+    }
+
+    //endregion
+
+
+    //region 封装startActivity
+
+
     /**
      * 传递数据对象到新启动的Activity
      *
@@ -46,7 +93,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
      * @param key    键值
      * @param event  要传递的对象，必须Serializable化
      */
-    public void goToActivity(Class<?> target, String key, Serializable event) {
+    public void goToActivity(Class<?> target, String key, Serializable event, boolean isFinish) {
 
         Intent intent = new Intent();
         intent.setClass(this, target);
@@ -54,12 +101,36 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
         bundle.putSerializable(key, event);
         intent.putExtras(bundle);
         this.startActivity(intent);
+        if (isFinish) {
+            this.finish();
+        }
     }
 
-    public void goToActivity(Class<?> target) {
+    public void goToActivity(Class<?> target, boolean isFinish) {
         Intent intent = new Intent();
         intent.setClass(this, target);
         this.startActivity(intent);
+        if (isFinish) {
+            this.finish();
+        }
+    }
+
+
+    public void goToActivityByAnim(Class<?> target, boolean isFinish) {
+
+        // 启动普通转场动画 , 记得对方Activity要有动画设置
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(this);
+            Intent i2 = new Intent(this, target);
+            startActivity(i2, oc2.toBundle());
+
+        } else {
+            startActivity(new Intent(this, target));
+        }
+        if (isFinish) {
+            this.finish();
+        }
     }
 
     /**
@@ -81,6 +152,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
         return null;
     }
 
+    //endregion
 
     @Override
     protected void onResume() {

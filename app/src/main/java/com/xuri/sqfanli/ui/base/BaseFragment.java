@@ -2,8 +2,10 @@ package com.xuri.sqfanli.ui.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +25,16 @@ public abstract class BaseFragment extends Fragment {
     public LayoutInflater inflater;
     protected boolean mIsLoadedData = false;
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        context = getActivity();
+        inflater = LayoutInflater.from(context);
+        TAG = this.getClass().getSimpleName();
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,31 +42,26 @@ public abstract class BaseFragment extends Fragment {
             view = inflater.inflate(getLayoutRes(), null);
             x.Ext.init(getActivity().getApplication());
             x.view().inject(this, view);
-            initView();
+            initView(savedInstanceState);
+        } else {
+            //缓存的rootView需要判断是否已经被加过parent，
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null) {
+                //如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
+                parent.removeView(view);
+            }
         }
-        //缓存的rootView需要判断是否已经被加过parent，
-        ViewGroup parent = (ViewGroup) view.getParent();
-        if (parent != null) {
-            //如果有parent需要从parent删除，要不然会发生这个rootview已经有parent的错误。
-            parent.removeView(view);
-        }
+
         String class_ = this.getClass().getSimpleName();
         MobclickAgent.onEvent(context, class_);
 
         return view;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        context = getActivity();
-        inflater = LayoutInflater.from(context);
-        TAG = this.getClass().getSimpleName();
-    }
 
     public abstract int getLayoutRes();
 
-    public abstract void initView();
+    public abstract void initView(Bundle savedInstanceState);
 
     /**
      * 实现懒加载，可见时才加载数据
@@ -125,12 +132,36 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
+    //region 封装startActivity
 
-    public void goToActivity(Class<?> target) {
+    public void goToActivity(Class<?> target, boolean isFinish) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), target);
         this.startActivity(intent);
+        if (isFinish) {
+            getActivity().finish();
+        }
     }
+
+    public void goToActivityByAnim(Class<?> target, boolean isFinish) {
+
+        // 启动普通转场动画 , 记得对方Activity要有动画设置
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity());
+            Intent i2 = new Intent(getActivity(), target);
+            startActivity(i2, oc2.toBundle());
+
+        } else {
+            startActivity(new Intent(getActivity(), target));
+        }
+        if (isFinish) {
+            getActivity().finish();
+        }
+    }
+
+    //endregion
+
 
     public void toast(String text) {
         Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();

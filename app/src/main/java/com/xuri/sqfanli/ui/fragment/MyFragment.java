@@ -1,10 +1,16 @@
 package com.xuri.sqfanli.ui.fragment;
 
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.transition.Explode;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.xuri.sqfanli.R;
+import com.xuri.sqfanli.ui.activity.MainActivity;
 import com.xuri.sqfanli.ui.activity.MySettingActivity;
 import com.xuri.sqfanli.ui.base.BaseFragment;
 import com.xuri.sqfanli.util.StatusBarUtil;
@@ -17,9 +23,6 @@ import org.xutils.view.annotation.ViewInject;
 
 public class MyFragment extends BaseFragment {
 
-    @ViewInject(R.id.tv_my)
-    private TextView tv_my;
-
     @ViewInject(R.id.my_setting)
     private ImageView my_setting;
 
@@ -29,13 +32,14 @@ public class MyFragment extends BaseFragment {
     }
 
     @Override
-    public void initView() {
+    public void initView(Bundle savedInstanceState) {
 
 
         my_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToActivity(MySettingActivity.class);
+                goToActivityByAnim(MySettingActivity.class, false);
+
             }
         });
 

@@ -1,9 +1,11 @@
 package com.xuri.sqfanli.ui.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,13 +15,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xuri.sqfanli.R;
-import com.xuri.sqfanli.adapter.AdapterHomeBtns;
-import com.xuri.sqfanli.adapter.AdapterHomeGoodsList;
-import com.xuri.sqfanli.adapter.AdapterHomeHot;
+import com.xuri.sqfanli.adapter.HomeBtnsAdapter;
+import com.xuri.sqfanli.adapter.HomeGoodsListAdapter;
+import com.xuri.sqfanli.adapter.HomeHotAdapter;
 import com.xuri.sqfanli.api.HomeApi;
 import com.xuri.sqfanli.api.base.CallBackApi;
 import com.xuri.sqfanli.bean.Adv;
 import com.xuri.sqfanli.bean.Shop;
+import com.xuri.sqfanli.bean.ShopType;
 import com.xuri.sqfanli.event.MessageEvent;
 import com.xuri.sqfanli.ui.base.BaseFragment;
 import com.xuri.sqfanli.util.StatusBarUtil;
@@ -32,8 +35,6 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 
 import org.greenrobot.eventbus.EventBus;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -47,11 +48,11 @@ import java.util.List;
 public class HomeGoodsListFragment extends BaseFragment {
 
     View headerView;
-    AdapterHomeGoodsList home_adapter;
-    private PagerGridLayoutManager mLayoutManager;
+    private HomeGoodsListAdapter home_adapter;
+    private PagerGridLayoutManager mBtnsManager;
     private PagerGridLayoutManager mHotManager;
-    private AdapterHomeHot adapterHomeHot;
-    private AdapterHomeBtns mAdapterHomeBtns;
+    private HomeHotAdapter adapterHomeHot;
+    private HomeBtnsAdapter homeBtnsAdapter;
     boolean isLoading = false;
     int currentPage = 1; //当前下拉商品页数
     int currentHotPage = 1; //当前热门商品页数
@@ -59,6 +60,7 @@ public class HomeGoodsListFragment extends BaseFragment {
     List<Shop> shoplistDatas = new ArrayList<>();   //下拉列表里面的商品数据
     List<Shop> hotlistDatas = new ArrayList<>();   //热卖里面的商品数据
     List<String> images = new ArrayList<>(); //轮播图片
+    List<ShopType> shopTypes = new ArrayList<>(); //按钮组数据
     int scrollY = 0; //用于向上按钮
     HomeApi homeApi = new HomeApi();
 
@@ -84,7 +86,7 @@ public class HomeGoodsListFragment extends BaseFragment {
     }
 
     @Override
-    public void initView() {
+    public void initView(Bundle savedInstanceState) {
 
         //动态嵌入布局
         if (headerView == null) {
@@ -101,6 +103,7 @@ public class HomeGoodsListFragment extends BaseFragment {
         initGoodsRv();
 
     }
+
 
     //商品列表
     void initGoodsRv() {
@@ -149,7 +152,7 @@ public class HomeGoodsListFragment extends BaseFragment {
             }
         });
 
-        home_adapter = new AdapterHomeGoodsList(R.layout.item_home_goods, shoplistDatas);
+        home_adapter = new HomeGoodsListAdapter(R.layout.item_home_goods, shoplistDatas);
         home_adapter.addHeaderView(headerView); //头部
 
         home_adapter.setEnableLoadMore(true);
@@ -224,26 +227,25 @@ public class HomeGoodsListFragment extends BaseFragment {
     //类型按钮组合
     void initBtn() {
         btnRv = headerView.findViewById(R.id.recycler_view);
+        homeBtnsAdapter = new HomeBtnsAdapter(R.layout.item_home_btn, shopTypes);
 
         int mRows = 2; //行数
         int mColumns = 5; //列数
-        mLayoutManager = new PagerGridLayoutManager(mRows, mColumns, PagerGridLayoutManager.HORIZONTAL);
+        mBtnsManager = new PagerGridLayoutManager(mRows, mColumns, PagerGridLayoutManager.HORIZONTAL);
         // 水平分页布局管理器
-        btnRv.setLayoutManager(mLayoutManager);
+        btnRv.setLayoutManager(mBtnsManager);
         // 设置滚动辅助工具
         PagerGridSnapHelper pageSnapHelper = new PagerGridSnapHelper();
         pageSnapHelper.attachToRecyclerView(btnRv);
 
-        mAdapterHomeBtns = new AdapterHomeBtns();
-        mAdapterHomeBtns.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        homeBtnsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onChanged() {
-                super.onChanged();
-                int count = mAdapterHomeBtns.getItemCount(); //item数量
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Toast.makeText(getContext(), "item" + position + " 被点击了", Toast.LENGTH_SHORT).show();
             }
         });
 
-        btnRv.setAdapter(mAdapterHomeBtns);
+        btnRv.setAdapter(homeBtnsAdapter);
         showType();
 
     }
@@ -259,7 +261,7 @@ public class HomeGoodsListFragment extends BaseFragment {
         PagerGridSnapHelper hotPageSnapHelper = new PagerGridSnapHelper();
         hotPageSnapHelper.attachToRecyclerView(hotRv);
 
-        adapterHomeHot = new AdapterHomeHot(R.layout.item_home_hot, hotlistDatas);
+        adapterHomeHot = new HomeHotAdapter(R.layout.item_home_hot, hotlistDatas);
         adapterHomeHot.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -361,13 +363,11 @@ public class HomeGoodsListFragment extends BaseFragment {
         String text = homeApi.getTypeFromServer(userSex, new CallBackApi() {
             @Override
             public void onSuccess(String result) {
-                try {
-                    JSONArray ja = new JSONArray(result);
-                    mAdapterHomeBtns.setData(ja);
-                    mAdapterHomeBtns.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                List<ShopType> datas = new Gson().fromJson(result, new TypeToken<List<ShopType>>() {
+                }.getType());
+                shopTypes.clear();
+                shopTypes.addAll(datas);
+                homeBtnsAdapter.notifyDataSetChanged();
 
             }
 
@@ -377,16 +377,13 @@ public class HomeGoodsListFragment extends BaseFragment {
             }
         });
 
-
         //先显示本地
         if (text != "" || text != null) {
-            try {
-                JSONArray ja = new JSONArray(text);
-                mAdapterHomeBtns.setData(ja);
-                mAdapterHomeBtns.notifyDataSetChanged();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            List<ShopType> datas = new Gson().fromJson(text, new TypeToken<List<ShopType>>() {
+            }.getType());
+            shopTypes.clear();
+            shopTypes.addAll(datas);
+            homeBtnsAdapter.notifyDataSetChanged();
         }
 
     }
@@ -428,14 +425,11 @@ public class HomeGoodsListFragment extends BaseFragment {
         homeApi.getTypeFromServer(userSex, new CallBackApi() {
             @Override
             public void onSuccess(String result) {
-                try {
-                    JSONArray ja = new JSONArray(result);
-                    mAdapterHomeBtns.setData(ja);
-                    mAdapterHomeBtns.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
+                List<ShopType> datas = new Gson().fromJson(result, new TypeToken<List<ShopType>>() {
+                }.getType());
+                shopTypes.clear();
+                shopTypes.addAll(datas);
+                homeBtnsAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -499,5 +493,6 @@ public class HomeGoodsListFragment extends BaseFragment {
             }
         });
     }
+
 
 }

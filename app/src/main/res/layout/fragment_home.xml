@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tl="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFF"
@@ -69,8 +68,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="5dp"
                     android:padding="@dimen/dp2"
-                    android:visibility="invisible"
-                    android:src="@drawable/nv" />
+                    android:src="@drawable/nv"
+                    android:visibility="invisible" />
 
                 <LinearLayout
                     android:id="@+id/layout_sousuo"
@@ -113,8 +112,8 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="5dp"
                     android:padding="@dimen/dp5"
-                    android:visibility="invisible"
-                    android:src="@drawable/bike" />
+                    android:src="@drawable/bike"
+                    android:visibility="invisible" />
 
             </RelativeLayout>
         </android.support.v7.widget.Toolbar>

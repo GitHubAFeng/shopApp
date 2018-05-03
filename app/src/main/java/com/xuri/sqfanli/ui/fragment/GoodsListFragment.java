@@ -1,6 +1,7 @@
 package com.xuri.sqfanli.ui.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +13,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xuri.sqfanli.R;
-import com.xuri.sqfanli.adapter.AdapterGoodsList;
+import com.xuri.sqfanli.adapter.GoodsListAdapter;
 import com.xuri.sqfanli.api.HomeApi;
 import com.xuri.sqfanli.api.base.CallBackApi;
 import com.xuri.sqfanli.bean.Shop;
@@ -30,7 +31,7 @@ import java.util.List;
 
 public class GoodsListFragment extends BaseFragment {
 
-    AdapterGoodsList home_adapter;
+    GoodsListAdapter home_adapter;
 
     boolean isLoading = false;
     int currentPage = 1; //当前页数
@@ -59,7 +60,7 @@ public class GoodsListFragment extends BaseFragment {
     }
 
     @Override
-    public void initView() {
+    public void initView(Bundle savedInstanceState) {
 
         initGoodsRv();
 
@@ -67,7 +68,7 @@ public class GoodsListFragment extends BaseFragment {
 
     //商品列表
     void initGoodsRv() {
-        home_adapter = new AdapterGoodsList(R.layout.item_shangpin_home, shoplistDatas);
+        home_adapter = new GoodsListAdapter(R.layout.item_shangpin_home, shoplistDatas);
 
         layout_loadMore.setVisibility(View.GONE); //加载更多
         iv_xiangshang.setVisibility(View.GONE);//向上按钮，默认隐藏
@@ -176,6 +177,7 @@ public class GoodsListFragment extends BaseFragment {
         home_adapter.notifyDataSetChanged();
 
     }
+
     //下拉刷新
     void onDataRefresh() {
         if (!layout_refresh.isRefreshing()) {

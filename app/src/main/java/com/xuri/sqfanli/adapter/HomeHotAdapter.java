@@ -16,10 +16,10 @@ import java.util.List;
  * Created by AFeng on 2018/5/2.
  */
 
-public class AdapterHomeHot extends BaseQuickAdapter<Shop, BaseViewHolder> {
+public class HomeHotAdapter extends BaseQuickAdapter<Shop, BaseViewHolder> {
 
 
-    public AdapterHomeHot(int layoutResId, @Nullable List<Shop> data) {
+    public HomeHotAdapter(int layoutResId, @Nullable List<Shop> data) {
         super(layoutResId, data);
     }
 

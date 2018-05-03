@@ -1,5 +1,10 @@
 package com.xuri.sqfanli.ui.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.transition.Explode;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -25,12 +30,14 @@ public class MySettingActivity extends BaseFragmentActivity {
     @Override
     public void initView() {
 
+        super.initAnim(AnimType.explode);
         my_setting_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                onBackPressed();
-                finish();
-//                goToActivity(MainActivity.class);
+
+//                goToActivity(MainActivity.class, "setting-finish", 3, true);
+//                goToMainActivity();
+                goToActivityByAnim(MainActivity.class, true);
             }
         });
 

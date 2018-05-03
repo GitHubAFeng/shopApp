@@ -21,32 +21,28 @@ import java.util.List;
  * 商品列表
  */
 
-public class AdapterGoodsList extends BaseQuickAdapter<Shop, BaseViewHolder> {
+public class HomeGoodsListAdapter extends BaseQuickAdapter<Shop, BaseViewHolder> {
 
 
-    public AdapterGoodsList(int layoutResId, @Nullable List<Shop> data) {
+    public HomeGoodsListAdapter(int layoutResId, @Nullable List<Shop> data) {
         super(layoutResId, data);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, Shop item) {
+
+        x.image().bind((ImageView) helper.getView(R.id.iv2), item.getItempic());
+
         String title = item.getItemtitle();
         if (title.length() > 18) {
             title = title.substring(0, 18);
             title = title + "...";
         }
 
-        x.image().bind((ImageView) helper.getView(R.id.iv), item.getItempic());
         helper.setText(R.id.tv_title, title);
         helper.setText(R.id.tv_jiage, item.getItemendprice());
-
-        ImageView baoyouIconIv = helper.getView(R.id.baoyou_icon_iv);
-        //是否包邮，1为包邮，0为不包邮
-        if (("1").equals(item.getPostFree())) {
-            baoyouIconIv.setVisibility(View.VISIBLE);
-        } else {
-            baoyouIconIv.setVisibility(View.GONE);
-        }
+        helper.setText(R.id.tv_youquanjine, item.getCouponmoney()+ "元券");
+        helper.setText(R.id.tv_goumaishuliang, "月销" + item.getItemsale() + "件");
 
         TextView tv_yuanjia = helper.getView(R.id.tv_yuanjia);
 

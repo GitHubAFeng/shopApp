@@ -11,11 +11,11 @@ import java.util.List;
  * 首页商品滑动页面
  */
 
-public class AdapterHomeViewPager extends FragmentPagerAdapter {
+public class HomeViewPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> mAdapterFragments;
     private List<String> mAdapterTitles;
 
-    public AdapterHomeViewPager(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
+    public HomeViewPagerAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
         super(fm);
         this.mAdapterFragments = fragments;
         this.mAdapterTitles = titles;

@@ -1,7 +1,9 @@
 package com.xuri.sqfanli.ui.fragment;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
 
@@ -10,7 +12,7 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xuri.sqfanli.R;
-import com.xuri.sqfanli.adapter.AdapterHomeViewPager;
+import com.xuri.sqfanli.adapter.HomeViewPagerAdapter;
 import com.xuri.sqfanli.api.HomeApi;
 import com.xuri.sqfanli.api.UserApi;
 import com.xuri.sqfanli.api.base.CallBackApi;
@@ -33,7 +35,7 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment {
 
-    AdapterHomeViewPager adapterHomeViewPager;
+    HomeViewPagerAdapter adapterHomeViewPager;
     int userSex = 1; //男1  女2
     int left = 0;  //tab的x坐标
     int top = 0;   //tab的y坐标
@@ -57,8 +59,7 @@ public class HomeFragment extends BaseFragment {
 
 
     @Override
-    public void initView() {
-
+    public void initView(Bundle savedInstanceState) {
         initViewPager();
         appUpdateUser();
     }
@@ -68,7 +69,7 @@ public class HomeFragment extends BaseFragment {
         left = mMainTabLayout.getLeft();
         top = mMainTabLayout.getTop();
 
-        adapterHomeViewPager = new AdapterHomeViewPager(getFragmentManager(), mViewPagerFragments, mViewPagerTitles);
+        adapterHomeViewPager = new HomeViewPagerAdapter(getFragmentManager(), mViewPagerFragments, mViewPagerTitles);
         mMainViewPager.setAdapter(adapterHomeViewPager);
         mMainTabLayout.setViewPager(mMainViewPager);
         mMainTabLayout.setOnTabSelectListener(new OnTabSelectListener() {

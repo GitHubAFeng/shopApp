@@ -16,7 +16,6 @@ import java.io.Serializable;
 public abstract class BaseActivity extends Activity {
     public Context context;
     protected String TAG;
-    protected boolean mIsLoadedData = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,26 +38,6 @@ public abstract class BaseActivity extends Activity {
      */
     public abstract void initView();
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!mIsLoadedData) {
-            mIsLoadedData = true;
-            onLazyLoadOnce();
-        }
-    }
-
-    /**
-     * 懒加载一次。如果只想在对用户可见时才加载数据，并且只加载一次数据，在子类中重写该方法
-     */
-    protected void onLazyLoadOnce() {
-    }
-
-    public void goToActivity(Class<?> target) {
-        Intent intent = new Intent();
-        intent.setClass(this, target);
-        this.startActivity(intent);
-    }
 
     /**
      * 传递数据对象到新启动的Activity
