@@ -27,8 +27,11 @@
 
         <activity
             android:name=".ui.activity.MySettingActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.CashOutActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

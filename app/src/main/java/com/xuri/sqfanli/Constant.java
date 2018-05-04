@@ -3,8 +3,8 @@ package com.xuri.sqfanli;
 public class Constant {
     public final static String TOKEN = "7e80E9282fNa28ad7A6d2T0488d32da2";
     //    public final static String host = "http://192.168.2.100:8080/ctaobao/";
-//    public final static String host = "http://192.168.2.153:8081/ctaobao/";    //阿金服务器
-    public final static String host = "http://app.yuetaobuy.com/ctaobao/";
+    public final static String host = "http://192.168.2.153:8081/ctaobao/";    //阿金服务器
+//    public final static String host = "http://app.yuetaobuy.com/ctaobao/";
 
     public static String TaoBaoKeId = "mm_13835710_16188415_61080380";
 

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,7 +53,7 @@ public class HomeGoodsListFragment extends BaseFragment {
     private PagerGridLayoutManager mHotManager;
     private HomeHotAdapter adapterHomeHot;
     private HomeBtnsAdapter homeBtnsAdapter;
-    boolean isLoading = false;
+    boolean isLoading = false; //是否正在加载商品列表
     int currentPage = 1; //当前下拉商品页数
     int currentHotPage = 1; //当前热门商品页数
     int userSex = 1; //男1  女2
@@ -88,6 +88,11 @@ public class HomeGoodsListFragment extends BaseFragment {
     @Override
     public void initView(Bundle savedInstanceState) {
 
+        onInitPage();
+    }
+
+    //初始化页面
+    void onInitPage() {
         //动态嵌入布局
         if (headerView == null) {
             headerView = View.inflate(getContext(), R.layout.heard_home, null);
@@ -110,6 +115,17 @@ public class HomeGoodsListFragment extends BaseFragment {
         layout_loadMore.setVisibility(View.GONE); //加载更多
         iv_xiangshang.setVisibility(View.GONE);//向上按钮，默认隐藏
         iv_xiangshang.setOnClickListener(view -> rv.smoothScrollToPosition(0));
+        //防止数据加载过程滑动错误
+        rv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (isLoading) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -158,6 +174,9 @@ public class HomeGoodsListFragment extends BaseFragment {
         home_adapter.setEnableLoadMore(true);
         home_adapter.setUpFetchEnable(true);
         home_adapter.setOnLoadMoreListener(() -> {
+            if (layout_refresh.isRefreshing()) {
+                return;
+            }
             currentPage++;
             homeApi.getGoodsFromServer(currentPage, userSex, new CallBackApi() {
                 @Override
@@ -494,5 +513,10 @@ public class HomeGoodsListFragment extends BaseFragment {
         });
     }
 
-
+    //防止空白页面
+    @Override
+    protected void onVisibleToUser() {
+        if (shoplistDatas.size() > 0) return;
+        onInitPage();
+    }
 }

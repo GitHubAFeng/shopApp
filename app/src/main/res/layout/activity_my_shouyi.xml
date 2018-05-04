@@ -26,6 +26,7 @@
                 android:paddingTop="@dimen/dp20">
 
                 <ImageView
+                    android:id="@+id/my_shouyi_goback"
                     android:layout_width="@dimen/dp15"
                     android:layout_height="@dimen/dp15"
                     android:layout_gravity="center_vertical"

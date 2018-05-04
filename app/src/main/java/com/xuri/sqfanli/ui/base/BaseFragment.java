@@ -16,8 +16,6 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.xutils.x;
 
-import java.io.Serializable;
-
 public abstract class BaseFragment extends Fragment {
     protected String TAG;
     public Context context;
@@ -62,6 +60,8 @@ public abstract class BaseFragment extends Fragment {
     public abstract int getLayoutRes();
 
     public abstract void initView(Bundle savedInstanceState);
+
+    //region 数据处理
 
     /**
      * 实现懒加载，可见时才加载数据
@@ -132,7 +132,9 @@ public abstract class BaseFragment extends Fragment {
 
     }
 
-    //region 封装startActivity
+    //endregion
+
+    //region 页面跳转
 
     public void goToActivity(Class<?> target, boolean isFinish) {
         Intent intent = new Intent();

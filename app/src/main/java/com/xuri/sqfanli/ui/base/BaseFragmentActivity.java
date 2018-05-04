@@ -13,7 +13,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
-import com.xuri.sqfanli.ui.activity.MainActivity;
 
 import org.xutils.x;
 
@@ -45,7 +44,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
      */
     public abstract void initView();
 
-    //region 封装转场动画
+    //region 使用转场动画
     protected void initAnim(AnimType type) {
         //        explode：从场景的中心移入或移出
         //        slide：从场景的边缘移入或移出
@@ -82,9 +81,7 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
 
     //endregion
 
-
-    //region 封装startActivity
-
+    //region 页面跳转
 
     /**
      * 传递数据对象到新启动的Activity
@@ -154,6 +151,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
 
     //endregion
 
+    //region 数据处理
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -168,6 +167,8 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
      */
     protected void onLazyLoadOnce() {
     }
+
+    //endregion
 
 
     public void toast(String text) {

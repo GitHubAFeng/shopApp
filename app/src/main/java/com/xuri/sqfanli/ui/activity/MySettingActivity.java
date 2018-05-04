@@ -1,15 +1,13 @@
 package com.xuri.sqfanli.ui.activity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.transition.Explode;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.xuri.sqfanli.R;
 import com.xuri.sqfanli.ui.base.BaseFragmentActivity;
+import com.xuri.sqfanli.util.StatusBarUtil;
 
 import org.xutils.view.annotation.ViewInject;
 
@@ -30,14 +28,18 @@ public class MySettingActivity extends BaseFragmentActivity {
     @Override
     public void initView() {
 
+        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.white));
+//        StatusBarUtil.setColor(this, Color.parseColor("#FFFFFF"));
+//        StatusBarUtil.setTranslucentForImageView(this, 0, null);
+
         super.initAnim(AnimType.explode);
         my_setting_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 //                goToActivity(MainActivity.class, "setting-finish", 3, true);
 //                goToMainActivity();
-                goToActivityByAnim(MainActivity.class, true);
+//                goToActivityByAnim(MainActivity.class, true);
+                finish();
             }
         });
 

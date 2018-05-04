@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -93,7 +94,17 @@ public class GoodsListFragment extends BaseFragment {
 
             }
         });
-
+        //防止数据加载过程滑动错误
+        rv.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (isLoading) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
         //下拉刷新
         layout_refresh.setColorSchemeColors(getResources().getColor(R.color.refresh_layout_color));
         layout_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
