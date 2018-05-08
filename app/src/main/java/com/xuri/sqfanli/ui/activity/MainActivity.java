@@ -12,6 +12,7 @@ import com.xuri.sqfanli.ui.base.BaseFragmentActivity;
 import com.xuri.sqfanli.ui.fragment.Fragment2;
 import com.xuri.sqfanli.ui.fragment.Fragment3;
 import com.xuri.sqfanli.ui.fragment.HomeFragment;
+import com.xuri.sqfanli.ui.fragment.HomeV2Fragment;
 import com.xuri.sqfanli.ui.fragment.MyFragment;
 import com.xuri.sqfanli.view.NoScrollViewPager;
 
@@ -24,8 +25,8 @@ import java.util.List;
 
 public class MainActivity extends BaseFragmentActivity {
 
-    private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
-    private List<BaseFragment> views = new ArrayList<>();
+    private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<CustomTabEntity>();
+    private List<BaseFragment> views = new ArrayList<BaseFragment>();
     private String[] mTitles = {"首页", "花钱", "分类", "我的"};
     private int[] mIconUnselectIds = {
             R.drawable.home_no_select,
@@ -59,13 +60,6 @@ public class MainActivity extends BaseFragmentActivity {
         initBar();
         initTab();
 
-        Object object = getSerializDataByKey("setting-finish");
-        if (object != null) {
-            int item = (int) object;
-            mViewPager.setCurrentItem(item);
-        } else {
-            mViewPager.setCurrentItem(0);
-        }
 
     }
 
@@ -76,7 +70,8 @@ public class MainActivity extends BaseFragmentActivity {
             mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
         }
 
-        views.add(new HomeFragment());
+//        views.add(new HomeFragment());
+        views.add(new HomeV2Fragment());
         views.add(new Fragment2());
         views.add(new Fragment3());
         views.add(new MyFragment());

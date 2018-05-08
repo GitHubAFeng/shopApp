@@ -36,7 +36,7 @@ public class GoodsListAdapter extends BaseQuickAdapter<Shop, BaseViewHolder> {
             title = title + "...";
         }
 
-        x.image().bind((ImageView) helper.getView(R.id.iv), item.getItempic());
+        x.image().bind((ImageView) helper.getView(R.id.iv2), item.getItempic());
         helper.setText(R.id.tv_title, title);
         helper.setText(R.id.tv_jiage, item.getItemendprice());
 
@@ -56,8 +56,7 @@ public class GoodsListAdapter extends BaseQuickAdapter<Shop, BaseViewHolder> {
             tv_yuanjia.setText("淘宝价:￥" + item.getItemprice());
         }
         tv_yuanjia.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        helper.setText(R.id.tv_youquanjine, "月销" + item.getItemsale() + "件");
-        helper.setText(R.id.tv_goumaishuliang, item.getCouponmoney() + "元券");
-
+        helper.setText(R.id.tv_youquanjine, item.getCouponmoney()+ "元券");
+        helper.setText(R.id.tv_goumaishuliang, "月销" + item.getItemsale() + "件");
     }
 }

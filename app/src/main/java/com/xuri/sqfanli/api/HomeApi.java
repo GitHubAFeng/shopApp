@@ -14,6 +14,7 @@ import org.xutils.http.RequestParams;
 
 public class HomeApi extends BaseApi {
 
+    //轮播广告
     public String getAdvFromServer(int sex, CallBackApi callBackApi) {
         String key = "mainAdv/appGetMainAdvList" + sex;
         String result = SettingConfig.getInstance().getStringPreference(key, "");
@@ -24,7 +25,7 @@ public class HomeApi extends BaseApi {
         super.HttpPost(params, key, callBackApi);
         return result;
     }
-
+    //按钮组
     public String getTypeFromServer(int sex, CallBackApi callBackApi) {
         String key = "shopType/appShopType" + sex;
         String result = SettingConfig.getInstance().getStringPreference(key, "");
@@ -36,7 +37,7 @@ public class HomeApi extends BaseApi {
         return result;
     }
 
-
+    //商品
     public String getGoodsFromServer(int pageNum, int sex, CallBackApi callBackApi) {
         String key = "shop/appShop" + sex;
         String result = SettingConfig.getInstance().getStringPreference(key, "");
@@ -52,10 +53,10 @@ public class HomeApi extends BaseApi {
 
     }
 
-
+    //热门
     public String getHotFromServer(int pageNum, int sex, CallBackApi callBackApi) {
-        String key = "shop/appShop";
-//        String key = "sys/appHotEventsList";
+//        String key = "shop/appShop";
+        String key = "sys/appHotEventsList";
         String local_key = key + sex;
         String result = SettingConfig.getInstance().getStringPreference(local_key, "");
         String url = Constant.host + key;
@@ -67,7 +68,7 @@ public class HomeApi extends BaseApi {
         return result;
     }
 
-
+    //商品分类
     public String getGoodsTypeFromServer(int sex, CallBackApi callBackApi) {
         String key = "shopType/appShopType" + sex;
         String result = SettingConfig.getInstance().getStringPreference(key, "");

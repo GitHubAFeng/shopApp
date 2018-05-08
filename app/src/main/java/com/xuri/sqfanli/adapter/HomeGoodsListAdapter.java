@@ -52,8 +52,6 @@ public class HomeGoodsListAdapter extends BaseQuickAdapter<Shop, BaseViewHolder>
             tv_yuanjia.setText("淘宝价:￥" + item.getItemprice());
         }
         tv_yuanjia.setPaintFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-        helper.setText(R.id.tv_youquanjine, "月销" + item.getItemsale() + "件");
-        helper.setText(R.id.tv_goumaishuliang, item.getCouponmoney() + "元券");
 
     }
 }

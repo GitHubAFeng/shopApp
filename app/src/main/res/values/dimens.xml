@@ -8,7 +8,7 @@
     <dimen name="bottom_font_size">10sp</dimen>
 
     <dimen name="titleBar_height">25dp</dimen>
-
+    <dimen name="item_titlebar">50dp</dimen>
 
     <dimen name="dp1">1dp</dimen>
     <dimen name="dp2">2dp</dimen>

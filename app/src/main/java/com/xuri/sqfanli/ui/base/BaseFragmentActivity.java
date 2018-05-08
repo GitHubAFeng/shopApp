@@ -9,7 +9,9 @@ import android.support.v4.app.FragmentActivity;
 import android.transition.Explode;
 import android.transition.Fade;
 import android.transition.Slide;
+import android.transition.Visibility;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
@@ -56,18 +58,24 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
                 case explode:
                     Explode explode = new Explode();
                     explode.setDuration(500);
+                    explode.setMode(Visibility.MODE_IN);
                     getWindow().setExitTransition(explode);  //退出一个Activity的效果
                     getWindow().setEnterTransition(explode);   //进入一个Activity的效果
                     break;
                 case slide:
                     Slide slide = new Slide();
                     slide.setDuration(500);
+                    //设置为进入
+                    slide.setMode(Visibility.MODE_IN);
+                    //设置从右边进入
+//                    slide.setSlideEdge(Gravity.RIGHT);
                     getWindow().setExitTransition(slide);  //退出一个Activity的效果
                     getWindow().setEnterTransition(slide);   //进入一个Activity的效果
                     break;
                 case fade:
                     Fade fade = new Fade();
                     fade.setDuration(500);
+                    fade.setMode(Visibility.MODE_IN);
                     getWindow().setExitTransition(fade);  //退出一个Activity的效果
                     getWindow().setEnterTransition(fade);   //进入一个Activity的效果
                     break;

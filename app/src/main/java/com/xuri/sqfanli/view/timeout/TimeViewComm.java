@@ -206,7 +206,7 @@ public class TimeViewComm extends LinearLayout {
 
     public void addTimeoutPoint(int hour, int minute, int second) {
         if (null == mTimeoutPoints) {
-            mTimeoutPoints = new ArrayList<>();
+            mTimeoutPoints = new ArrayList<TimePoint>();
         }
         TimePoint timePoint = new TimePoint(df.format(hour), df.format(minute), df.format(second));
         mTimeoutPoints.add(timePoint);

@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xuri.sqfanli.R;
@@ -37,7 +38,7 @@ public class GoodsListFragment extends BaseFragment {
     boolean isLoading = false;
     int currentPage = 1; //当前页数
     int userSex = 1; //男1  女2
-    List<Shop> shoplistDatas = new ArrayList<>();   //下拉列表里面的商品数据
+    List<Shop> shoplistDatas = new ArrayList<Shop>();   //下拉列表里面的商品数据
 
     int scrollY = 0; //用于向上按钮
     HomeApi homeApi = new HomeApi();
@@ -73,7 +74,12 @@ public class GoodsListFragment extends BaseFragment {
 
         layout_loadMore.setVisibility(View.GONE); //加载更多
         iv_xiangshang.setVisibility(View.GONE);//向上按钮，默认隐藏
-        iv_xiangshang.setOnClickListener(view -> rv.smoothScrollToPosition(0));
+        iv_xiangshang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rv.smoothScrollToPosition(0);
+            }
+        });
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -116,35 +122,42 @@ public class GoodsListFragment extends BaseFragment {
 
         home_adapter.setEnableLoadMore(true);
         home_adapter.setUpFetchEnable(true);
-        home_adapter.setOnLoadMoreListener(() -> {
-            currentPage++;
-            homeApi.getGoodsFromServer(currentPage, userSex, new CallBackApi() {
-                @Override
-                public void onSuccess(String result) {
-                    List<Shop> datas = new Gson().fromJson(result, new TypeToken<List<Shop>>() {
-                    }.getType());
-                    shoplistDatas.addAll(datas);
-                    home_adapter.notifyDataSetChanged();
-                    home_adapter.loadMoreComplete();
-                }
+        home_adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
 
-                @Override
-                public void onFinished() {
-                    isLoading = false;
-                    layout_loadMore.setVisibility(View.GONE);
-                    layout_refresh.setRefreshing(false);
-                }
-            });
+            @Override
+            public void onLoadMoreRequested() {
+                currentPage++;
+                homeApi.getGoodsFromServer(currentPage, userSex, new CallBackApi() {
+                    @Override
+                    public void onSuccess(String result) {
+                        List<Shop> datas = new Gson().fromJson(result, new TypeToken<List<Shop>>() {
+                        }.getType());
+                        shoplistDatas.addAll(datas);
+                        home_adapter.notifyDataSetChanged();
+                        home_adapter.loadMoreComplete();
+                    }
+
+                    @Override
+                    public void onFinished() {
+                        isLoading = false;
+                        layout_loadMore.setVisibility(View.GONE);
+                        layout_refresh.setRefreshing(false);
+                    }
+                });
+            }
         }, rv);
         //点击事件
-        home_adapter.setOnItemClickListener((adapter1, view, position) -> {
-            Shop item = home_adapter.getData().get(position);
-            Intent intent = new Intent();
+        home_adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Shop item = home_adapter.getData().get(position);
+                Intent intent = new Intent();
 //                        intent.setClass(context, A_shangpinxiangqing.class); //详情页面
-            intent.putExtra("jsonText", item.toString());
+                intent.putExtra("jsonText", item.toString());
 //            context.startActivity(intent);
-            Toast.makeText(context, "position：" + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "position：" + position, Toast.LENGTH_SHORT).show();
 
+            }
         });
 
         rv.setLayoutManager(new GridLayoutManager(getContext(), 2));

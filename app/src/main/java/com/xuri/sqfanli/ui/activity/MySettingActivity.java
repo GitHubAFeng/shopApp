@@ -32,7 +32,7 @@ public class MySettingActivity extends BaseFragmentActivity {
 //        StatusBarUtil.setColor(this, Color.parseColor("#FFFFFF"));
 //        StatusBarUtil.setTranslucentForImageView(this, 0, null);
 
-        super.initAnim(AnimType.explode);
+        super.initAnim(AnimType.fade); //使用进场动画
         my_setting_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

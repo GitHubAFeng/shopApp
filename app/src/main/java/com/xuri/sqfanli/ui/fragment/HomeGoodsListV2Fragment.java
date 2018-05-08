@@ -3,12 +3,14 @@ package com.xuri.sqfanli.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -17,18 +19,16 @@ import com.google.gson.reflect.TypeToken;
 import com.xuri.sqfanli.R;
 import com.xuri.sqfanli.adapter.HomeBtnsAdapter;
 import com.xuri.sqfanli.adapter.HomeGoodsListAdapter;
-import com.xuri.sqfanli.adapter.HomeHotAdapter;
 import com.xuri.sqfanli.api.HomeApi;
 import com.xuri.sqfanli.api.base.CallBackApi;
 import com.xuri.sqfanli.bean.Adv;
+import com.xuri.sqfanli.bean.HotGoods;
 import com.xuri.sqfanli.bean.Shop;
 import com.xuri.sqfanli.bean.ShopType;
 import com.xuri.sqfanli.event.MessageEvent;
 import com.xuri.sqfanli.ui.base.BaseFragment;
-import com.xuri.sqfanli.util.StatusBarUtil;
 import com.xuri.sqfanli.view.PagerLayoutManager.PagerGridLayoutManager;
 import com.xuri.sqfanli.view.PagerLayoutManager.PagerGridSnapHelper;
-import com.xuri.sqfanli.view.timeout.TimeViewComm;
 import com.xuri.sqfanli.view.xImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -36,29 +36,27 @@ import com.youth.banner.listener.OnBannerListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by AFeng on 2018/4/26.
- * 首页
+ * Created by AFeng on 2018/5/7.
+ * 首页版本2
  */
 
-public class HomeGoodsListFragment extends BaseFragment {
+public class HomeGoodsListV2Fragment extends BaseFragment {
 
     View headerView;
     private HomeGoodsListAdapter home_adapter;
     private PagerGridLayoutManager mBtnsManager;
-    private PagerGridLayoutManager mHotManager;
-    private HomeHotAdapter adapterHomeHot;
     private HomeBtnsAdapter homeBtnsAdapter;
     boolean isLoading = false; //是否正在加载商品列表
     int currentPage = 1; //当前下拉商品页数
     int currentHotPage = 1; //当前热门商品页数
     int userSex = 1; //男1  女2
     List<Shop> shoplistDatas = new ArrayList<Shop>();   //下拉列表里面的商品数据
-    List<Shop> hotlistDatas = new ArrayList<Shop>();   //热卖里面的商品数据
     List<String> images = new ArrayList<String>(); //轮播图片
     List<ShopType> shopTypes = new ArrayList<ShopType>(); //按钮组数据
     int scrollY = 0; //用于向上按钮
@@ -68,16 +66,25 @@ public class HomeGoodsListFragment extends BaseFragment {
 
     private Banner banner;
     private RecyclerView btnRv;
-    private RecyclerView hotRv;
     @ViewInject(R.id.layout_refresh)
     SwipeRefreshLayout layout_refresh;
     @ViewInject(R.id.rv)
     private RecyclerView rv;
     @ViewInject(R.id.layout_loadMore)
     LinearLayout layout_loadMore;
-
     @ViewInject(R.id.iv_xiangshang)
     ImageView iv_xiangshang;
+
+    //热门推荐
+    TextView home_hot_title_1;
+    TextView home_hot_title_2;
+    TextView home_hot_title_3;
+    TextView home_hot_desc_1;
+    TextView home_hot_desc_2;
+    TextView home_hot_desc_3;
+    ImageView home_hot_img_1;
+    ImageView home_hot_img_2;
+    ImageView home_hot_img_3;
 
 
     @Override
@@ -95,12 +102,8 @@ public class HomeGoodsListFragment extends BaseFragment {
     void onInitPage() {
         //动态嵌入布局
         if (headerView == null) {
-            headerView = View.inflate(getContext(), R.layout.heard_home, null);
+            headerView = View.inflate(getContext(), R.layout.header_home_v2, null);
         }
-        StatusBarUtil.setTranslucentForImageView(getActivity(), 0, null);
-
-        TimeViewComm hotTime = headerView.findViewById(R.id.home_time);
-        hotTime.startTime(22, 02, 14);
 
         initBanner();
         initBtn();
@@ -173,7 +176,7 @@ public class HomeGoodsListFragment extends BaseFragment {
             }
         });
 
-        home_adapter = new HomeGoodsListAdapter(R.layout.item_home_goods, shoplistDatas);
+        home_adapter = new HomeGoodsListAdapter(R.layout.item_shangpin_home, shoplistDatas);
         home_adapter.addHeaderView(headerView); //头部
 
         home_adapter.setEnableLoadMore(true);
@@ -215,12 +218,12 @@ public class HomeGoodsListFragment extends BaseFragment {
 //                        intent.setClass(context, A_shangpinxiangqing.class); //详情页面
                         intent.putExtra("jsonText", item.toString());
 //            context.startActivity(intent);
-                        Toast.makeText(context, "position：" + position, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "position：" + position, Toast.LENGTH_SHORT).show();
 
                     }
                 });
 
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv.setLayoutManager(new GridLayoutManager(getContext(), 2));
         rv.setAdapter(home_adapter);
         //添加单元格分隔线
 //        rv.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -285,47 +288,44 @@ public class HomeGoodsListFragment extends BaseFragment {
     //热门推荐
     void initHot() {
 
-        hotRv = headerView.findViewById(R.id.home_rv_hot);
-        mHotManager = new PagerGridLayoutManager(1, 5, PagerGridLayoutManager.HORIZONTAL);
-        // 水平分页布局管理器
-        hotRv.setLayoutManager(mHotManager);
-        // 设置滚动辅助工具
-        PagerGridSnapHelper hotPageSnapHelper = new PagerGridSnapHelper();
-        hotPageSnapHelper.attachToRecyclerView(hotRv);
+        home_hot_title_1 = headerView.findViewById(R.id.home_hot_title_1);
+        home_hot_title_2 = headerView.findViewById(R.id.home_hot_title_2);
+        home_hot_title_3 = headerView.findViewById(R.id.home_hot_title_3);
+        home_hot_desc_1 = headerView.findViewById(R.id.home_hot_desc_1);
+        home_hot_desc_2 = headerView.findViewById(R.id.home_hot_desc_2);
+        home_hot_desc_3 = headerView.findViewById(R.id.home_hot_desc_3);
+        home_hot_img_1 = headerView.findViewById(R.id.home_hot_img_1);
+        home_hot_img_2 = headerView.findViewById(R.id.home_hot_img_2);
+        home_hot_img_3 = headerView.findViewById(R.id.home_hot_img_3);
 
-        adapterHomeHot = new HomeHotAdapter(R.layout.item_home_hot, hotlistDatas);
-        adapterHomeHot.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+        String text = homeApi.getHotFromServer(currentHotPage, userSex, new CallBackApi() {
             @Override
-            public void onChanged() {
-                super.onChanged();
-                int count = adapterHomeHot.getItemCount(); //item数量
+            public void onSuccess(String result) {
+                HotGoods datas = new Gson().fromJson(result, HotGoods.class);
+                home_hot_desc_1.setText(datas.getRankingName());
+                home_hot_desc_2.setText(datas.getTodFaddish());
+                home_hot_desc_3.setText(datas.getTodUpdate());
+                x.image().bind(home_hot_img_1, datas.getRankingImg());
+                x.image().bind(home_hot_img_2, datas.getTodFaddishImg());
+                x.image().bind(home_hot_img_3, datas.getTodUpdateImg());
+
+            }
+
+            @Override
+            public void onFinished() {
+
             }
         });
 
-        adapterHomeHot.setEnableLoadMore(true);
-        adapterHomeHot.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                currentHotPage++;
-                homeApi.getHotFromServer(currentHotPage, userSex, new CallBackApi() {
-                    @Override
-                    public void onSuccess(String result) {
-                        List<Shop> datas = new Gson().fromJson(result, new TypeToken<List<Shop>>() {
-                        }.getType());
-                        hotlistDatas.addAll(datas);
-                        adapterHomeHot.notifyDataSetChanged();
-                    }
+        if (TextUtils.isEmpty(text)) return;
+        HotGoods datas = new Gson().fromJson(text, HotGoods.class);
+        home_hot_desc_1.setText(datas.getRankingName());
+        home_hot_desc_2.setText(datas.getTodFaddish());
+        home_hot_desc_3.setText(datas.getTodUpdate());
+        x.image().bind(home_hot_img_1, datas.getRankingImg());
+        x.image().bind(home_hot_img_2, datas.getTodFaddishImg());
+        x.image().bind(home_hot_img_3, datas.getTodUpdateImg());
 
-                    @Override
-                    public void onFinished() {
-                        adapterHomeHot.loadMoreComplete();
-                    }
-                });
-            }
-        }, hotRv);
-
-        hotRv.setAdapter(adapterHomeHot);
-        showHot();
     }
 
     void showGoodsList() {
@@ -422,32 +422,6 @@ public class HomeGoodsListFragment extends BaseFragment {
 
     }
 
-    void showHot() {
-        String text = homeApi.getHotFromServer(currentHotPage, userSex, new CallBackApi() {
-            @Override
-            public void onSuccess(String result) {
-                List<Shop> datas = new Gson().fromJson(result, new TypeToken<List<Shop>>() {
-                }.getType());
-                hotlistDatas.clear();
-                hotlistDatas.addAll(datas);
-                adapterHomeHot.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-
-        if (text == "" || text == null) return;
-        List<Shop> datas = new Gson().fromJson(text, new TypeToken<List<Shop>>() {
-        }.getType());
-        hotlistDatas.clear();
-        hotlistDatas.addAll(datas);
-        adapterHomeHot.notifyDataSetChanged();
-
-    }
 
     //下拉刷新
     void onDataRefresh() {
@@ -496,11 +470,13 @@ public class HomeGoodsListFragment extends BaseFragment {
         homeApi.getHotFromServer(1, userSex, new CallBackApi() {
             @Override
             public void onSuccess(String result) {
-                List<Shop> datas = new Gson().fromJson(result, new TypeToken<List<Shop>>() {
-                }.getType());
-                hotlistDatas.clear();
-                hotlistDatas.addAll(datas);
-                adapterHomeHot.notifyDataSetChanged();
+                HotGoods datas = new Gson().fromJson(result, HotGoods.class);
+                home_hot_desc_1.setText(datas.getRankingName());
+                home_hot_desc_2.setText(datas.getTodFaddish());
+                home_hot_desc_3.setText(datas.getTodUpdate());
+                x.image().bind(home_hot_img_1, datas.getRankingImg());
+                x.image().bind(home_hot_img_2, datas.getTodFaddishImg());
+                x.image().bind(home_hot_img_3, datas.getTodUpdateImg());
 
             }
 

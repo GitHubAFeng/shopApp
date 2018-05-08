@@ -29,11 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by AFeng on 2018/4/26.
- * 首页
+ * Created by AFeng on 2018/5/8.
+ * 首页版本2
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeV2Fragment extends BaseFragment {
 
     HomeViewPagerAdapter adapterHomeViewPager;
     int userSex = 1; //男1  女2
@@ -54,7 +54,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public int getLayoutRes() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_home_v2;
     }
 
 
@@ -124,7 +124,8 @@ public class HomeFragment extends BaseFragment {
                 for (int i = 0; i < data.size(); i++) {
                     mViewPagerTitles.add(data.get(i).getName());
                     if (i == 0) {
-                        mViewPagerFragments.add(new HomeGoodsListFragment());
+//                        mViewPagerFragments.add(new HomeGoodsListFragment());
+                        mViewPagerFragments.add(new HomeGoodsListV2Fragment());
                     } else {
                         mViewPagerFragments.add(new GoodsListFragment());
                     }
@@ -151,7 +152,8 @@ public class HomeFragment extends BaseFragment {
             for (int i = 0; i < data.size(); i++) {
                 mViewPagerTitles.add(data.get(i).getName());
                 if (i == 0) {
-                    mViewPagerFragments.add(new HomeGoodsListFragment());
+//                    mViewPagerFragments.add(new HomeGoodsListFragment());
+                    mViewPagerFragments.add(new HomeGoodsListV2Fragment());
                 } else {
                     mViewPagerFragments.add(new GoodsListFragment());
                 }

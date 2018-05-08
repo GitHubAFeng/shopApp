@@ -36,7 +36,7 @@ public class TimeViewFlicker extends TimeViewComm {
 
     @Override
     protected void setTime(String hour, String minute, String second) {
-        List<Animator> animators = new LinkedList<>();
+        List<Animator> animators = new LinkedList<Animator>();
         if (isChanged(hour, mHours)) {
             ValueAnimator scaleX = ObjectAnimator.ofFloat(mHours, "ScaleX", 1f, 0.7f, 1f);
             ValueAnimator scaleY = ObjectAnimator.ofFloat(mHours, "ScaleY", 1f, 0.7f, 1f);

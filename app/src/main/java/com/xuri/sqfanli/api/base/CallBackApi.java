@@ -7,5 +7,6 @@ package com.xuri.sqfanli.api.base;
 public interface CallBackApi {
 
     void onSuccess(String result);
+
     void onFinished();
 }

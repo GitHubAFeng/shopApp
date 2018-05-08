@@ -26,7 +26,7 @@ public class HomeHotAdapter extends BaseQuickAdapter<Shop, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, Shop item) {
 
-        x.image().bind(helper.getView(R.id.home_hot_img), item.getItempic());
+        x.image().bind((ImageView) helper.getView(R.id.home_hot_img), item.getItempic());
 
         String title = item.getItemtitle();
         if (title.length() > 8) {

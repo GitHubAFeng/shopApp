@@ -1,6 +1,7 @@
 package com.xuri.sqfanli.ui.activity;
 
 import android.graphics.Color;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.xuri.sqfanli.R;
@@ -27,8 +28,13 @@ public class CashOutActivity extends BaseFragmentActivity {
     public void initView() {
 //        StatusBarUtil.setColor(this, Color.parseColor("#FD3E5D"));
         StatusBarUtil.setTranslucentForImageView(this, 0, null);
-        super.initAnim(AnimType.explode);
+        super.initAnim(AnimType.fade); //使用进场动画
 
-        my_shouyi_goback.setOnClickListener(view -> finish());
+        my_shouyi_goback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }

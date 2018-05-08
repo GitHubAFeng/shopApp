@@ -95,7 +95,7 @@ public class PagerGridLayoutManager extends RecyclerView.LayoutManager
     public PagerGridLayoutManager(@IntRange(from = 1, to = 100) int rows,
                                   @IntRange(from = 1, to = 100) int columns,
                                   @OrientationType int orientation) {
-        mItemFrames = new SparseArray<>();
+        mItemFrames = new SparseArray<Rect>();
         mOrientation = orientation;
         mRows = rows;
         mColumns = columns;

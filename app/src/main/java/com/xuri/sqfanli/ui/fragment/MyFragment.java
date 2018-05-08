@@ -32,9 +32,19 @@ public class MyFragment extends BaseFragment {
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        my_setting.setOnClickListener(view -> goToActivityByAnim(MySettingActivity.class, false));
+        my_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToActivityByAnim(MySettingActivity.class, false);
+            }
+        });
 
-        my_tixian.setOnClickListener(view -> goToActivityByAnim(CashOutActivity.class, false));
+        my_tixian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToActivityByAnim(CashOutActivity.class, false);
+            }
+        });
 
 
     }
