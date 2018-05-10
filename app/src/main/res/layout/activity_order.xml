@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--标题-->
+    <FrameLayout
+        android:id="@+id/rl_shop_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_titlebar"
+        android:background="#fff">
+
+        <ImageButton
+            android:id="@+id/ib_back"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/goods_back"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="订单管理"
+            android:textColor="#2A2A2A"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/ib_close"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/close"
+            android:scaleType="fitXY" />
+
+    </FrameLayout>
+
+
+    <!--订单分类Tab-->
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/order_tab"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="#FFF"
+        app:tl_indicator_anim_enable="true"
+        app:tl_indicator_bounce_enable="true"
+        app:tl_indicator_color="#FF5E6F"
+        app:tl_indicator_height="1dp"
+        app:tl_indicator_width="10dp"
+        app:tl_textAllCaps="true"
+        app:tl_textBold="BOTH"
+        app:tl_textSelectColor="#FF5E6F"
+        app:tl_textUnselectColor="#0D0D0D"
+        app:tl_textsize="10sp" />
+
+    <!--订单导航条-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/order_vp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+
+</LinearLayout>

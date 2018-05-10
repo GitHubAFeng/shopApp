@@ -13,7 +13,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             app:contentInsetStart="0.0dp"
             app:layout_scrollFlags="scroll|enterAlways">
@@ -21,12 +21,13 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#FFF">
+                android:background="#FFF"
+                android:paddingTop="@dimen/dp20">
 
                 <ImageView
                     android:id="@+id/my_setting_back"
-                    android:layout_width="@dimen/dp15"
-                    android:layout_height="@dimen/dp15"
+                    android:layout_width="@dimen/dp25"
+                    android:layout_height="@dimen/dp25"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dp10"
                     android:src="@drawable/my_left_arror" />
@@ -36,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="设置"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
 
@@ -63,17 +64,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp10"
+                    android:paddingHorizontal="@dimen/dp10"
+                    android:paddingVertical="@dimen/dp20"
                     android:text="支付宝绑定"
-                    android:textSize="14sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp8"
+                    android:layout_marginLeft="@dimen/dp15"
                     android:text="527***@qq.com"
                     android:textColor="#E3E3E3"
-                    android:textSize="12sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -88,7 +92,8 @@
                         android:paddingRight="@dimen/dp8"
                         android:text="修改"
                         android:textColor="#E3E3E3"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:layout_width="20dp"
@@ -108,17 +113,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp10"
+                    android:paddingHorizontal="@dimen/dp10"
+                    android:paddingVertical="@dimen/dp20"
                     android:text="微信绑定"
-                    android:textSize="14sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp8"
+                    android:layout_marginLeft="@dimen/dp15"
                     android:text="527***@qq.com"
                     android:textColor="#E3E3E3"
-                    android:textSize="12sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -133,7 +141,8 @@
                         android:paddingRight="@dimen/dp8"
                         android:text="修改"
                         android:textColor="#E3E3E3"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:layout_width="20dp"
@@ -153,17 +162,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp10"
+                    android:paddingHorizontal="@dimen/dp10"
+                    android:paddingVertical="@dimen/dp20"
                     android:text="清除缓存"
-                    android:textSize="14sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dp8"
+                    android:layout_marginLeft="@dimen/dp15"
                     android:text="1.31MB"
                     android:textColor="#E3E3E3"
-                    android:textSize="12sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -178,10 +190,10 @@
                         android:layout_marginRight="@dimen/dp10"
                         android:background="@drawable/shape_my_tixian"
                         android:paddingHorizontal="@dimen/dp10"
-                        android:paddingVertical="@dimen/dp2"
+                        android:paddingVertical="@dimen/dp4"
                         android:text="清除缓存"
                         android:textColor="#FD3E5D"
-                        android:textSize="12sp" />
+                        android:textSize="14sp" />
 
 
                 </LinearLayout>
@@ -197,9 +209,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dp10"
+                    android:paddingHorizontal="@dimen/dp10"
+                    android:paddingVertical="@dimen/dp20"
                     android:text="消息通知"
-                    android:textSize="14sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -231,7 +245,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp10"
+            android:layout_marginTop="@dimen/dp5"
             android:background="#FFF"
             android:gravity="center"
             android:padding="@dimen/dp10">
@@ -239,8 +253,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dp6"
                 android:text="退出登录"
-                android:textSize="16sp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
     </LinearLayout>

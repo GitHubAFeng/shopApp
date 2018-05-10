@@ -72,32 +72,19 @@ public class HomeFragment extends BaseFragment {
         adapterHomeViewPager = new HomeViewPagerAdapter(getFragmentManager(), mViewPagerFragments, mViewPagerTitles);
         mMainViewPager.setAdapter(adapterHomeViewPager);
         mMainTabLayout.setViewPager(mMainViewPager);
-        mMainTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-
-
-            }
-
-            @Override
-            public void onTabReselect(int position) {
-
-            }
-        });
         mMainViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
                 if (position != 0) {
                     mMainTabLayout.setVisibility(View.VISIBLE);
                 } else {
                     mMainTabLayout.setVisibility(View.GONE);
                 }
-                mMainTabLayout.setCurrentTab(position);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
             }
 
             @Override
@@ -105,6 +92,7 @@ public class HomeFragment extends BaseFragment {
 
             }
         });
+
         mMainViewPager.setCurrentItem(0);
 
         showViewPager();

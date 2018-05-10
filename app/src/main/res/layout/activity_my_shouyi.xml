@@ -43,10 +43,10 @@
 
                 <ImageView
                     android:id="@+id/my_setting"
-                    android:layout_width="@dimen/dp25"
-                    android:layout_height="@dimen/dp25"
+                    android:layout_width="@dimen/dp20"
+                    android:layout_height="@dimen/dp20"
                     android:layout_gravity="right|center_vertical"
-                    android:layout_marginRight="@dimen/dp10"
+                    android:layout_marginRight="@dimen/dp25"
                     android:src="@drawable/my_help" />
 
             </FrameLayout>
@@ -56,7 +56,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="80dp"
             android:background="#FD3E5D"
             android:orientation="horizontal"
             android:paddingTop="@dimen/dp10">
@@ -88,7 +88,8 @@
                         android:paddingVertical="@dimen/dp2"
                         android:text="150.25"
                         android:textColor="#FFF"
-                        android:textSize="20sp" />
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
@@ -114,7 +115,8 @@
                         android:paddingVertical="@dimen/dp2"
                         android:text="180.55"
                         android:textColor="#FFF"
-                        android:textSize="20sp" />
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
@@ -127,9 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp40"
             android:background="#E73552"
-            android:gravity="center"
-
-            >
+            android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -141,8 +141,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="135dp"
             android:background="#FFF"
+            android:gravity="center"
             android:orientation="horizontal"
             android:padding="@dimen/dp15">
 
@@ -179,14 +180,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dp8"
                     android:text="￥1.2"
-                    android:textSize="16sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="上月佣金"
                     android:textColor="#AFAFAF"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -228,14 +230,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dp8"
                     android:text="￥0"
-                    android:textSize="16sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="本月佣金"
                     android:textColor="#AFAFAF"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -277,14 +280,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/dp8"
                     android:text="￥1.2"
-                    android:textSize="16sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="上月佣金"
                     android:textColor="#AFAFAF"
-                    android:textSize="10sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -297,8 +301,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:layout_marginTop="@dimen/dp8"
+            android:layout_height="140dp"
+            android:layout_marginTop="@dimen/dp10"
             android:background="#FFF"
             android:orientation="vertical"
             android:showDividers="end">
@@ -307,7 +311,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:paddingVertical="@dimen/dp5">
+                android:paddingVertical="@dimen/dp13">
 
                 <ImageView
                     android:layout_width="@dimen/dp20"
@@ -328,7 +332,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="2dp"
                 android:background="#F4F3F8" />
 
 
@@ -372,7 +376,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/dp8"
                         android:text="￥0"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
@@ -416,7 +421,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/dp8"
                         android:text="￥0"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
@@ -432,8 +438,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:layout_marginTop="@dimen/dp8"
+            android:layout_height="140dp"
+            android:layout_marginTop="@dimen/dp10"
             android:background="#FFF"
             android:orientation="vertical"
             android:showDividers="end">
@@ -442,7 +448,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:paddingVertical="@dimen/dp5">
+                android:paddingVertical="@dimen/dp13">
 
                 <ImageView
                     android:layout_width="@dimen/dp20"
@@ -463,7 +469,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="2dp"
                 android:background="#F4F3F8" />
 
 
@@ -507,7 +513,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/dp8"
                         android:text="￥0"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>
@@ -551,7 +558,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/dp8"
                         android:text="￥0"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
 
 
                 </LinearLayout>

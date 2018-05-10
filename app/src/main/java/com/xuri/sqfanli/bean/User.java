@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 
+import com.xuri.sqfanli.MyAPP;
 import com.xuri.sqfanli.util.SettingConfig;
 
 import java.math.BigDecimal;
@@ -207,11 +208,12 @@ public class User {
     private String wxAppID;
     private String wxAppSecret;
 
-    public static User getInstance(Context context) {
+    public static User getInstance() {
         if (user == null) {
             user = new User();
+            Context context = MyAPP.getInstance();
             String id = SettingConfig.getInstance(context).getStringPreference("id", "0");
-            if(id==null || id.length()==0) {
+            if (id == null || id.length() == 0) {
                 id = "0";
             }
             user.setId(Integer.parseInt(id));
@@ -339,6 +341,7 @@ public class User {
         SettingConfig.getInstance(context).setStringPreference("hongbaoMoney", userLog.getHongbaoMoney());
         user = null;
     }
+
     //退出登录
     public static void userOutLogin(Context context) {
         SettingConfig.getInstance(context).setStringPreference("id", "0");

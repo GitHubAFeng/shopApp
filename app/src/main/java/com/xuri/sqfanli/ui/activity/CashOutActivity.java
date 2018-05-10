@@ -28,7 +28,7 @@ public class CashOutActivity extends BaseFragmentActivity {
     public void initView() {
 //        StatusBarUtil.setColor(this, Color.parseColor("#FD3E5D"));
         StatusBarUtil.setTranslucentForImageView(this, 0, null);
-        super.initAnim(AnimType.fade); //使用进场动画
+//        super.initAnim(AnimType.fade); //使用进场动画
 
         my_shouyi_goback.setOnClickListener(new View.OnClickListener() {
             @Override

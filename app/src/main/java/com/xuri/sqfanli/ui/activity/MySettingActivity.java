@@ -28,11 +28,12 @@ public class MySettingActivity extends BaseFragmentActivity {
     @Override
     public void initView() {
 
-        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.white));
+        StatusBarUtil.setTranslucentForImageView(this, 0, null);
+//        StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.white));
 //        StatusBarUtil.setColor(this, Color.parseColor("#FFFFFF"));
 //        StatusBarUtil.setTranslucentForImageView(this, 0, null);
+//        super.initAnim(AnimType.fade); //使用进场动画
 
-        super.initAnim(AnimType.fade); //使用进场动画
         my_setting_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
