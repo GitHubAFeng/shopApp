@@ -1,6 +1,5 @@
 package com.xuri.sqfanli.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,7 +8,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
@@ -19,6 +17,7 @@ import com.xuri.sqfanli.adapter.GoodsListAdapter;
 import com.xuri.sqfanli.api.HomeApi;
 import com.xuri.sqfanli.api.base.CallBackApi;
 import com.xuri.sqfanli.bean.Shop;
+import com.xuri.sqfanli.ui.activity.GoodsDetailActivity;
 import com.xuri.sqfanli.ui.base.BaseFragment;
 
 import org.xutils.view.annotation.ViewInject;
@@ -151,12 +150,7 @@ public class GoodsListFragment extends BaseFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Shop item = home_adapter.getData().get(position);
-                Intent intent = new Intent();
-//                        intent.setClass(context, A_shangpinxiangqing.class); //详情页面
-                intent.putExtra("jsonText", item.toString());
-//            context.startActivity(intent);
-                Toast.makeText(getContext(), "position：" + position, Toast.LENGTH_SHORT).show();
-
+                goToActivity(GoodsDetailActivity.class, "jsonText", item, false);
             }
         });
 

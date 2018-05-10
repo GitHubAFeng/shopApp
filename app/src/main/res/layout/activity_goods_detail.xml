@@ -1,63 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <!--标题-->
+    <FrameLayout
+        android:id="@+id/rl_shop_title"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="@dimen/item_titlebar"
+        android:background="#fff">
 
-        <!--详情-->
-        <FrameLayout
+        <ImageButton
+            android:id="@+id/ib_back"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/goods_back"
+            android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#eee">
+            android:gravity="center"
+            android:text="商品详情"
+            android:textColor="#2A2A2A"
+            android:textSize="16sp" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#eee" />
+    </FrameLayout>
 
-            <ImageView
-                android:id="@+id/iv_xiangshang"
-                android:layout_width="@dimen/dp55"
-                android:layout_height="@dimen/dp55"
-                android:layout_gravity="right|bottom"
-                android:layout_marginBottom="@dimen/dp40"
-                android:layout_marginRight="@dimen/dp3"
-                android:src="@drawable/xiangshang" />
-        </FrameLayout>
-        <!--标题-->
-        <FrameLayout
-            android:id="@+id/rl_shop_title"
+    <!--详情-->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#eee">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/goods_detail_rv"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/item_titlebar"
-            android:background="#fff">
+            android:layout_height="match_parent"
+            android:background="#eee" />
 
-            <ImageButton
-                android:id="@+id/ib_back"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/goods_back"
-                android:layout_gravity="left|center_vertical"
-                android:scaleType="fitXY" />
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="商品详情"
-                android:textColor="#2A2A2A"
-                android:textSize="16sp"
-                />
-
-        </FrameLayout>
-    </RelativeLayout>
+        <ImageView
+            android:id="@+id/iv_xiangshang"
+            android:layout_width="@dimen/dp55"
+            android:layout_height="@dimen/dp55"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="@dimen/dp40"
+            android:layout_marginRight="@dimen/dp3"
+            android:src="@drawable/xiangshang" />
+    </FrameLayout>
 
     <!--导购-->
     <LinearLayout
@@ -112,11 +108,10 @@
             android:id="@+id/layout_bujingquan"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dp8"
             android:layout_weight="1"
             android:gravity="right|center_vertical"
-            android:orientation="vertical"
-            android:layout_marginRight="@dimen/dp8"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_daoqi"
@@ -124,8 +119,7 @@
                 android:layout_height="wrap_content"
                 android:text="2天后到期"
                 android:textColor="#AFAFAF"
-                android:textSize="12sp"
-                 />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_youhuiquanjine"
@@ -134,8 +128,7 @@
                 android:layout_marginTop="@dimen/dp5"
                 android:text="领券立减￥3元"
                 android:textColor="#FE464E"
-                android:textSize="12sp"
-                />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout

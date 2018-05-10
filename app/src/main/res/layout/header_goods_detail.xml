@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--轮播-->
+    <com.youth.banner.Banner
+        android:id="@+id/banner"
+        android:layout_width="wrap_content"
+        android:layout_height="240dp"
+        app:image_scale_type="fit_xy"
+        app:indicator_drawable_selected="@drawable/indicator_drawable_selected" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp25"
+        android:layout_marginTop="@dimen/dp10"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp15"
+        android:paddingRight="@dimen/dp15">
+
+        <TextView
+            android:id="@+id/tv_baoyou"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp5"
+            android:background="@drawable/kuang_hong_radius"
+            android:paddingBottom="@dimen/dp1"
+            android:paddingLeft="@dimen/dp4"
+            android:paddingRight="@dimen/dp4"
+            android:paddingTop="@dimen/dp1"
+            android:text="包邮"
+            android:textColor="#ff4544"
+            android:textSize="@dimen/sp10" />
+
+        <TextView
+            android:id="@+id/tv_biaoti"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:textSize="14sp"
+            android:lines="1"
+            android:text="标题"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            android:textColor="#444" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp15"
+        android:paddingRight="@dimen/dp15">
+
+        <ImageView
+            android:id="@+id/iv_quanhoujiatubiao"
+            android:layout_width="@dimen/dp30"
+            android:layout_height="@dimen/dp12"
+            android:layout_marginBottom="@dimen/dp6"
+            android:src="@drawable/quanhoujia" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="￥"
+            android:textColor="#ff6742" />
+
+        <TextView
+            android:id="@+id/tv_jiage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="24.9"
+            android:textColor="#ff6742"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_yuanjia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_marginTop="@dimen/dp5"
+            android:ellipsize="end"
+            android:lines="1"
+            android:text="原价￥28.9"
+
+            android:textColor="#999"
+            android:textSize="@dimen/sp12" />
+
+        <TextView
+            android:id="@+id/tv_fanhuan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp5"
+            android:layout_weight="1"
+            android:text="返还￥00元"
+            android:textColor="#fff85725"
+            android:textSize="@dimen/sp11"
+            android:visibility="invisible" />
+
+
+        <TextView
+            android:id="@+id/tv_xiaoliang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已有888人购买"
+            android:textColor="#999"
+            android:textSize="@dimen/sp12" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_lingquan"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp90"
+        android:layout_marginBottom="@dimen/dp15"
+        android:layout_marginLeft="@dimen/dp15"
+        android:layout_marginRight="@dimen/dp15"
+        android:background="@drawable/youhuiquanbeijing">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_youhuiquanjine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3元优惠券"
+                android:textColor="#fff"
+                android:textSize="@dimen/sp18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_youhuiquanqixian"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="使用期限:2017-12-12 - 2017-13-13"
+                android:textColor="#fff"
+                android:textSize="@dimen/sp10" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp20"
+            android:background="@drawable/youhuiquan_xian"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="立即领券"
+            android:textColor="#fff"
+            android:textSize="@dimen/sp14">
+
+
+        </TextView>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dp15"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="@dimen/dp40"
+            android:layout_height="1px"
+            android:background="#cccccc" />
+
+        <TextView
+            android:layout_width="@dimen/dp8"
+            android:layout_height="@dimen/dp8"
+            android:layout_marginRight="@dimen/dp10"
+            android:background="#cccccc"
+            android:rotation="45" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="宝贝详情"
+            android:textColor="#333" />
+
+        <TextView
+            android:layout_width="@dimen/dp8"
+            android:layout_height="@dimen/dp8"
+            android:layout_marginLeft="@dimen/dp10"
+            android:background="#cccccc"
+            android:rotation="45" />
+
+        <TextView
+            android:layout_width="@dimen/dp40"
+            android:layout_height="1px"
+            android:background="#cccccc" />
+    </LinearLayout>
+
+</LinearLayout>

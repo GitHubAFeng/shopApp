@@ -22,6 +22,7 @@ import java.util.List;
 
 /**
  * Created by santa on 16/8/26.
+ * 倒计时
  */
 public class TimeViewComm extends LinearLayout {
     protected TextView mHours;

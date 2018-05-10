@@ -120,6 +120,16 @@ public abstract class BaseFragmentActivity extends FragmentActivity {
         }
     }
 
+    public void goToActivity(Class<?> target, String key, String value, boolean isFinish) {
+        Intent intent = new Intent();
+        intent.setClass(this, target);
+        intent.putExtra(key, value);
+        this.startActivity(intent);
+        if (isFinish) {
+            this.finish();
+        }
+    }
+
 
     public void goToActivityByAnim(Class<?> target, boolean isFinish) {
 

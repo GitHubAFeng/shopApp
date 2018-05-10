@@ -1,6 +1,5 @@
 package com.xuri.sqfanli.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -21,11 +20,13 @@ import com.xuri.sqfanli.adapter.HomeBtnsAdapter;
 import com.xuri.sqfanli.adapter.HomeGoodsListAdapter;
 import com.xuri.sqfanli.api.HomeApi;
 import com.xuri.sqfanli.api.base.CallBackApi;
+import com.xuri.sqfanli.api.base.CallBackDataApi;
 import com.xuri.sqfanli.bean.Adv;
 import com.xuri.sqfanli.bean.HotGoods;
 import com.xuri.sqfanli.bean.Shop;
 import com.xuri.sqfanli.bean.ShopType;
 import com.xuri.sqfanli.event.MessageEvent;
+import com.xuri.sqfanli.ui.activity.GoodsDetailActivity;
 import com.xuri.sqfanli.ui.base.BaseFragment;
 import com.xuri.sqfanli.view.PagerLayoutManager.PagerGridLayoutManager;
 import com.xuri.sqfanli.view.PagerLayoutManager.PagerGridSnapHelper;
@@ -214,12 +215,7 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                         Shop item = home_adapter.getData().get(position);
-                        Intent intent = new Intent();
-//                        intent.setClass(context, A_shangpinxiangqing.class); //详情页面
-                        intent.putExtra("jsonText", item.toString());
-//            context.startActivity(intent);
-                        Toast.makeText(getContext(), "position：" + position, Toast.LENGTH_SHORT).show();
-
+                        goToActivity(GoodsDetailActivity.class, "jsonText", item, false);
                     }
                 });
 
@@ -358,17 +354,17 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
 
     void showAdv() {
 
-        String text = homeApi.getAdvFromServer(userSex, new CallBackApi() {
+        Adv _adv = homeApi.getAdvFromServer(userSex, new CallBackDataApi() {
             @Override
-            public void onSuccess(String result) {
-                Adv adv = new Gson().fromJson(result, Adv.class);
-                images.clear();
+            public void onSuccess(Object o) {
+                final Adv adv = (Adv) o;
                 if (adv == null || adv.getMainAdvList() == null) return;
+                images.clear();
                 for (int i = 0; i < adv.getMainAdvList().size(); i++) {
                     images.add(adv.getMainAdvList().get(i).getAdvImg());
                 }
                 //设置图片集合
-                banner.setImages(images);
+                banner.update(images);
             }
 
             @Override
@@ -377,18 +373,13 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
             }
         });
 
-
-        //先显示本地
-        if (text != "" || text != null) {
-            Adv adv = new Gson().fromJson(text, Adv.class);
-            images.clear();
-            if (adv == null || adv.getMainAdvList() == null) return;
-            for (int i = 0; i < adv.getMainAdvList().size(); i++) {
-                images.add(adv.getMainAdvList().get(i).getAdvImg());
-            }
-            //设置图片集合
-            banner.setImages(images);
+        if (_adv == null || _adv.getMainAdvList() == null) return;
+        images.clear();
+        for (int i = 0; i < _adv.getMainAdvList().size(); i++) {
+            images.add(_adv.getMainAdvList().get(i).getAdvImg());
         }
+        //设置图片集合
+        banner.update(images);
 
     }
 
@@ -447,17 +438,17 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
         });
 
         //轮播
-        homeApi.getAdvFromServer(userSex, new CallBackApi() {
+        homeApi.getAdvFromServer(userSex, new CallBackDataApi() {
             @Override
-            public void onSuccess(String result) {
-                Adv adv = new Gson().fromJson(result, Adv.class);
-                images.clear();
+            public void onSuccess(Object o) {
+                final Adv adv = (Adv) o;
                 if (adv == null || adv.getMainAdvList() == null) return;
+                images.clear();
                 for (int i = 0; i < adv.getMainAdvList().size(); i++) {
                     images.add(adv.getMainAdvList().get(i).getAdvImg());
                 }
                 //设置图片集合
-                banner.setImages(images);
+                banner.update(images);
             }
 
             @Override
@@ -465,6 +456,7 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
 
             }
         });
+
 
         //热门
         homeApi.getHotFromServer(1, userSex, new CallBackApi() {

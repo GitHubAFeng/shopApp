@@ -1,9 +1,10 @@
 package com.xuri.sqfanli.api;
 
 import com.xuri.sqfanli.Constant;
-import com.xuri.sqfanli.MyAPP;
 import com.xuri.sqfanli.api.base.BaseApi;
 import com.xuri.sqfanli.api.base.CallBackApi;
+import com.xuri.sqfanli.api.base.CallBackDataApi;
+import com.xuri.sqfanli.bean.Adv;
 import com.xuri.sqfanli.util.SettingConfig;
 
 import org.xutils.http.RequestParams;
@@ -25,6 +26,7 @@ public class HomeApi extends BaseApi {
         super.HttpPost(params, key, callBackApi);
         return result;
     }
+
     //按钮组
     public String getTypeFromServer(int sex, CallBackApi callBackApi) {
         String key = "shopType/appShopType" + sex;
@@ -78,6 +80,21 @@ public class HomeApi extends BaseApi {
         params.addParameter("shopType.sex", sex);
         super.HttpPost(params, key, callBackApi);
         return result;
+    }
+
+
+    //---------------------   版本2   ------------------------//
+
+
+    //轮播广告
+    public Adv getAdvFromServer(int sex, CallBackDataApi callBackDataApi) {
+        String key = "mainAdv/appGetMainAdvList";
+        String local_key = key + sex;
+        String url = Constant.host + key;
+        RequestParams params = new RequestParams(url);
+        params.addParameter("mainadv.sex", sex);
+        Object data = super.HttpPost(params, local_key, Adv.class, callBackDataApi);
+        return (Adv) data;
     }
 
 

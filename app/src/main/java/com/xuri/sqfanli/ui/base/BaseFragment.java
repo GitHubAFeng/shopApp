@@ -16,6 +16,8 @@ import com.umeng.analytics.MobclickAgent;
 
 import org.xutils.x;
 
+import java.io.Serializable;
+
 public abstract class BaseFragment extends Fragment {
     protected String TAG;
     public Context context;
@@ -139,6 +141,36 @@ public abstract class BaseFragment extends Fragment {
     public void goToActivity(Class<?> target, boolean isFinish) {
         Intent intent = new Intent();
         intent.setClass(getActivity(), target);
+        this.startActivity(intent);
+        if (isFinish) {
+            getActivity().finish();
+        }
+    }
+
+    /**
+     * 传递数据对象到新启动的Activity
+     *
+     * @param target 要启动的Activity
+     * @param key    键值
+     * @param event  要传递的对象，必须Serializable化
+     */
+    public void goToActivity(Class<?> target, String key, Serializable event, boolean isFinish) {
+
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), target);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(key, event);
+        intent.putExtras(bundle);
+        this.startActivity(intent);
+        if (isFinish) {
+            getActivity().finish();
+        }
+    }
+
+    public void goToActivity(Class<?> target, String key, String value, boolean isFinish) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), target);
+        intent.putExtra(key, value);
         this.startActivity(intent);
         if (isFinish) {
             getActivity().finish();

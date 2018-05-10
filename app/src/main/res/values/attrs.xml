@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!--自定义view的样式-->
 <resources>
+    <!--倒计时-->
     <declare-styleable name="TimeViewComm">
         <attr name="tvc_backgroundColor" format="color" />
         <attr name="tvc_textColor" format="color" />
@@ -10,4 +11,7 @@
         <attr name="tvc_textPaddingVertical" format="dimension" />
         <attr name="tvc_setDrawable_sub" format="reference" />
     </declare-styleable>
+
+
+
 </resources>
