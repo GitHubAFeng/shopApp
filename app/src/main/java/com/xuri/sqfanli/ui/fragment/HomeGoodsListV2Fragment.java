@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,14 +13,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.xuri.sqfanli.R;
 import com.xuri.sqfanli.adapter.HomeBtnsAdapter;
 import com.xuri.sqfanli.adapter.HomeGoodsListAdapter;
 import com.xuri.sqfanli.api.HomeApi;
-import com.xuri.sqfanli.api.base.CallBackApi;
 import com.xuri.sqfanli.api.base.CallBackDataApi;
+import com.xuri.sqfanli.api.base.CallBackListApi;
 import com.xuri.sqfanli.bean.Adv;
 import com.xuri.sqfanli.bean.HotGoods;
 import com.xuri.sqfanli.bean.Shop;
@@ -55,12 +53,11 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
     private HomeBtnsAdapter homeBtnsAdapter;
     boolean isLoading = false; //是否正在加载商品列表
     int currentPage = 1; //当前下拉商品页数
-    int currentHotPage = 1; //当前热门商品页数
-    int userSex = 1; //男1  女2
     List<Shop> shoplistDatas = new ArrayList<Shop>();   //下拉列表里面的商品数据
     List<String> images = new ArrayList<String>(); //轮播图片
     List<ShopType> shopTypes = new ArrayList<ShopType>(); //按钮组数据
     int scrollY = 0; //用于向上按钮
+
     HomeApi homeApi = new HomeApi();
 
     Boolean is_show_tab = false;  //分类tab是否显示
@@ -97,6 +94,8 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
     public void initView(Bundle savedInstanceState) {
 
         onInitPage();
+
+        onLoadData();
     }
 
     //初始化页面
@@ -107,12 +106,11 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
         }
 
         initBanner();
-        initBtn();
+        initType();
         initHot();
         initGoodsRv();
 
     }
-
 
     //商品列表
     void initGoodsRv() {
@@ -189,23 +187,8 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
                     return;
                 }
                 currentPage++;
-                homeApi.getGoodsFromServer(currentPage, userSex, new CallBackApi() {
-                    @Override
-                    public void onSuccess(String result) {
-                        List<Shop> datas = new Gson().fromJson(result, new TypeToken<List<Shop>>() {
-                        }.getType());
-                        shoplistDatas.addAll(datas);
-                        home_adapter.notifyDataSetChanged();
-                    }
+                getGoodsList(currentPage, false, true);
 
-                    @Override
-                    public void onFinished() {
-                        home_adapter.loadMoreComplete();
-                        isLoading = false;
-                        layout_loadMore.setVisibility(View.GONE);
-                        layout_refresh.setRefreshing(false);
-                    }
-                });
             }
         }, rv);
 
@@ -229,7 +212,6 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
 //            }
 //        });
 
-        showGoodsList();
     }
 
     //轮播
@@ -249,14 +231,12 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
             }
         });
 
-        showAdv();
-
         //banner设置方法全部调用完毕时最后调用
         banner.start();
     }
 
     //类型按钮组合
-    void initBtn() {
+    void initType() {
         btnRv = headerView.findViewById(R.id.recycler_view);
         homeBtnsAdapter = new HomeBtnsAdapter(R.layout.item_home_btn, shopTypes);
 
@@ -277,7 +257,6 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
         });
 
         btnRv.setAdapter(homeBtnsAdapter);
-        showType();
 
     }
 
@@ -294,17 +273,19 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
         home_hot_img_2 = headerView.findViewById(R.id.home_hot_img_2);
         home_hot_img_3 = headerView.findViewById(R.id.home_hot_img_3);
 
-        String text = homeApi.getHotFromServer(currentHotPage, userSex, new CallBackApi() {
-            @Override
-            public void onSuccess(String result) {
-                HotGoods datas = new Gson().fromJson(result, HotGoods.class);
-                home_hot_desc_1.setText(datas.getRankingName());
-                home_hot_desc_2.setText(datas.getTodFaddish());
-                home_hot_desc_3.setText(datas.getTodUpdate());
-                x.image().bind(home_hot_img_1, datas.getRankingImg());
-                x.image().bind(home_hot_img_2, datas.getTodFaddishImg());
-                x.image().bind(home_hot_img_3, datas.getTodUpdateImg());
+    }
 
+    void getHot(final Boolean isRefresh) {
+        HotGoods hotGoods = homeApi.getHotFromServer(new CallBackDataApi() {
+            @Override
+            public void onSuccess(Object o) {
+                HotGoods data = (HotGoods) o;
+                home_hot_desc_1.setText(data.getRankingName());
+                home_hot_desc_2.setText(data.getTodFaddish());
+                home_hot_desc_3.setText(data.getTodUpdate());
+                x.image().bind(home_hot_img_1, data.getRankingImg());
+                x.image().bind(home_hot_img_2, data.getTodFaddishImg());
+                x.image().bind(home_hot_img_3, data.getTodUpdateImg());
             }
 
             @Override
@@ -313,48 +294,52 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
             }
         });
 
-        if (TextUtils.isEmpty(text)) return;
-        HotGoods datas = new Gson().fromJson(text, HotGoods.class);
-        home_hot_desc_1.setText(datas.getRankingName());
-        home_hot_desc_2.setText(datas.getTodFaddish());
-        home_hot_desc_3.setText(datas.getTodUpdate());
-        x.image().bind(home_hot_img_1, datas.getRankingImg());
-        x.image().bind(home_hot_img_2, datas.getTodFaddishImg());
-        x.image().bind(home_hot_img_3, datas.getTodUpdateImg());
+        if (hotGoods == null || isRefresh) return;
+        home_hot_desc_1.setText(hotGoods.getRankingName());
+        home_hot_desc_2.setText(hotGoods.getTodFaddish());
+        home_hot_desc_3.setText(hotGoods.getTodUpdate());
+        x.image().bind(home_hot_img_1, hotGoods.getRankingImg());
+        x.image().bind(home_hot_img_2, hotGoods.getTodFaddishImg());
+        x.image().bind(home_hot_img_3, hotGoods.getTodUpdateImg());
 
     }
 
-    void showGoodsList() {
-        String text = homeApi.getGoodsFromServer(1, userSex, new CallBackApi() {
+    void getGoodsList(int page, final Boolean isRefresh, final Boolean isLoadMore) {
+
+        List listdata = homeApi.getGoodsFromServer(page, "", null, new CallBackListApi() {
             @Override
-            public void onSuccess(String result) {
-                List<Shop> datas = new Gson().fromJson(result, new TypeToken<List<Shop>>() {
-                }.getType());
-                shoplistDatas.clear();
-                shoplistDatas.addAll(datas);
+            public void onSuccess(List o) {
+                if (!isLoadMore) {
+                    shoplistDatas.clear();
+                }
+                shoplistDatas.addAll(o);
                 home_adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onFinished() {
-                isLoading = false;
-                layout_loadMore.setVisibility(View.GONE);
-                layout_refresh.setRefreshing(false);
+                if (isRefresh) {
+                    layout_refresh.setRefreshing(false);
+                }
+                if (isLoadMore) {
+                    isLoading = false;
+                    layout_loadMore.setVisibility(View.GONE);
+                    layout_refresh.setRefreshing(false);
+                    home_adapter.loadMoreComplete();
+                }
             }
         });
 
-        if (text == "" || text == null) return;
-        List<Shop> datas = new Gson().fromJson(text, new TypeToken<List<Shop>>() {
-        }.getType());
-
-        shoplistDatas.addAll(datas);
+        if (listdata == null || listdata.size() == 0 || isRefresh || isLoadMore) return;
+        shoplistDatas.clear();
+        shoplistDatas.addAll(listdata);
         home_adapter.notifyDataSetChanged();
 
     }
 
-    void showAdv() {
+    void getAdv(final Boolean isRefresh) {
 
-        Adv _adv = homeApi.getAdvFromServer(userSex, new CallBackDataApi() {
+        Adv _adv = homeApi.getAdvFromServer(new CallBackDataApi() {
             @Override
             public void onSuccess(Object o) {
                 final Adv adv = (Adv) o;
@@ -373,7 +358,7 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
             }
         });
 
-        if (_adv == null || _adv.getMainAdvList() == null) return;
+        if (_adv == null || _adv.getMainAdvList() == null || isRefresh) return;
         images.clear();
         for (int i = 0; i < _adv.getMainAdvList().size(); i++) {
             images.add(_adv.getMainAdvList().get(i).getAdvImg());
@@ -383,15 +368,12 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
 
     }
 
-    void showType() {
-
-        String text = homeApi.getTypeFromServer(userSex, new CallBackApi() {
+    void getType(int classify, final Boolean isRefresh) {
+        List datalist = homeApi.getTypeFromServer(classify, new CallBackListApi() {
             @Override
-            public void onSuccess(String result) {
-                List<ShopType> datas = new Gson().fromJson(result, new TypeToken<List<ShopType>>() {
-                }.getType());
+            public void onSuccess(List o) {
                 shopTypes.clear();
-                shopTypes.addAll(datas);
+                shopTypes.addAll(o);
                 homeBtnsAdapter.notifyDataSetChanged();
 
             }
@@ -402,17 +384,20 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
             }
         });
 
-        //先显示本地
-        if (text != "" || text != null) {
-            List<ShopType> datas = new Gson().fromJson(text, new TypeToken<List<ShopType>>() {
-            }.getType());
-            shopTypes.clear();
-            shopTypes.addAll(datas);
-            homeBtnsAdapter.notifyDataSetChanged();
-        }
+        if (datalist == null || datalist.size() == 0 || isRefresh) return;
+        shopTypes.clear();
+        shopTypes.addAll(datalist);
+        homeBtnsAdapter.notifyDataSetChanged();
 
     }
 
+    void onLoadData() {
+        getGoodsList(1, false, false);
+        getAdv(false);
+        getType(2, false);
+        getHot(false);
+        Log.d(TAG, "onLoadOnce: 数据加载完毕");
+    }
 
     //下拉刷新
     void onDataRefresh() {
@@ -421,80 +406,18 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
         }
 
         //按钮组
-        homeApi.getTypeFromServer(userSex, new CallBackApi() {
-            @Override
-            public void onSuccess(String result) {
-                List<ShopType> datas = new Gson().fromJson(result, new TypeToken<List<ShopType>>() {
-                }.getType());
-                shopTypes.clear();
-                shopTypes.addAll(datas);
-                homeBtnsAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
+        getType(2, true);
 
         //轮播
-        homeApi.getAdvFromServer(userSex, new CallBackDataApi() {
-            @Override
-            public void onSuccess(Object o) {
-                final Adv adv = (Adv) o;
-                if (adv == null || adv.getMainAdvList() == null) return;
-                images.clear();
-                for (int i = 0; i < adv.getMainAdvList().size(); i++) {
-                    images.add(adv.getMainAdvList().get(i).getAdvImg());
-                }
-                //设置图片集合
-                banner.update(images);
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-
+        getAdv(true);
 
         //热门
-        homeApi.getHotFromServer(1, userSex, new CallBackApi() {
-            @Override
-            public void onSuccess(String result) {
-                HotGoods datas = new Gson().fromJson(result, HotGoods.class);
-                home_hot_desc_1.setText(datas.getRankingName());
-                home_hot_desc_2.setText(datas.getTodFaddish());
-                home_hot_desc_3.setText(datas.getTodUpdate());
-                x.image().bind(home_hot_img_1, datas.getRankingImg());
-                x.image().bind(home_hot_img_2, datas.getTodFaddishImg());
-                x.image().bind(home_hot_img_3, datas.getTodUpdateImg());
-
-            }
-
-            @Override
-            public void onFinished() {
-                currentHotPage = 1;
-            }
-        });
+        getHot(true);
 
         //商品
-        homeApi.getGoodsFromServer(1, userSex, new CallBackApi() {
-            @Override
-            public void onSuccess(String result) {
-                List<Shop> datas = new Gson().fromJson(result, new TypeToken<List<Shop>>() {
-                }.getType());
-                shoplistDatas.clear();
-                shoplistDatas.addAll(datas);
-                home_adapter.notifyDataSetChanged();
-            }
+        getGoodsList(1, true, false);
 
-            @Override
-            public void onFinished() {
-                currentPage = 1;
-                layout_refresh.setRefreshing(false);
-            }
-        });
+
     }
 
 

@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by AFeng on 2018/5/10.
@@ -77,7 +79,7 @@ public class GoodsDetailV2Adapter extends RecyclerView.Adapter<RecyclerView.View
                 }
             }
         } catch (Exception e) {
-
+            Log.e("error", "setBannerImgUrl: " + e.getMessage());
         }
     }
 

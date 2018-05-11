@@ -1,7 +1,5 @@
 package com.xuri.sqfanli.ui.activity;
 
-import android.support.v4.view.ViewPager;
-
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -11,12 +9,9 @@ import com.xuri.sqfanli.ui.base.BaseFragment;
 import com.xuri.sqfanli.ui.base.BaseFragmentActivity;
 import com.xuri.sqfanli.ui.fragment.Fragment2;
 import com.xuri.sqfanli.ui.fragment.Fragment3;
-import com.xuri.sqfanli.ui.fragment.HomeFragment;
 import com.xuri.sqfanli.ui.fragment.HomeV2Fragment;
 import com.xuri.sqfanli.ui.fragment.MyFragment;
 import com.xuri.sqfanli.view.NoScrollViewPager;
-
-import android.transition.Explode;
 
 import org.xutils.view.annotation.ViewInject;
 
@@ -56,7 +51,7 @@ public class MainActivity extends BaseFragmentActivity {
     @Override
     public void initView() {
 
-       super.initAnim(AnimType.explode);
+        super.initAnim(AnimType.explode);
         initBar();
         initTab();
 
@@ -70,31 +65,12 @@ public class MainActivity extends BaseFragmentActivity {
             mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));
         }
 
-//        views.add(new HomeFragment());
         views.add(new HomeV2Fragment());
         views.add(new Fragment2());
         views.add(new Fragment3());
         views.add(new MyFragment());
-
+        mViewPager.setOffscreenPageLimit(4); //允许保留的页面，防止首页被重绘
         mViewPager.setAdapter(new MainTabAdapter(getSupportFragmentManager(), views, mTitles));
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                commonTabLayout.setCurrentTab(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
         commonTabLayout.setTabData(mTabEntities);
         commonTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override

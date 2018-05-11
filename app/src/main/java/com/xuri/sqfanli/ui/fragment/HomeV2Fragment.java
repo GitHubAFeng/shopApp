@@ -8,14 +8,12 @@ import android.view.View;
 import android.view.animation.TranslateAnimation;
 
 import com.flyco.tablayout.SlidingTabLayout;
-import com.flyco.tablayout.listener.OnTabSelectListener;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.xuri.sqfanli.R;
 import com.xuri.sqfanli.adapter.HomeViewPagerAdapter;
 import com.xuri.sqfanli.api.HomeApi;
 import com.xuri.sqfanli.api.UserApi;
 import com.xuri.sqfanli.api.base.CallBackApi;
+import com.xuri.sqfanli.api.base.CallBackListApi;
 import com.xuri.sqfanli.bean.ShopType;
 import com.xuri.sqfanli.event.MessageEvent;
 import com.xuri.sqfanli.ui.base.BaseFragment;
@@ -36,7 +34,6 @@ import java.util.List;
 public class HomeV2Fragment extends BaseFragment {
 
     HomeViewPagerAdapter adapterHomeViewPager;
-    int userSex = 1; //男1  女2
     int left = 0;  //tab的x坐标
     int top = 0;   //tab的y坐标
     HomeApi homeApi = new HomeApi();
@@ -61,7 +58,7 @@ public class HomeV2Fragment extends BaseFragment {
     @Override
     public void initView(Bundle savedInstanceState) {
         initViewPager();
-        appUpdateUser();
+        Log.d(TAG, "initView: ");
     }
 
     //滑动页面
@@ -72,18 +69,6 @@ public class HomeV2Fragment extends BaseFragment {
         adapterHomeViewPager = new HomeViewPagerAdapter(getFragmentManager(), mViewPagerFragments, mViewPagerTitles);
         mMainViewPager.setAdapter(adapterHomeViewPager);
         mMainTabLayout.setViewPager(mMainViewPager);
-        mMainTabLayout.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-
-
-            }
-
-            @Override
-            public void onTabReselect(int position) {
-
-            }
-        });
         mMainViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -107,32 +92,15 @@ public class HomeV2Fragment extends BaseFragment {
         });
         mMainViewPager.setCurrentItem(0);
 
-        showViewPager();
+        getVpData();
 
     }
 
-    void showViewPager() {
-
-        String text = homeApi.getGoodsTypeFromServer(userSex, new CallBackApi() {
+    void getVpData() {
+        List datalist = homeApi.getTypeFromServer(1, new CallBackListApi() {
             @Override
-            public void onSuccess(String result) {
-                List<ShopType> data = new Gson().fromJson(result, new TypeToken<List<ShopType>>() {
-                }.getType());
-                mViewPagerTitles.clear();
-                mViewPagerFragments.clear();
-                if (data == null) return;
-                for (int i = 0; i < data.size(); i++) {
-                    mViewPagerTitles.add(data.get(i).getName());
-                    if (i == 0) {
-//                        mViewPagerFragments.add(new HomeGoodsListFragment());
-                        mViewPagerFragments.add(new HomeGoodsListV2Fragment());
-                    } else {
-                        mViewPagerFragments.add(new GoodsListFragment());
-                    }
-                }
-                adapterHomeViewPager.notifyDataSetChanged();
-                mMainTabLayout.setViewPager(mMainViewPager);
-
+            public void onSuccess(List o) {
+                setVpData(o);
             }
 
             @Override
@@ -141,28 +109,24 @@ public class HomeV2Fragment extends BaseFragment {
             }
         });
 
+        setVpData(datalist);
 
-        //先显示本地
-        if (text != "" || text != null) {
-            List<ShopType> data = new Gson().fromJson(text, new TypeToken<List<ShopType>>() {
-            }.getType());
-            mViewPagerTitles.clear();
-            mViewPagerFragments.clear();
-            if (data == null) return;
-            for (int i = 0; i < data.size(); i++) {
-                mViewPagerTitles.add(data.get(i).getName());
-                if (i == 0) {
-//                    mViewPagerFragments.add(new HomeGoodsListFragment());
-                    mViewPagerFragments.add(new HomeGoodsListV2Fragment());
-                } else {
-                    mViewPagerFragments.add(new GoodsListFragment());
-                }
-            }
-            adapterHomeViewPager.notifyDataSetChanged();
-            mMainTabLayout.setViewPager(mMainViewPager);
+    }
 
+    void setVpData(List o) {
+        if (o == null || o.size() == 0) return;
+        ArrayList<ShopType> data = (ArrayList<ShopType>) o;
+
+        mViewPagerTitles.clear();
+        mViewPagerFragments.clear();
+        mViewPagerTitles.add("首页");
+        mViewPagerFragments.add(new HomeGoodsListV2Fragment());
+        for (int i = 0; i < data.size(); i++) {
+            mViewPagerTitles.add(data.get(i).getName());
+            mViewPagerFragments.add(GoodsListFragment.newInstance(data.get(i).getId()));
         }
-
+        adapterHomeViewPager.notifyDataSetChanged();
+        mMainTabLayout.setViewPager(mMainViewPager);
     }
 
     void showTabAnim() {
@@ -187,7 +151,7 @@ public class HomeV2Fragment extends BaseFragment {
     }
 
 
-    //事件侦听
+
     @Override
     public void onStart() {
         super.onStart();
@@ -200,6 +164,7 @@ public class HomeV2Fragment extends BaseFragment {
         EventBus.getDefault().unregister(this);
     }
 
+    //动画事件侦听
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
         if (event.getMessage().equals("VISIBLE")) {

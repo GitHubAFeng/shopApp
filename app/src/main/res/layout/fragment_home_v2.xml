@@ -88,19 +88,19 @@
         <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/main_tab"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="40dp"
             android:background="#FFF"
             android:visibility="gone"
             app:tl_indicator_anim_enable="true"
             app:tl_indicator_bounce_enable="true"
             app:tl_indicator_color="#FF5E6F"
             app:tl_indicator_height="1dp"
-            app:tl_indicator_width="10dp"
+            app:tl_indicator_width_equal_title="true"
             app:tl_textAllCaps="true"
             app:tl_textBold="BOTH"
             app:tl_textSelectColor="#FF5E6F"
             app:tl_textUnselectColor="#0D0D0D"
-            app:tl_textsize="10sp" />
+            app:tl_textsize="14sp" />
 
         <!--商品内容导航条-->
         <android.support.v4.view.ViewPager

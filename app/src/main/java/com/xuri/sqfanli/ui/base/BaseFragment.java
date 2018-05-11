@@ -23,7 +23,7 @@ public abstract class BaseFragment extends Fragment {
     public Context context;
     public View view;
     public LayoutInflater inflater;
-    protected boolean mIsLoadedData = false;
+    protected boolean isVisible = false;
 
 
     @Override
@@ -73,64 +73,34 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isResumed()) {
-            handleOnVisibilityChangedToUser(isVisibleToUser);
+        if (isVisibleToUser) {
+            isVisible = true;
+            onVisible();
+        } else {
+            isVisible = false;
+            onInvisible();
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getUserVisibleHint()) {
-            handleOnVisibilityChangedToUser(true);
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (getUserVisibleHint()) {
-            handleOnVisibilityChangedToUser(false);
-        }
-    }
 
     /**
      * 处理对用户是否可见
-     *
-     * @param isVisibleToUser
      */
-    private void handleOnVisibilityChangedToUser(boolean isVisibleToUser) {
-        if (isVisibleToUser) {
-            // 对用户可见
-            if (!mIsLoadedData) {
-                mIsLoadedData = true;
-                onLazyLoadOnce();
-            }
-            onVisibleToUser();
-        } else {
-            // 对用户不可见
-            onInvisibleToUser();
-        }
-    }
-
-    /**
-     * 懒加载一次。如果只想在对用户可见时才加载数据，并且只加载一次数据，在子类中重写该方法
-     */
-    protected void onLazyLoadOnce() {
-
-    }
-
-    /**
-     * 对用户可见时触发该方法。如果只想在对用户可见时才加载数据，在子类中重写该方法
-     */
-    protected void onVisibleToUser() {
-
+    private void onVisible() {
+        onLazyLoad();
     }
 
     /**
      * 对用户不可见时触发该方法
      */
-    protected void onInvisibleToUser() {
+    protected void onInvisible() {
+
+    }
+
+    /**
+     * 懒加载，需要保证页面控件绘制已经完成
+     */
+    protected void onLazyLoad() {
 
     }
 
