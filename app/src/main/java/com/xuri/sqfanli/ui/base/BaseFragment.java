@@ -26,15 +26,6 @@ public abstract class BaseFragment extends Fragment {
     protected boolean isVisible = false;
 
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        context = getActivity();
-        inflater = LayoutInflater.from(context);
-        TAG = this.getClass().getSimpleName();
-    }
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,6 +47,15 @@ public abstract class BaseFragment extends Fragment {
         MobclickAgent.onEvent(context, class_);
 
         return view;
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        context = getActivity();
+        inflater = LayoutInflater.from(context);
+        TAG = this.getClass().getSimpleName();
     }
 
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
+import com.xuri.sqfanli.util.PicassoHelper;
 import com.youth.banner.loader.ImageLoader;
 
 import org.xutils.x;
@@ -22,7 +23,8 @@ public class xImageLoader extends com.youth.banner.loader.ImageLoader {
             return;
         }
 //        x.image().bind(imageView,url);
-        Picasso.with(context).load(url).into(imageView);
+//        Picasso.with(context).load(url).into(imageView);
+        PicassoHelper.showImageByPicassoFixXY(context, imageView, url);
     }
 
 }

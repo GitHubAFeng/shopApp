@@ -2,16 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <!--轮播-->
-    <com.youth.banner.Banner
-        android:id="@+id/banner"
-        android:layout_width="wrap_content"
-        android:layout_height="240dp"
-        app:image_scale_type="fit_xy"
-        app:indicator_drawable_selected="@drawable/indicator_drawable_selected" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#dddddd">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_imagePages"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp250" />
+            <!--指示点-->
+            <LinearLayout
+                android:id="@+id/ll_pointGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dp8"
+                android:paddingRight="@dimen/dp5" />
+        </RelativeLayout>
+    </FrameLayout>
 
 
     <LinearLayout
@@ -42,12 +62,12 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:ellipsize="end"
-            android:textSize="14sp"
+            android:gravity="center_vertical"
             android:lines="1"
             android:text="标题"
-            android:textStyle="bold"
-            android:gravity="center_vertical"
-            android:textColor="#444" />
+            android:textColor="#444"
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 

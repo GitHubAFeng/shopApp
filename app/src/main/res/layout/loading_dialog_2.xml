@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+
+        android:layout_width="@dimen/dp260"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/copy_raudio_white_bg"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp15"
+            android:text="即将前往"
+
+            android:textColor="#404040"
+            android:textSize="@dimen/sp14" />
+
+
+        <ImageView
+            android:id="@+id/logo_taobao"
+            android:layout_width="@dimen/dp75"
+            android:layout_height="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp15"
+            android:background="@drawable/load_taobao_title" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp2"
+
+            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginBottom="@dimen/dp15"
+            android:layout_marginLeft="@dimen/dp10"
+            android:layout_marginRight="@dimen/dp10"
+            android:background="#F8F8F8"
+            android:textColor="#FF9522" />
+
+
+        <RelativeLayout
+            android:layout_width="@dimen/dp237"
+            android:layout_height="@dimen/dp157"
+            android:layout_marginBottom="@dimen/dp20"
+            android:background="@drawable/t0"
+            android:orientation="vertical">
+
+            <ImageView
+            android:id="@+id/seach_go"
+            android:layout_width="@dimen/dp140"
+            android:layout_height="@dimen/dp140"
+                android:layout_centerInParent="true"
+            android:background="@drawable/t1"
+            android:gravity="center" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textColor="#373737"
+            android:text="小贴士：购物后记得返回哦~"
+            android:layout_marginBottom="@dimen/dp10"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

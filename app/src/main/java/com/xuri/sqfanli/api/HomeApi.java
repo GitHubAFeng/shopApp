@@ -1,5 +1,7 @@
 package com.xuri.sqfanli.api;
 
+import android.util.Log;
+
 import com.google.gson.reflect.TypeToken;
 import com.xuri.sqfanli.Constant;
 import com.xuri.sqfanli.api.base.BaseApi;
@@ -15,6 +17,7 @@ import com.xuri.sqfanli.util.SettingConfig;
 
 import org.xutils.http.RequestParams;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -164,12 +167,15 @@ public class HomeApi extends BaseApi {
         params.addParameter("shop.ctype", shoptype);
         params.addParameter("shop.collectUserId", userid);
         params.addParameter("sex", sex);
+
         if (paramlist != null && paramlist.size() > 0) {
             String params_key, params_value;
             for (int i = 0; i < paramlist.size(); i++) {
                 params_key = paramlist.get(i).get("name");
                 params_value = paramlist.get(i).get("value");
                 params.addParameter(params_key, params_value);
+                Log.d("getGoodsList", "getGoodsList: "+params_key);
+                Log.d("getGoodsList", "getGoodsList: "+params_value);
             }
         }
         return super.HttpPost(params, key, new TypeToken<List<Shop>>() {

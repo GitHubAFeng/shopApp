@@ -69,20 +69,6 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
         if (shop == null) return;
         goodsDetailV2Adapter.setShopData(shop);
 
-        goodsApi.getBannerFromServer(shop.getItemid(), new CallBackDataApi() {
-            @Override
-            public void onSuccess(Object o) {
-                MessageVo data = (MessageVo) o;
-                goodsDetailV2Adapter.setBannerImgUrl(data.getMessage());
-                goodsDetailV2Adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-
         goodsApi.getTuPingFromServer(shop.getItemid(), new CallBackListApi() {
             @Override
             public void onSuccess(List o) {

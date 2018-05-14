@@ -5,5 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="refresh_layout_color">#f85725</color>
     <color name="white">#ffffffff</color>
+    <color name="black">#ff000000</color>
 
 </resources>

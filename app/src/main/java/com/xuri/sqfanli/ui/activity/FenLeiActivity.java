@@ -1,14 +1,10 @@
-package com.xuri.sqfanli.ui.fragment;
+package com.xuri.sqfanli.ui.activity;
 
 import android.app.AlertDialog;
 import android.graphics.Color;
-import android.graphics.Rect;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -16,18 +12,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.xuri.sqfanli.R;
-import com.xuri.sqfanli.adapter.GoodsFenLeiAdapter;
-import com.xuri.sqfanli.api.HomeApi;
+import com.xuri.sqfanli.adapter.FenLeiAdapter;
+import com.xuri.sqfanli.api.GoodsApi;
 import com.xuri.sqfanli.api.base.CallBackListApi;
 import com.xuri.sqfanli.bean.ShaiXuanBean;
 import com.xuri.sqfanli.bean.Shop;
-import com.xuri.sqfanli.bean.ShopType;
 import com.xuri.sqfanli.event.OnLoadMoreListener;
 import com.xuri.sqfanli.event.OnShaiXuanListener;
-import com.xuri.sqfanli.event.OnShaixuanBtnClickListener;
-import com.xuri.sqfanli.ui.base.BaseFragment;
-import com.xuri.sqfanli.util.CommonMethod;
+import com.xuri.sqfanli.ui.base.BaseFragmentActivity;
+import com.xuri.sqfanli.view.LoadingDialog_logo_1;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xutils.view.annotation.ViewInject;
@@ -38,94 +33,71 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by AFeng on 2018/4/26.
- * 首页
+ * Created by AFeng on 2018/5/14.
+ * 子分类页面
  */
 
-public class GoodsListFragment extends BaseFragment {
+public class FenLeiActivity extends BaseFragmentActivity {
 
-    GoodsFenLeiAdapter goodsFenLeiAdapter;
-    OnShaiXuanListener onShaiXuanListener;
-    boolean isLoading = false;
-    int currentPage = 1; //当前页数
+
+    GoodsApi goodsApi;
+    FenLeiAdapter adapter;
     ArrayList<Shop> shoplistDatas = new ArrayList<Shop>();   //下拉列表里面的商品数据
-    ArrayList<ShopType> shopTypes = new ArrayList<ShopType>(); //按钮组数据
-
-    int scrollY = 0; //用于向上按钮
-    int shaixuanLayoutY;//筛选header控件滑动的高度
-    HomeApi homeApi = new HomeApi();
-
-    String goodsType; //商品分类
-    String jiagebiaoqian = "";
+    OnShaiXuanListener onShaiXuanListener;
+    int scrollY = 0;
     List<Map<String, String>> shaixuantiaojian = new ArrayList<Map<String, String>>();
-    String shaixuantiaojianStr = "";
+    int dangqianyeshu = 1;
+    private String jiagebiaoqian = "";
+    private String shaixuantiaojianStr = "";
+    private String fenleiKeyword = ""; //关键词
+    String fenlei = "", fenleiId = "";
 
-    @ViewInject(R.id.shaixuan_root_layout)
-    LinearLayout mShaixuanLayout;
 
-    @ViewInject(R.id.layout_refresh)
-    SwipeRefreshLayout layout_refresh;
     @ViewInject(R.id.rv)
-    private RecyclerView rv;
+    RecyclerView rv;
+    boolean isLoading = false;
+    @ViewInject(R.id.title_name_tv)
+    TextView tv_title;
+    boolean isFirstResume = true;
     @ViewInject(R.id.layout_loadMore)
     LinearLayout layout_loadMore;
     @ViewInject(R.id.iv_xiangshang)
     ImageView iv_xiangshang;
-
+    @ViewInject(R.id.layout_refresh)
+    SwipeRefreshLayout layout_refresh;
     @ViewInject(R.id.layout_jiage)
-    LinearLayout layout_jiage;
+    private LinearLayout layout_jiage;
     @ViewInject(R.id.layout_shaixuan)
-    LinearLayout layout_shaixuan;
+    private LinearLayout layout_shaixuan;
     @ViewInject(R.id.iv_jiage)
-    ImageView iv_jiage;
+    private ImageView iv_jiage;
     @ViewInject(R.id.tv_zonghe)
-    TextView tv_zonghe;
+    private TextView tv_zonghe;
     @ViewInject(R.id.tv_xiaoliang)
-    TextView tv_xiaoliang;
+    private TextView tv_xiaoliang;
     @ViewInject(R.id.tv_jiage)
-    TextView tv_jiage;
+    private TextView tv_jiage;
     @ViewInject(R.id.tv_shaixuan)
-    TextView tv_shaixuan;
+    private TextView tv_shaixuan;
 
-
-    public static GoodsListFragment newInstance(String gt) {
-        Bundle args = new Bundle();
-        args.putString("goodsType", gt);
-        GoodsListFragment goodsListFragment = new GoodsListFragment();
-        goodsListFragment.setArguments(args);
-        return goodsListFragment;
-    }
 
     @Override
     public int getLayoutRes() {
-        return R.layout.f_huaqian;
+        return R.layout.a_fenlei_parent;
     }
+
 
     @Override
-    public void initView(Bundle savedInstanceState) {
-        if (getArguments() != null) {
-            goodsType = getArguments().getString("goodsType");
+    public void initView() {
+        if (goodsApi == null) {
+            goodsApi = new GoodsApi();
         }
 
-        initPage();
-        loadData();
-    }
-
-
-    void initPage() {
-//        MobclickAgent.onEvent(context, "huaqian");//改成分类
-
-        layout_loadMore.setVisibility(View.GONE);
-        iv_xiangshang.setVisibility(View.GONE);//向上按钮，默认隐藏
-        iv_xiangshang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rv.smoothScrollToPosition(0);
-            }
-        });
+        //子分类
+        String shifouzifenlei = getIntent().getStringExtra("shifouzifenlei");
 
         //刷新
-        layout_refresh.setColorSchemeColors(getResources().getColor(R.color.refresh_layout_color));
+        layout_refresh.setColorSchemeColors(Color.parseColor("#f85725"));
         layout_refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -133,15 +105,21 @@ public class GoodsListFragment extends BaseFragment {
             }
         });
 
-        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                int[] location = new int[2];
-                mShaixuanLayout.getLocationOnScreen(location);
-                shaixuanLayoutY = location[1];
-            }
+        layout_loadMore.setVisibility(View.GONE);
+        fenlei = getIntent().getStringExtra("fenlei");
+        fenleiId = getIntent().getStringExtra("fenleiId");
+        fenleiKeyword = getIntent().getStringExtra("fenleiKeyword");
+        MobclickAgent.onEvent(context, "fenlei" + fenleiId);
 
+        //向上按钮
+        iv_xiangshang.setVisibility(View.GONE);//向上按钮，默认隐藏
+        iv_xiangshang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                rv.smoothScrollToPosition(0);
+            }
+        });
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -151,49 +129,45 @@ public class GoodsListFragment extends BaseFragment {
                 } else {
                     iv_xiangshang.setVisibility(View.GONE);
                 }
-
-                int getTop = CommonMethod.getDistanceY(goodsFenLeiAdapter.getHeaderView());
-                if (getTop <= shaixuanLayoutY) {
-                    mShaixuanLayout.setVisibility(View.VISIBLE);
-                } else {
-                    mShaixuanLayout.setY(0);
-                    mShaixuanLayout.setVisibility(View.GONE);
-                }
             }
+
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                int[] location = new int[2];
+//                mShaixuanLayout.getLocationOnScreen(location);
+//                shaixuanLayoutY = location[1];
+//            }
         });
 
-        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
-        //第一行1列，其他2列
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                return position == 0 ? 2 : 1;
-            }
-        });
+        //页面标题
+        tv_title.setText(fenlei);
 
+
+        adapter = new FenLeiAdapter(context);
+        GridLayoutManager layoutManager = new GridLayoutManager(context, 2);
         rv.setLayoutManager(layoutManager);
-        goodsFenLeiAdapter = new GoodsFenLeiAdapter(getContext());
-        goodsFenLeiAdapter.setData_headerLayout(R.layout.header_huaqian_fenlei);
-        goodsFenLeiAdapter.setShopTypes(shopTypes);
-        goodsFenLeiAdapter.setShoplistDatas(shoplistDatas);
-        goodsFenLeiAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
+
+        adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void OnLoadMore() {
 
                 if (!isLoading) {
                     isLoading = true;
                     layout_loadMore.setVisibility(View.VISIBLE);
-                    currentPage = currentPage + 1;
-                    getGoodsList(currentPage, false, true);
+                    dangqianyeshu = dangqianyeshu + 1;
+                    getGoodsList(dangqianyeshu, false, true);
 
                 }
 
             }
         });
 
-        //筛选
+        adapter.setData_fenlei(fenlei);
+        adapter.setData_shifouzifenlei(shifouzifenlei);
 
-        goodsFenLeiAdapter.setOnShaiXuanListener(new OnShaiXuanListener() {
+//筛选
+        adapter.setOnShaiXuanListener(new OnShaiXuanListener() {
             @Override
             public void call(String text, ShaiXuanBean shaiXuanBean) {
                 shaixuantiaojian = new ArrayList<Map<String, String>>();
@@ -218,7 +192,7 @@ public class GoodsListFragment extends BaseFragment {
                     map1.put("value", "4");
                     shaixuantiaojian.add(map1);
                 } else {
-                    //筛选里面的
+                    //,shangjia_tianmao,,zhekou2,,zuidijia12,,zuigaojia33,
                     if (text.contains("shangjia_tianmao")) {
                         Map<String, String> map1 = new HashMap<String, String>();
                         map1.put("name", "shop.shoptype");
@@ -248,10 +222,9 @@ public class GoodsListFragment extends BaseFragment {
 
 //                    String zuidijia = StringUtils.substringBetween(text, "zuidijia", ",");
 //                    String zuigaojia = StringUtils.substringBetween(text, "zuigaojia", ",");
+
                     String zuidijia = shaiXuanBean != null ? shaiXuanBean.getZuidijia() : "";
                     String zuigaojia = shaiXuanBean != null ? shaiXuanBean.getZuigaojia() : "";
-
-                    Log.d(TAG, "call: " + zuidijia);
 
                     if (!zuidijia.equals("")) {
                         Map<String, String> map1 = new HashMap<String, String>();
@@ -272,77 +245,39 @@ public class GoodsListFragment extends BaseFragment {
             }
         });
 
-        rv.setAdapter(goodsFenLeiAdapter);
-        rv.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.bottom = 1;
-            }
-        });
-
-
-        goodsFenLeiAdapter.setOnShaixuanBtnClickListener(new OnShaixuanBtnClickListener() {
-            @Override
-            public void onShaixuanBtnClick(View view, String keyText) {
-                if (!TextUtils.isEmpty(keyText)) {
-                    if (keyText.equals("zonghe")) {
-                        iv_jiage.setImageResource(R.drawable.ic_result_disable);
-                        tv_zonghe.setTextColor(Color.parseColor("#ff6742"));
-                        tv_xiaoliang.setTextColor(Color.parseColor("#555555"));
-                        tv_jiage.setTextColor(Color.parseColor("#555555"));
-                        tv_shaixuan.setTextColor(Color.parseColor("#555555"));
-
-                    } else if (keyText.equals("xiaoliang")) {
-                        iv_jiage.setImageResource(R.drawable.ic_result_disable);
-                        tv_zonghe.setTextColor(Color.parseColor("#555555"));
-                        tv_xiaoliang.setTextColor(Color.parseColor("#ff6742"));
-                        tv_jiage.setTextColor(Color.parseColor("#555555"));
-                        tv_shaixuan.setTextColor(Color.parseColor("#555555"));
-
-                    } else if (keyText.equals("jiage-di")) {
-                        iv_jiage.setImageResource(R.drawable.ic_result_down);
-                        tv_zonghe.setTextColor(Color.parseColor("#555555"));
-                        tv_xiaoliang.setTextColor(Color.parseColor("#555555"));
-                        tv_jiage.setTextColor(Color.parseColor("#ff6742"));
-                        tv_shaixuan.setTextColor(Color.parseColor("#555555"));
-
-                    } else if (keyText.equals("jiage-gao")) {
-                        iv_jiage.setImageResource(R.drawable.ic_result_up);
-                        tv_zonghe.setTextColor(Color.parseColor("#555555"));
-                        tv_xiaoliang.setTextColor(Color.parseColor("#555555"));
-                        tv_jiage.setTextColor(Color.parseColor("#ff6742"));
-                        tv_shaixuan.setTextColor(Color.parseColor("#555555"));
-
-                    } else if (keyText.equals("shaixuan")) {
-                        iv_jiage.setImageResource(R.drawable.ic_result_disable);
-                        tv_zonghe.setTextColor(Color.parseColor("#555555"));
-                        tv_xiaoliang.setTextColor(Color.parseColor("#555555"));
-                        tv_jiage.setTextColor(Color.parseColor("#555555"));
-                        tv_shaixuan.setTextColor(Color.parseColor("#ff6742"));
-
-                    }
-                }
-            }
-        });
-
+        rv.setAdapter(adapter);
 
         shaixuanLayoutOnClick();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        MobclickAgent.onPageStart("fenlei" + fenleiId);
+
+        isFirstResume = false;
+        LoadingDialog_logo_1.close();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("fenlei" + fenleiId);
     }
 
 
     //商品列表
     void getGoodsList(int page, final Boolean isRefresh, final Boolean isLoadMore) {
-        List listdata = homeApi.getGoodsFromServer(page, goodsType, shaixuantiaojian, new CallBackListApi() {
+        List listdata = goodsApi.getGoodsFromServer(page, fenleiId, fenleiKeyword, shaixuantiaojian, new CallBackListApi() {
             @Override
             public void onSuccess(List o) {
                 if (isLoadMore) {
-                    goodsFenLeiAdapter.loadMore((ArrayList<Shop>) o);
+                    adapter.loadMore((ArrayList<Shop>) o);
                 } else {
                     shoplistDatas.addAll(o);
                 }
-                goodsFenLeiAdapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -362,57 +297,7 @@ public class GoodsListFragment extends BaseFragment {
             return;
         shoplistDatas.clear();
         shoplistDatas.addAll(listdata);
-        goodsFenLeiAdapter.notifyDataSetChanged();
-    }
-
-    void getType(int classify, final Boolean isRefresh) {
-        List datalist = homeApi.getTypeFromServer(classify, new CallBackListApi() {
-            @Override
-            public void onSuccess(List o) {
-                if (o == null || o.size() == 0) return;
-                ArrayList<ShopType> data = (ArrayList<ShopType>) o;
-                shopTypes.clear();
-                for (int i = 0; i < data.size(); i++) {
-                    if (data.get(i).getId().equals(goodsType)) {
-                        shopTypes.addAll(data.get(i).getList());
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
-
-        if (datalist == null || datalist.size() == 0 || isRefresh) return;
-        ArrayList<ShopType> data = (ArrayList<ShopType>) datalist;
-        shopTypes.clear();
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).getId().equals(goodsType)) {
-                shopTypes.addAll(data.get(i).getList());
-                break;
-            }
-        }
-    }
-
-    void loadData() {
-        getGoodsList(1, false, false);
-        getType(1, false);
-    }
-
-    //下拉刷新
-    void onDataRefresh() {
-        if (!layout_refresh.isRefreshing()) {
-            layout_refresh.setRefreshing(true);
-        }
-
-        getType(1, true);
-
-
-        getGoodsList(1, true, false);
-
+        adapter.notifyDataSetChanged();
     }
 
 
@@ -420,7 +305,7 @@ public class GoodsListFragment extends BaseFragment {
      * 价格、筛选header控件里面的按钮操作方法
      */
     public void shaixuanLayoutOnClick() {
-        onShaiXuanListener = goodsFenLeiAdapter.getOnShaiXuanListener();
+        onShaiXuanListener = adapter.getOnShaiXuanListener();
 
         //综合
         tv_zonghe.setOnClickListener(new View.OnClickListener() {
@@ -434,7 +319,6 @@ public class GoodsListFragment extends BaseFragment {
                 tv_jiage.setTextColor(Color.parseColor("#555555"));
                 tv_shaixuan.setTextColor(Color.parseColor("#555555"));
                 rv.smoothScrollToPosition(0);
-                goodsFenLeiAdapter.setHighLightKey("zonghe");
             }
         });
 
@@ -450,7 +334,6 @@ public class GoodsListFragment extends BaseFragment {
                 tv_jiage.setTextColor(Color.parseColor("#555555"));
                 tv_shaixuan.setTextColor(Color.parseColor("#555555"));
                 rv.smoothScrollToPosition(0);
-                goodsFenLeiAdapter.setHighLightKey("xiaoliang");
             }
         });
 
@@ -462,12 +345,10 @@ public class GoodsListFragment extends BaseFragment {
                     onShaiXuanListener.call("jiage-di", null);
                     jiagebiaoqian = "di";
                     iv_jiage.setImageResource(R.drawable.ic_result_down);
-                    goodsFenLeiAdapter.setHighLightKey("jiage-di");
                 } else {
                     onShaiXuanListener.call("jiage-gao", null);
                     jiagebiaoqian = "gao";
                     iv_jiage.setImageResource(R.drawable.ic_result_up);
-                    goodsFenLeiAdapter.setHighLightKey("jiage-gao");
                 }
                 tv_zonghe.setTextColor(Color.parseColor("#555555"));
                 tv_xiaoliang.setTextColor(Color.parseColor("#555555"));
@@ -478,7 +359,7 @@ public class GoodsListFragment extends BaseFragment {
 
         });
 
-        //筛选按钮点击，初始化弹出层
+        //筛选
         layout_shaixuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -627,12 +508,14 @@ public class GoodsListFragment extends BaseFragment {
                     public void onClick(View view) {
                         shaixuantiaojianStr = shaixuantiaojianStr + ",zuidijia" + et_zuidijia.getText() + ",";
                         shaixuantiaojianStr = shaixuantiaojianStr + ",zuigaojia" + et_zuigaojia.getText() + ",";
+
                         String zuidijia = String.valueOf(et_zuidijia.getText());
                         String zuigaojia = String.valueOf(et_zuigaojia.getText());
                         ShaiXuanBean data = new ShaiXuanBean();
                         data.setZuidijia(zuidijia);
                         data.setZuigaojia(zuigaojia);
                         onShaiXuanListener.call("shaixuantiaojian", data);
+
                         dialog.cancel();
                         iv_jiage.setImageResource(R.drawable.ic_result_disable);
                         tv_zonghe.setTextColor(Color.parseColor("#555555"));
@@ -640,18 +523,25 @@ public class GoodsListFragment extends BaseFragment {
                         tv_jiage.setTextColor(Color.parseColor("#555555"));
                         tv_shaixuan.setTextColor(Color.parseColor("#ff6742"));
                         rv.smoothScrollToPosition(0);
-                        goodsFenLeiAdapter.setHighLightKey("shaixuan");
                     }
                 });
             }
         });
     }
 
+    public void finish(View view) {
+        finish();
+    }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        LoadingDialog_logo_1.close();
-//    }
+
+    //下拉刷新
+    void onDataRefresh() {
+        if (!layout_refresh.isRefreshing()) {
+            layout_refresh.setRefreshing(true);
+        }
+
+        getGoodsList(1, true, false);
+
+    }
 
 }

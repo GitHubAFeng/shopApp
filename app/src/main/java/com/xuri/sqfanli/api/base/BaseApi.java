@@ -29,32 +29,37 @@ public class BaseApi {
      * @return 返回本地缓存数据
      */
     public String HttpPost(RequestParams params, final String localDataKey, final CallBackApi callBackApi) {
-        String local_result = SettingConfig.getInstance().getStringPreference(localDataKey, "");
-        x.http().post(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                SettingConfig.getInstance().setStringPreference(localDataKey, result);
-                callBackApi.onSuccess(result);
-            }
+        try {
+            String local_result = SettingConfig.getInstance().getStringPreference(localDataKey, "");
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    SettingConfig.getInstance().setStringPreference(localDataKey, result);
+                    callBackApi.onSuccess(result);
+                }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                System.err.println("--------------onError:" + ex.getMessage());
-                Log.e("HttpPost", "onError: " + ex.getMessage());
-            }
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    System.err.println("--------------onError:" + ex.getMessage());
+                    Log.e("HttpPost", "onError: " + ex.getMessage());
+                }
 
-            @Override
-            public void onCancelled(CancelledException cex) {
+                @Override
+                public void onCancelled(CancelledException cex) {
 
-            }
+                }
 
-            @Override
-            public void onFinished() {
-                callBackApi.onFinished();
-            }
-        });
+                @Override
+                public void onFinished() {
+                    callBackApi.onFinished();
+                }
+            });
 
-        return local_result;
+            return local_result;
+        } catch (Exception e) {
+            Log.e("BaseApi", "HttpPost: " + e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -64,28 +69,33 @@ public class BaseApi {
      * @param callBackApi 网络请求数据回调
      */
     public void HttpPost(RequestParams params, final CallBackApi callBackApi) {
-        x.http().post(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                callBackApi.onSuccess(result);
-            }
+        try {
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    callBackApi.onSuccess(result);
+                }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                System.err.println("--------------onError:" + ex.getMessage());
-                Log.e("HttpPost", "onError: " + ex.getMessage());
-            }
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    System.err.println("--------------onError:" + ex.getMessage());
+                    Log.e("HttpPost", "onError: " + ex.getMessage());
+                }
 
-            @Override
-            public void onCancelled(CancelledException cex) {
+                @Override
+                public void onCancelled(CancelledException cex) {
 
-            }
+                }
 
-            @Override
-            public void onFinished() {
-                callBackApi.onFinished();
-            }
-        });
+                @Override
+                public void onFinished() {
+                    callBackApi.onFinished();
+                }
+            });
+        } catch (Exception e) {
+            Log.e("BaseApi", "HttpPost: " + e.getMessage());
+
+        }
     }
 
 
@@ -100,33 +110,39 @@ public class BaseApi {
      * @return 返回本地缓存数据
      */
     public <T> T HttpPost(RequestParams params, final String localDataKey, final Class<T> t, final CallBackDataApi callBackDataApi) {
-        String local_result = SettingConfig.getInstance().getStringPreference(localDataKey, "");
-        x.http().post(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                SettingConfig.getInstance().setStringPreference(localDataKey, result);
-                T target = new Gson().fromJson(result, t);
-                callBackDataApi.onSuccess(target);
-            }
+        try {
+            String local_result = SettingConfig.getInstance().getStringPreference(localDataKey, "");
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    SettingConfig.getInstance().setStringPreference(localDataKey, result);
+                    T target = new Gson().fromJson(result, t);
+                    callBackDataApi.onSuccess(target);
+                }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                System.err.println("--------------onError:" + ex.getMessage());
-                Log.e("HttpPost", "onError: " + ex.getMessage());
-            }
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    System.err.println("--------------onError:" + ex.getMessage());
+                    Log.e("HttpPost", "onError: " + ex.getMessage());
+                }
 
-            @Override
-            public void onCancelled(CancelledException cex) {
+                @Override
+                public void onCancelled(CancelledException cex) {
 
-            }
+                }
 
-            @Override
-            public void onFinished() {
-                callBackDataApi.onFinished();
-            }
-        });
+                @Override
+                public void onFinished() {
+                    callBackDataApi.onFinished();
+                }
+            });
 
-        return new Gson().fromJson(local_result, t);
+            return new Gson().fromJson(local_result, t);
+
+        } catch (Exception e) {
+            Log.e("BaseApi", "HttpPost: " + e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -138,29 +154,34 @@ public class BaseApi {
      * @param <T>             bean数据实体
      */
     public <T> void HttpPost(RequestParams params, final Class<T> t, final CallBackDataApi callBackDataApi) {
-        x.http().post(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                T target = new Gson().fromJson(result, t);
-                callBackDataApi.onSuccess(target);
-            }
+        try {
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    T target = new Gson().fromJson(result, t);
+                    callBackDataApi.onSuccess(target);
+                }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                System.err.println("--------------onError:" + ex.getMessage());
-                Log.e("HttpPost", "onError: " + ex.getMessage());
-            }
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    System.err.println("--------------onError:" + ex.getMessage());
+                    Log.e("HttpPost", "onError: " + ex.getMessage());
+                }
 
-            @Override
-            public void onCancelled(CancelledException cex) {
+                @Override
+                public void onCancelled(CancelledException cex) {
 
-            }
+                }
 
-            @Override
-            public void onFinished() {
-                callBackDataApi.onFinished();
-            }
-        });
+                @Override
+                public void onFinished() {
+                    callBackDataApi.onFinished();
+                }
+            });
+
+        } catch (Exception e) {
+            Log.e("BaseApi", "HttpPost: " + e.getMessage());
+        }
     }
 
 
@@ -174,33 +195,39 @@ public class BaseApi {
      * @return 返回本地缓存数据
      */
     public List HttpPost(RequestParams params, final String localDataKey, final Type typeOfT, final CallBackListApi callBackListApi) {
-        String local_result = SettingConfig.getInstance().getStringPreference(localDataKey, "");
-        x.http().post(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                SettingConfig.getInstance().setStringPreference(localDataKey, result);
-                List target = new Gson().fromJson(result, typeOfT);
-                callBackListApi.onSuccess(target);
-            }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                System.err.println("--------------onError:" + ex.getMessage());
-                Log.e("HttpPost", "onError: " + ex.getMessage());
-            }
+        try {
+            String local_result = SettingConfig.getInstance().getStringPreference(localDataKey, "");
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    SettingConfig.getInstance().setStringPreference(localDataKey, result);
+                    List target = new Gson().fromJson(result, typeOfT);
+                    callBackListApi.onSuccess(target);
+                }
 
-            @Override
-            public void onCancelled(CancelledException cex) {
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    System.err.println("--------------onError:" + ex.getMessage());
+                    Log.e("HttpPost", "onError: " + ex.getMessage());
+                }
 
-            }
+                @Override
+                public void onCancelled(CancelledException cex) {
 
-            @Override
-            public void onFinished() {
-                callBackListApi.onFinished();
-            }
-        });
+                }
 
-        return new Gson().fromJson(local_result, typeOfT);
+                @Override
+                public void onFinished() {
+                    callBackListApi.onFinished();
+                }
+            });
+            return new Gson().fromJson(local_result, typeOfT);
+
+        } catch (Exception e) {
+            Log.e("BaseApi", "HttpPost: " + e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -211,30 +238,34 @@ public class BaseApi {
      * @param callBackListApi 网络请求数据回调
      */
     public void HttpPost(RequestParams params, final Type typeOfT, final CallBackListApi callBackListApi) {
+        try {
+            x.http().post(params, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    List target = new Gson().fromJson(result, typeOfT);
+                    callBackListApi.onSuccess(target);
+                }
 
-        x.http().post(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                List target = new Gson().fromJson(result, typeOfT);
-                callBackListApi.onSuccess(target);
-            }
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+                    System.err.println("--------------onError:" + ex.getMessage());
+                    Log.e("HttpPost", "onError: " + ex.getMessage());
+                }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                System.err.println("--------------onError:" + ex.getMessage());
-                Log.e("HttpPost", "onError: " + ex.getMessage());
-            }
+                @Override
+                public void onCancelled(CancelledException cex) {
 
-            @Override
-            public void onCancelled(CancelledException cex) {
+                }
 
-            }
+                @Override
+                public void onFinished() {
+                    callBackListApi.onFinished();
+                }
+            });
 
-            @Override
-            public void onFinished() {
-                callBackListApi.onFinished();
-            }
-        });
+        } catch (Exception e) {
+            Log.e("BaseApi", "HttpPost: " + e.getMessage());
+        }
 
     }
 

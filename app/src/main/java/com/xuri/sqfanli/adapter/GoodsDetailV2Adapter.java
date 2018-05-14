@@ -6,16 +6,22 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.xuri.sqfanli.Constant;
 import com.xuri.sqfanli.R;
+import com.xuri.sqfanli.bean.MessageVo;
 import com.xuri.sqfanli.bean.Shop;
 import com.xuri.sqfanli.bean.ShopImg;
 import com.xuri.sqfanli.ui.activity.GoodsDetailActivity;
@@ -26,6 +32,10 @@ import com.xuri.sqfanli.view.xImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,10 +53,13 @@ public class GoodsDetailV2Adapter extends RecyclerView.Adapter<RecyclerView.View
     private Activity activity;
     private int screenWide = 0;
 
+    private GoodsDetailBanner adapter_lunbotu;
+
     private ArrayList<ShopImg> shopImgs;//商品详情图片
     private ArrayList<Shop> tuiJianList;   //尾部推荐商品
     Shop shop;
-    ArrayList<String> bannerImgUrl;
+    String toubuimgs[];
+    ImageView[] pointViews;//头部的imageview
 
     public GoodsDetailV2Adapter(Activity activity, Context context) {
         this.context = context;
@@ -66,20 +79,10 @@ public class GoodsDetailV2Adapter extends RecyclerView.Adapter<RecyclerView.View
 
     public void setShopData(Shop shop) {
         this.shop = shop;
-    }
-
-
-    public void setBannerImgUrl(String urls) {
         try {
-            bannerImgUrl = new ArrayList<String>();
-            String[] toubuimgs = urls.split(",");
-            if (toubuimgs.length > 0) {
-                for (int i = 0; i < toubuimgs.length; i++) {
-                    bannerImgUrl.add(toubuimgs[i]);
-                }
-            }
+            toubuimgs = shop.getImages().split(",");
         } catch (Exception e) {
-            Log.e("error", "setBannerImgUrl: " + e.getMessage());
+            toubuimgs = new String[0];
         }
     }
 
@@ -179,14 +182,138 @@ public class GoodsDetailV2Adapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
 
-    class HeaderHolder extends RecyclerView.ViewHolder {
+    void xianshilunbotu(final HeaderHolder h) {
 
+        adapter_lunbotu = new GoodsDetailBanner(context);
+        adapter_lunbotu.setData(toubuimgs);
+        Rect outsize = new Rect();
+        activity.getWindowManager().getDefaultDisplay().getRectSize(outsize);
+        ViewGroup.LayoutParams params = h.viewPager.getLayoutParams();
+        params.height = outsize.width();
+        h.viewPager.setLayoutParams(params);
+
+        h.viewPager.setAdapter(adapter_lunbotu);
+        //解决与refresh的冲突
+        h.viewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+//                        layout_refresh.setEnabled(false);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+//                        layout_refresh.setEnabled(true);
+                        break;
+                }
+                return false;
+            }
+        });
+        //小圆点
+        int count = 0;
+        if (toubuimgs != null) {
+            count = toubuimgs.length;
+        }
+        pointViews = new ImageView[count];
+        h.ll_pointGroup.removeAllViews();
+        for (int i = 0; i < count; i++) {
+            ImageView iv = new ImageView(context);
+            if (i == 0) {
+                iv.setImageResource(R.drawable.feature_point_cur);
+            } else {
+                iv.setImageResource(R.drawable.feature_point);
+
+            }
+            iv.setLayoutParams(new LinearLayout.LayoutParams(35, 15));
+            iv.setScaleType(ImageView.ScaleType.CENTER_CROP);// 设置铺满
+            h.ll_pointGroup.addView(iv);
+            pointViews[i] = iv;
+        }
+
+        //滑动小圆点
+        h.viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                for (int i = 0; i < pointViews.length; i++) {
+                    if (i == position) {
+                        pointViews[i].setImageResource(R.drawable.feature_point_cur);
+                    } else {
+                        pointViews[i].setImageResource(R.drawable.feature_point);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        if (toubuimgs != null && toubuimgs.length == 1 && toubuimgs[0].equals("")) {
+            String url = Constant.host + "shop/appShopHeadImg";
+            RequestParams imgParams = new RequestParams(url);
+            imgParams.addParameter("shop.itemid", shop.getItemid());
+            x.http().get(imgParams, new Callback.CommonCallback<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    MessageVo meg = new Gson().fromJson(result, MessageVo.class);
+                    String[] toubuimgArr = meg.getMessage().split(",");
+                    adapter_lunbotu.setData(toubuimgArr);
+                    adapter_lunbotu.notifyDataSetChanged();
+
+
+                    pointViews = new ImageView[toubuimgArr.length];
+                    h.ll_pointGroup.removeAllViews();
+                    for (int i = 0; i < toubuimgArr.length; i++) {
+                        ImageView iv = new ImageView(context);
+                        if (i == 0) {
+                            iv.setImageResource(R.drawable.feature_point_cur);
+                        } else {
+                            iv.setImageResource(R.drawable.feature_point);
+
+                        }
+                        iv.setLayoutParams(new LinearLayout.LayoutParams(35, 15));
+                        iv.setScaleType(ImageView.ScaleType.CENTER_CROP);// 设置铺满
+                        h.ll_pointGroup.addView(iv);
+                        pointViews[i] = iv;
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            });
+        }
+    }
+
+
+    class HeaderHolder extends RecyclerView.ViewHolder {
+        ViewPager viewPager;
+        LinearLayout ll_pointGroup, layout_lingquan;
         TextView tv_baoyou, tv_yuanjia, tv_biaoti, tv_jiage, tv_xiaoliang, tv_youhuiquanjine, tv_youhuiquanqixian;
-        Banner banner;
 
         public HeaderHolder(View itemView) {
             super(itemView);
-
+            viewPager = (ViewPager) itemView.findViewById(R.id.vp_imagePages);
+            ll_pointGroup = (LinearLayout) itemView.findViewById(R.id.ll_pointGroup);
+            layout_lingquan = (LinearLayout) itemView.findViewById(R.id.layout_lingquan);
             tv_baoyou = itemView.findViewById(R.id.tv_baoyou);
             tv_yuanjia = itemView.findViewById(R.id.tv_yuanjia);
             tv_biaoti = itemView.findViewById(R.id.tv_biaoti);
@@ -194,7 +321,6 @@ public class GoodsDetailV2Adapter extends RecyclerView.Adapter<RecyclerView.View
             tv_xiaoliang = itemView.findViewById(R.id.tv_xiaoliang);
             tv_youhuiquanjine = itemView.findViewById(R.id.tv_youhuiquanjine);
             tv_youhuiquanqixian = itemView.findViewById(R.id.tv_youhuiquanqixian);
-            banner = itemView.findViewById(R.id.banner);
 
         }
     }
@@ -231,23 +357,7 @@ public class GoodsDetailV2Adapter extends RecyclerView.Adapter<RecyclerView.View
 
     void initHeader(RecyclerView.ViewHolder holder) {
         HeaderHolder h = (HeaderHolder) holder;
-
-        //设置图片加载器
-        h.banner.setImageLoader(new xImageLoader());
-        //设置指示器位置（当banner模式中有指示器时）
-        h.banner.setIndicatorGravity(BannerConfig.CENTER);
-
-        h.banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                Toast.makeText(context, position + "", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //设置图片集合
-        h.banner.update(bannerImgUrl);
-        //banner设置方法全部调用完毕时最后调用
-        h.banner.start();
+        xianshilunbotu(h);
 
         if (shop.getItemtitle().contains("包邮")) {
             h.tv_baoyou.setVisibility(View.VISIBLE);
