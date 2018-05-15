@@ -12,10 +12,15 @@ public class ShopTypeImg implements Serializable{
     private String createTime;
     private String id;
     private String img;
+    private String imgType;
+    private String imgUrl;
     private String keyword;
     private String rid;
     private String shopNum;
     private String shopTypeId;
+    private String itemId;
+    private String title;
+
     public void setCid(String cid) {
         this.cid = cid;
     }
@@ -44,6 +49,20 @@ public class ShopTypeImg implements Serializable{
         return img;
     }
 
+    public String getImgType() {
+        return imgType;
+    }
+    public void setImgType(String imgType) {
+        this.imgType = imgType;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
+
     public void setKeyword(String keyword) {
         this.keyword = keyword;
     }
@@ -70,5 +89,19 @@ public class ShopTypeImg implements Serializable{
     }
     public String getShopTypeId() {
         return shopTypeId;
+    }
+
+    public String getItemId() {
+        return itemId;
+    }
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

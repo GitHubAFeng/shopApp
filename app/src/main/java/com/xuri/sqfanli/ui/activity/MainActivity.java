@@ -7,10 +7,12 @@ import com.xuri.sqfanli.R;
 import com.xuri.sqfanli.adapter.MainTabAdapter;
 import com.xuri.sqfanli.ui.base.BaseFragment;
 import com.xuri.sqfanli.ui.base.BaseFragmentActivity;
+import com.xuri.sqfanli.ui.fragment.F_fenlei_new;
 import com.xuri.sqfanli.ui.fragment.Fragment2;
 import com.xuri.sqfanli.ui.fragment.Fragment3;
 import com.xuri.sqfanli.ui.fragment.HomeV2Fragment;
 import com.xuri.sqfanli.ui.fragment.MyFragment;
+import com.xuri.sqfanli.ui.fragment.SearchCategoriesFragment;
 import com.xuri.sqfanli.view.NoScrollViewPager;
 
 import org.xutils.view.annotation.ViewInject;
@@ -22,7 +24,7 @@ public class MainActivity extends BaseFragmentActivity {
 
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<CustomTabEntity>();
     private List<BaseFragment> views = new ArrayList<BaseFragment>();
-    private String[] mTitles = {"首页", "花钱", "分类", "我的"};
+    private String[] mTitles = {"首页", "品牌", "分类", "我的"};
     private int[] mIconUnselectIds = {
             R.drawable.home_no_select,
             R.drawable.home_tab_huaqiang_no,
@@ -66,8 +68,8 @@ public class MainActivity extends BaseFragmentActivity {
         }
 
         views.add(new HomeV2Fragment());
-        views.add(new Fragment2());
-        views.add(new Fragment3());
+        views.add(new F_fenlei_new());
+        views.add(new SearchCategoriesFragment());
         views.add(new MyFragment());
         mViewPager.setOffscreenPageLimit(4); //允许保留的页面，防止首页被重绘
         mViewPager.setAdapter(new MainTabAdapter(getSupportFragmentManager(), views, mTitles));

@@ -68,6 +68,7 @@
             >
 
             <LinearLayout
+                android:id="@+id/jiukuaijiu_baoyou_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -107,6 +108,7 @@
                 android:background="#F4F3F8" />
 
             <LinearLayout
+                android:id="@+id/paihangbang_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -146,6 +148,7 @@
                 android:background="#F4F3F8" />
 
             <LinearLayout
+                android:id="@+id/pinpai_yougou_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

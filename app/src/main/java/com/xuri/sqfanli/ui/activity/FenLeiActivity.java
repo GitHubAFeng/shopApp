@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -109,6 +110,8 @@ public class FenLeiActivity extends BaseFragmentActivity {
         fenlei = getIntent().getStringExtra("fenlei");
         fenleiId = getIntent().getStringExtra("fenleiId");
         fenleiKeyword = getIntent().getStringExtra("fenleiKeyword");
+        boolean isShowSearch = getIntent().getBooleanExtra("isShowSearch", true);
+
         MobclickAgent.onEvent(context, "fenlei" + fenleiId);
 
         //向上按钮
@@ -143,11 +146,10 @@ public class FenLeiActivity extends BaseFragmentActivity {
         //页面标题
         tv_title.setText(fenlei);
 
-
         adapter = new FenLeiAdapter(context);
+        adapter.setShoplistDatas(shoplistDatas);
         GridLayoutManager layoutManager = new GridLayoutManager(context, 2);
         rv.setLayoutManager(layoutManager);
-
         adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void OnLoadMore() {
@@ -166,7 +168,7 @@ public class FenLeiActivity extends BaseFragmentActivity {
         adapter.setData_fenlei(fenlei);
         adapter.setData_shifouzifenlei(shifouzifenlei);
 
-//筛选
+        //筛选
         adapter.setOnShaiXuanListener(new OnShaiXuanListener() {
             @Override
             public void call(String text, ShaiXuanBean shaiXuanBean) {
@@ -241,7 +243,7 @@ public class FenLeiActivity extends BaseFragmentActivity {
 
                 }
 
-                getGoodsList(1, false, true);
+                getGoodsList(1, true, false);
             }
         });
 
@@ -274,8 +276,11 @@ public class FenLeiActivity extends BaseFragmentActivity {
             public void onSuccess(List o) {
                 if (isLoadMore) {
                     adapter.loadMore((ArrayList<Shop>) o);
+                } else if (isRefresh) {
+                    shoplistDatas.clear();
+                    shoplistDatas.addAll((ArrayList<Shop>) o);
                 } else {
-                    shoplistDatas.addAll(o);
+                    shoplistDatas.addAll((ArrayList<Shop>) o);
                 }
                 adapter.notifyDataSetChanged();
             }

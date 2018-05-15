@@ -2,6 +2,14 @@ package com.xuri.sqfanli.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -13,6 +21,15 @@ import com.squareup.picasso.Transformation;
  */
 
 public class PicassoHelper {
+
+    public static void showImageRound(Context context, ImageView imageView, String url) {
+        if (url == null || url.equals("") || context == null || imageView == null) {
+            return;
+        }
+        Picasso.with(context).load(url).transform(new PicassoTransform(20)).into(imageView);
+
+    }
+
 
     public static void showImageByPicasso(Context context, ImageView imageView, String url) {
         if (url == null || url.equals("") || context == null || imageView == null) {
@@ -61,9 +78,10 @@ public class PicassoHelper {
         Picasso.with(context)
                 .load(url)
                 .transform(transformation)
-
                 .into(imageView);
 
     }
+
+
 
 }

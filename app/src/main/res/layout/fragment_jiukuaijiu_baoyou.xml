@@ -1,0 +1,63 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/dp3"
+    android:orientation="vertical" >
+
+    <include layout="@layout/common_header_shaixuan_layout"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/data_list_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/background"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <ImageView
+            android:id="@+id/go_back_top_iv"
+            android:layout_width="@dimen/dp55"
+            android:layout_height="@dimen/dp55"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="@dimen/dp70"
+            android:layout_marginRight="@dimen/dp3"
+            android:src="@drawable/xiangshang"
+            android:visibility="gone"/>
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/load_more_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp10"
+        android:paddingTop="@dimen/dp10">
+
+        <ProgressBar
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp5"
+            android:text="加载中"
+            android:textSize="@dimen/sp12"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -174,7 +174,7 @@ public class GoodsDetailV2Adapter extends RecyclerView.Adapter<RecyclerView.View
                 Intent intent = new Intent();
                 intent.setClass(context, GoodsDetailActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("jsonText", tuiJianList.get(pos));
+                bundle.putSerializable("jsonBean", tuiJianList.get(pos));
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }

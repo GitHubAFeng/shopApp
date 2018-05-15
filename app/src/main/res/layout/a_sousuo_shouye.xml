@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_sousuo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/dp10"
+        android:paddingBottom="@dimen/dp10">
+
+        <ImageButton
+            android:id="@+id/title_back_btn"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="@dimen/dp40"
+            android:padding="@dimen/dp20"
+            android:scaleType="centerCrop"
+            android:src="@drawable/back"
+            android:background="@null"
+            android:onClick="finish"/>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp35"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/et_keyword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_light_gray_radius_500"
+                android:gravity="center_vertical"
+                android:hint="搜你想搜的"
+                android:imeActionLabel="搜索"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="@dimen/dp38"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp14"
+                android:singleLine="true"/>
+
+            <ImageView
+                android:layout_width="@dimen/dp38"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dp10"
+                android:src="@drawable/sousuo" />
+
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/search_btn"
+            android:layout_width="@dimen/dp60"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center"
+            android:text="搜索"
+            android:textColor="@color/gray_text_color" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/grayline" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/search_info_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_lishi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dp20"
+                    android:paddingRight="@dimen/dp10"
+                    android:paddingTop="@dimen/dp8">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="历史搜索" />
+
+                    <ImageView
+                        android:id="@+id/tv_qingchu"
+                        android:layout_width="@dimen/dp18"
+                        android:layout_height="@dimen/dp18"
+                        android:src="@drawable/img_clean_history" />
+                </LinearLayout>
+
+                <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/fl_lishi"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/dp10"
+                    android:paddingLeft="@dimen/dp20"
+                    android:paddingRight="@dimen/dp20"
+                    android:paddingTop="@dimen/dp10"
+                    zhy:max_select="-1" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp8"
+                    android:background="#eee" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dp20"
+                android:paddingRight="@dimen/dp10"
+                android:paddingTop="@dimen/dp8">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="大家都在搜" />
+
+            </LinearLayout>
+
+            <com.zhy.view.flowlayout.TagFlowLayout
+                android:id="@+id/fl_dajiadouzaisou"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dp10"
+                android:paddingLeft="@dimen/dp20"
+                android:paddingRight="@dimen/dp20"
+                android:paddingTop="@dimen/dp10"
+                zhy:max_select="-1" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:id="@+id/lianxiangci_rv"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

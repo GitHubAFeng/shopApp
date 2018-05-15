@@ -1,5 +1,6 @@
 package com.xuri.sqfanli.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.umeng.analytics.MobclickAgent;
 import com.xuri.sqfanli.R;
 import com.xuri.sqfanli.adapter.HomeBtnsAdapter;
 import com.xuri.sqfanli.adapter.HomeGoodsListAdapter;
@@ -24,7 +26,10 @@ import com.xuri.sqfanli.bean.HotGoods;
 import com.xuri.sqfanli.bean.Shop;
 import com.xuri.sqfanli.bean.ShopType;
 import com.xuri.sqfanli.event.MessageEvent;
+import com.xuri.sqfanli.ui.activity.A_fenlei_parent;
 import com.xuri.sqfanli.ui.activity.GoodsDetailActivity;
+import com.xuri.sqfanli.ui.activity.HotSalesActivity;
+import com.xuri.sqfanli.ui.activity.JiukuaijiuBaoyouActivity;
 import com.xuri.sqfanli.ui.base.BaseFragment;
 import com.xuri.sqfanli.view.PagerLayoutManager.PagerGridLayoutManager;
 import com.xuri.sqfanli.view.PagerLayoutManager.PagerGridSnapHelper;
@@ -59,6 +64,7 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
     int scrollY = 0; //用于向上按钮
 
     HomeApi homeApi = new HomeApi();
+    HotGoods hotGoods;
 
     Boolean is_show_tab = false;  //分类tab是否显示
 
@@ -83,6 +89,7 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
     ImageView home_hot_img_1;
     ImageView home_hot_img_2;
     ImageView home_hot_img_3;
+    LinearLayout jiukuaijiu_baoyou_layout, pinpai_yougou_layout, paihangbang_layout;
 
 
     @Override
@@ -198,7 +205,7 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                         Shop item = home_adapter.getData().get(position);
-                        goToActivity(GoodsDetailActivity.class, "jsonText", item, false);
+                        goToActivity(GoodsDetailActivity.class, "jsonBean", item, false);
                     }
                 });
 
@@ -262,7 +269,9 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
 
     //热门推荐
     void initHot() {
-
+        jiukuaijiu_baoyou_layout = headerView.findViewById(R.id.jiukuaijiu_baoyou_layout);
+        pinpai_yougou_layout = headerView.findViewById(R.id.pinpai_yougou_layout);
+        paihangbang_layout = headerView.findViewById(R.id.paihangbang_layout);
         home_hot_title_1 = headerView.findViewById(R.id.home_hot_title_1);
         home_hot_title_2 = headerView.findViewById(R.id.home_hot_title_2);
         home_hot_title_3 = headerView.findViewById(R.id.home_hot_title_3);
@@ -273,19 +282,58 @@ public class HomeGoodsListV2Fragment extends BaseFragment {
         home_hot_img_2 = headerView.findViewById(R.id.home_hot_img_2);
         home_hot_img_3 = headerView.findViewById(R.id.home_hot_img_3);
 
+        //排行榜
+        paihangbang_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MobclickAgent.onEvent(context, "paihangbang");
+                Intent intent = new Intent();
+                intent.setClass(context, HotSalesActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+        //9块9包邮
+        jiukuaijiu_baoyou_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MobclickAgent.onEvent(context, "jiukuaijiubaoyou");
+                Intent intent = new Intent();
+                intent.setClass(context, JiukuaijiuBaoyouActivity.class);
+                intent.putExtra("fenlei", "9块9包邮");
+                intent.putExtra("fenleiId", "2");
+                context.startActivity(intent);
+            }
+        });
+
+        pinpai_yougou_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MobclickAgent.onEvent(context, "jinrishangxin");
+                Intent intent = new Intent();
+                intent.setClass(context, A_fenlei_parent.class);
+                intent.putExtra("fenlei", "品牌优购");
+                intent.putExtra("fenleiId", "");
+                intent.putExtra("fenleiKeyword", hotGoods.getKeyword());
+                context.startActivity(intent);
+            }
+        });
+
+
+
     }
 
     void getHot(final Boolean isRefresh) {
-        HotGoods hotGoods = homeApi.getHotFromServer(new CallBackDataApi() {
+         hotGoods = homeApi.getHotFromServer(new CallBackDataApi() {
             @Override
             public void onSuccess(Object o) {
-                HotGoods data = (HotGoods) o;
-                home_hot_desc_1.setText(data.getRankingName());
-                home_hot_desc_2.setText(data.getTodFaddish());
-                home_hot_desc_3.setText(data.getTodUpdate());
-                x.image().bind(home_hot_img_1, data.getRankingImg());
-                x.image().bind(home_hot_img_2, data.getTodFaddishImg());
-                x.image().bind(home_hot_img_3, data.getTodUpdateImg());
+                hotGoods = (HotGoods) o;
+                home_hot_desc_1.setText(hotGoods.getRankingName());
+                home_hot_desc_2.setText(hotGoods.getTodFaddish());
+                home_hot_desc_3.setText(hotGoods.getTodUpdate());
+                x.image().bind(home_hot_img_1, hotGoods.getRankingImg());
+                x.image().bind(home_hot_img_2, hotGoods.getTodFaddishImg());
+                x.image().bind(home_hot_img_3, hotGoods.getTodUpdateImg());
             }
 
             @Override

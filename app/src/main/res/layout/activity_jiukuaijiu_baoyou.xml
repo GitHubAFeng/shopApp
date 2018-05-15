@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/title_back_btn"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="@dimen/dp50"
+            android:padding="@dimen/dp20"
+            android:scaleType="centerCrop"
+            android:src="@drawable/back"
+            android:background="@null"
+            android:onClick="finish"/>
+
+        <ImageView
+            android:id="@+id/title_name_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp20"
+            android:layout_centerInParent="true"
+            android:src="@drawable/jiukuaijiubaoyou_title"/>
+
+        <ImageButton
+            android:id="@+id/search_btn"
+            android:layout_width="@dimen/dp50"
+            android:layout_height="@dimen/dp50"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/dp15"
+            android:src="@drawable/search_icon"
+            android:background="@null"
+            android:scaleType="centerCrop"
+            android:onClick="gotoSearch"/>
+
+    </RelativeLayout>
+
+    <com.xuri.sqfanli.view.Hm_StripViewPager_slidable_huaqianfenlei
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

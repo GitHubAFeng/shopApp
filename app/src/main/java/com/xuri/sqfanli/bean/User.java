@@ -3,7 +3,6 @@ package com.xuri.sqfanli.bean;
 import android.content.Context;
 import android.content.Intent;
 
-
 import com.xuri.sqfanli.MyAPP;
 import com.xuri.sqfanli.util.SettingConfig;
 
@@ -208,67 +207,79 @@ public class User {
     private String wxAppID;
     private String wxAppSecret;
 
+    public static User getInstance(Context context) {
+        if (user == null) {
+            user = new User();
+            userState(context, user);
+        }
+        return user;
+    }
+
     public static User getInstance() {
         if (user == null) {
             user = new User();
             Context context = MyAPP.getInstance();
-            String id = SettingConfig.getInstance(context).getStringPreference("id", "0");
-            if (id == null || id.length() == 0) {
-                id = "0";
-            }
-            user.setId(Integer.parseInt(id));
-            user.setPid(SettingConfig.getInstance(context).getStringPreference("pid", ""));
-            user.setOpenId(SettingConfig.getInstance(context).getStringPreference("openId", ""));
-            user.setImei(SettingConfig.getInstance(context).getStringPreference("imei", ""));
-            user.setUserCode(SettingConfig.getInstance(context).getStringPreference("userCode", ""));
-            user.setNiName(SettingConfig.getInstance(context).getStringPreference("niName", ""));
-            user.setPhoto(SettingConfig.getInstance(context).getStringPreference("photo", ""));
-            user.setPhone(SettingConfig.getInstance(context).getStringPreference("phone", ""));
-            user.setAlipay(SettingConfig.getInstance(context).getStringPreference("alipay", ""));
-            user.setUname(SettingConfig.getInstance(context).getStringPreference("uname", ""));
-            user.setSex(SettingConfig.getInstance(context).getStringPreference("sex", ""));
-            user.setTodMoney(new BigDecimal(SettingConfig.getInstance(context).getStringPreference("todMoney", "0")));
-            user.setYuMoney(new BigDecimal(SettingConfig.getInstance(context).getStringPreference("yuMoney", "0")));
-            user.setTotMoney(new BigDecimal(SettingConfig.getInstance(context).getStringPreference("totMoney", "0")));
-            user.setPayMoney(new BigDecimal(SettingConfig.getInstance(context).getStringPreference("payMoney", "0")));
-            user.setPayNum((int) (SettingConfig.getInstance(context).getStringPreference("payNum", 0)));
-            user.setTotTiMoney(SettingConfig.getInstance(context).getStringPreference("totTiMoney", "0"));
-            user.setNianLv(new BigDecimal(SettingConfig.getInstance(context).getStringPreference("nianLv", "0")));
-            user.setBangWx(SettingConfig.getInstance(context).getStringPreference("bangWx", ""));
-            user.setQrCodeUrl(SettingConfig.getInstance(context).getStringPreference("qrCodeUrl", ""));
-            user.setHuaHeadImg(SettingConfig.getInstance(context).getStringPreference("huaHeadImg", ""));
-            user.setHuaHeadUrl(SettingConfig.getInstance(context).getStringPreference("huaHeadUrl", ""));
-            user.setHuaMidImg(SettingConfig.getInstance(context).getStringPreference("huaMidImg", ""));
-            user.setHuaMidUrl(SettingConfig.getInstance(context).getStringPreference("huaMidUrl", ""));
-            user.setPopTi(SettingConfig.getInstance(context).getStringPreference("popTi", "0"));
-            user.setFuPop(SettingConfig.getInstance(context).getStringPreference("fuPop", "0"));
-            user.setFuPopImg(SettingConfig.getInstance(context).getStringPreference("fuPopImg", ""));
-            user.setFuPopUrl(SettingConfig.getInstance(context).getStringPreference("fuPopUrl", ""));
-            user.setTaobaoImg(SettingConfig.getInstance(context).getStringPreference("taobaoImg", ""));
-            user.setTaobaoUrl(SettingConfig.getInstance(context).getStringPreference("taobaoUrl", ""));
-            user.setTianmaoImg(SettingConfig.getInstance(context).getStringPreference("tianmaoImg", ""));
-            user.setTianmaoUrl(SettingConfig.getInstance(context).getStringPreference("tianmaoUrl", ""));
-            user.setQuanNum(SettingConfig.getInstance(context).getStringPreference("quannum", ""));
-            user.setTodShengTag(SettingConfig.getInstance(context).getStringPreference("todShengTag", ""));
-            user.setFriPing(SettingConfig.getInstance(context).getStringPreference("friPing", ""));
-            user.setFriPingTag(SettingConfig.getInstance(context).getStringPreference("friPingTag", ""));
-            user.setXiaoPing(SettingConfig.getInstance(context).getStringPreference("xiaoPing", ""));
-            user.setXiaoPingTag(SettingConfig.getInstance(context).getStringPreference("xiaoPingTag", ""));
-            user.setSharePing(SettingConfig.getInstance(context).getStringPreference("sharePing", ""));
-            user.setSharePingTag(SettingConfig.getInstance(context).getStringPreference("sharePingTag", ""));
-            user.setUsePing(SettingConfig.getInstance(context).getStringPreference("usePing", ""));
-            user.setUsePingTag(SettingConfig.getInstance(context).getStringPreference("usePingTag", ""));
-            user.setShopPing(SettingConfig.getInstance(context).getStringPreference("shopPing", ""));
-            user.setShopPingTag(SettingConfig.getInstance(context).getStringPreference("shopPingTag", ""));
-            user.setDuiAdvImg(SettingConfig.getInstance(context).getStringPreference("duiAdvImg", ""));
-            user.setDuiAdvUrl(SettingConfig.getInstance(context).getStringPreference("duiAdvUrl", ""));
-            user.setMianTag(SettingConfig.getInstance(context).getStringPreference("mianTag", ""));
-            user.setDaiCunMoney(SettingConfig.getInstance(context).getStringPreference("daiCunMoney", 0));
-            user.setHongbaoState(SettingConfig.getInstance(context).getStringPreference("hongbaoState", ""));
-            user.setHongbaoMoney(SettingConfig.getInstance(context).getStringPreference("hongbaoMoney", ""));
-
+            userState(context, user);
         }
         return user;
+    }
+
+    private static void userState(Context context, User user) {
+        String id = SettingConfig.getInstance(context).getStringPreference("id", "0");
+        if (id == null || id.length() == 0) {
+            id = "0";
+        }
+        user.setId(Integer.parseInt(id));
+        user.setPid(SettingConfig.getInstance(context).getStringPreference("pid", ""));
+        user.setOpenId(SettingConfig.getInstance(context).getStringPreference("openId", ""));
+        user.setImei(SettingConfig.getInstance(context).getStringPreference("imei", ""));
+        user.setUserCode(SettingConfig.getInstance(context).getStringPreference("userCode", ""));
+        user.setNiName(SettingConfig.getInstance(context).getStringPreference("niName", ""));
+        user.setPhoto(SettingConfig.getInstance(context).getStringPreference("photo", ""));
+        user.setPhone(SettingConfig.getInstance(context).getStringPreference("phone", ""));
+        user.setAlipay(SettingConfig.getInstance(context).getStringPreference("alipay", ""));
+        user.setUname(SettingConfig.getInstance(context).getStringPreference("uname", ""));
+        user.setSex(SettingConfig.getInstance(context).getStringPreference("sex", ""));
+        user.setTodMoney(new BigDecimal(SettingConfig.getInstance(context).getStringPreference("todMoney", "0")));
+        user.setYuMoney(new BigDecimal(SettingConfig.getInstance(context).getStringPreference("yuMoney", "0")));
+        user.setTotMoney(new BigDecimal(SettingConfig.getInstance(context).getStringPreference("totMoney", "0")));
+        user.setPayMoney(new BigDecimal(SettingConfig.getInstance(context).getStringPreference("payMoney", "0")));
+        user.setPayNum((int) (SettingConfig.getInstance(context).getStringPreference("payNum", 0)));
+        user.setTotTiMoney(SettingConfig.getInstance(context).getStringPreference("totTiMoney", "0"));
+        user.setNianLv(new BigDecimal(SettingConfig.getInstance(context).getStringPreference("nianLv", "0")));
+        user.setBangWx(SettingConfig.getInstance(context).getStringPreference("bangWx", ""));
+        user.setQrCodeUrl(SettingConfig.getInstance(context).getStringPreference("qrCodeUrl", ""));
+        user.setHuaHeadImg(SettingConfig.getInstance(context).getStringPreference("huaHeadImg", ""));
+        user.setHuaHeadUrl(SettingConfig.getInstance(context).getStringPreference("huaHeadUrl", ""));
+        user.setHuaMidImg(SettingConfig.getInstance(context).getStringPreference("huaMidImg", ""));
+        user.setHuaMidUrl(SettingConfig.getInstance(context).getStringPreference("huaMidUrl", ""));
+        user.setPopTi(SettingConfig.getInstance(context).getStringPreference("popTi", "0"));
+        user.setFuPop(SettingConfig.getInstance(context).getStringPreference("fuPop", "0"));
+        user.setFuPopImg(SettingConfig.getInstance(context).getStringPreference("fuPopImg", ""));
+        user.setFuPopUrl(SettingConfig.getInstance(context).getStringPreference("fuPopUrl", ""));
+        user.setTaobaoImg(SettingConfig.getInstance(context).getStringPreference("taobaoImg", ""));
+        user.setTaobaoUrl(SettingConfig.getInstance(context).getStringPreference("taobaoUrl", ""));
+        user.setTianmaoImg(SettingConfig.getInstance(context).getStringPreference("tianmaoImg", ""));
+        user.setTianmaoUrl(SettingConfig.getInstance(context).getStringPreference("tianmaoUrl", ""));
+        user.setQuanNum(SettingConfig.getInstance(context).getStringPreference("quannum", ""));
+        user.setTodShengTag(SettingConfig.getInstance(context).getStringPreference("todShengTag", ""));
+        user.setFriPing(SettingConfig.getInstance(context).getStringPreference("friPing", ""));
+        user.setFriPingTag(SettingConfig.getInstance(context).getStringPreference("friPingTag", ""));
+        user.setXiaoPing(SettingConfig.getInstance(context).getStringPreference("xiaoPing", ""));
+        user.setXiaoPingTag(SettingConfig.getInstance(context).getStringPreference("xiaoPingTag", ""));
+        user.setSharePing(SettingConfig.getInstance(context).getStringPreference("sharePing", ""));
+        user.setSharePingTag(SettingConfig.getInstance(context).getStringPreference("sharePingTag", ""));
+        user.setUsePing(SettingConfig.getInstance(context).getStringPreference("usePing", ""));
+        user.setUsePingTag(SettingConfig.getInstance(context).getStringPreference("usePingTag", ""));
+        user.setShopPing(SettingConfig.getInstance(context).getStringPreference("shopPing", ""));
+        user.setShopPingTag(SettingConfig.getInstance(context).getStringPreference("shopPingTag", ""));
+        user.setDuiAdvImg(SettingConfig.getInstance(context).getStringPreference("duiAdvImg", ""));
+        user.setDuiAdvUrl(SettingConfig.getInstance(context).getStringPreference("duiAdvUrl", ""));
+        user.setMianTag(SettingConfig.getInstance(context).getStringPreference("mianTag", ""));
+        user.setDaiCunMoney(SettingConfig.getInstance(context).getStringPreference("daiCunMoney", 0));
+        user.setHongbaoState(SettingConfig.getInstance(context).getStringPreference("hongbaoState", ""));
+        user.setHongbaoMoney(SettingConfig.getInstance(context).getStringPreference("hongbaoMoney", ""));
+
     }
 
     public String getWxAppID() {

@@ -174,8 +174,8 @@ public class HomeApi extends BaseApi {
                 params_key = paramlist.get(i).get("name");
                 params_value = paramlist.get(i).get("value");
                 params.addParameter(params_key, params_value);
-                Log.d("getGoodsList", "getGoodsList: "+params_key);
-                Log.d("getGoodsList", "getGoodsList: "+params_value);
+                Log.d("getGoodsList", "getGoodsList: " + params_key);
+                Log.d("getGoodsList", "getGoodsList: " + params_value);
             }
         }
         return super.HttpPost(params, key, new TypeToken<List<Shop>>() {

@@ -12,6 +12,11 @@
         <attr name="tvc_setDrawable_sub" format="reference" />
     </declare-styleable>
 
+    <!--TextView倾斜文字-->
+    <declare-styleable name="LeanTextView">
+        <attr name="degree" format="dimension" />
+    </declare-styleable>
+
 
 
 </resources>

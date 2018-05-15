@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#50000000"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="@dimen/dp55"
+        android:id="@+id/iv_logo"
+        android:layout_height="@dimen/dp55"
+        android:src="@drawable/loading_animation" />
+
+
+</LinearLayout>

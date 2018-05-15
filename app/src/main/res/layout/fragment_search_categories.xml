@@ -1,0 +1,105 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp35"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginBottom="@dimen/dp10">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/search_tips_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/sousuo_sousuokuang"
+                android:gravity="center_vertical"
+                android:hint="搜索商品名称或粘贴淘宝标题"
+                android:paddingLeft="@dimen/dp38"
+                android:textColor="@color/_22"
+                android:textSize="@dimen/sp14"/>
+
+            <ImageView
+                android:layout_width="@dimen/dp38"
+                android:layout_height="match_parent"
+                android:padding="@dimen/dp10"
+                android:src="@drawable/sousuo" />
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="@dimen/dp70"
+            android:layout_height="match_parent"
+            android:background="@drawable/taobaosousuoanniu"
+            android:gravity="center"
+            android:text="搜索"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/categories_parent_rv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white" />
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:background="@color/background">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/dp10"
+                android:layout_marginRight="@dimen/dp10"
+                android:orientation="vertical">
+
+                <com.youth.banner.Banner
+                    android:id="@+id/common_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp95"
+                    app:indicator_height="@dimen/dp6"
+                    app:indicator_width="@dimen/dp6"
+                    app:indicator_margin="@dimen/dp2"
+                    app:indicator_drawable_selected="@drawable/dot_orange"
+                    app:indicator_drawable_unselected="@drawable/dot_gray"
+                    app:image_scale_type="fit_xy"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/categories_child_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:background="@color/background" />
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>

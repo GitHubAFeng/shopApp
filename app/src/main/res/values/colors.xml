@@ -3,8 +3,34 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="refresh_layout_color">#f85725</color>
     <color name="white">#ffffffff</color>
     <color name="black">#ff000000</color>
+    <color name="background">#fff1f1f1</color>
+
+
+    <color name="ee">#eeeeee</color>
+    <color name="dd">#dddddd</color>
+    <color name="f0">#f0f0f0</color>
+    <color name="f3">#f3f3f3</color>
+    <color name="f5">#f5f5f5</color>
+    <color name="_00">#000000</color>
+    <color name="_22">#222222</color>
+    <color name="_33">#333333</color>
+    <color name="_44">#444444</color>
+
+    <color name="grayline">#ffd7d7d7</color>
+    <color name="translucent_background">#60000000</color>
+    <color name="deep_radius_red_btn_color">#F32F19</color>
+    <color name="radius_orange_btn_color">#FE8601</color>
+    <color name="tab_title_select_color">#FF6742</color>
+    <color name="hongbao_money_text_color">#FE4443</color>
+    <color name="tixian_high_light_text_color">#F7B83A</color>
+    <color name="refresh_layout_color">#f85725</color>
+
+    <color name="gray_text_color">#7D7D7D</color>
+    <color name="light_gray_bg_color">#F1F2F6</color>
+    <color name="super_member_brown_color">#64502C</color>
+    <color name="super_member_golden_color">#AA934F</color>
+    <color name="super_member_yellow_color">#F0E2A5</color>
 
 </resources>

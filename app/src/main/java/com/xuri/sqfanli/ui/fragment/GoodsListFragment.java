@@ -268,7 +268,7 @@ public class GoodsListFragment extends BaseFragment {
 
                 }
 
-                getGoodsList(1, false, true);
+                getGoodsList(1, true, false);
             }
         });
 
@@ -339,9 +339,13 @@ public class GoodsListFragment extends BaseFragment {
             public void onSuccess(List o) {
                 if (isLoadMore) {
                     goodsFenLeiAdapter.loadMore((ArrayList<Shop>) o);
+                } else if (isRefresh) {
+                    shoplistDatas.clear();
+                    shoplistDatas.addAll(o);
                 } else {
                     shoplistDatas.addAll(o);
                 }
+
                 goodsFenLeiAdapter.notifyDataSetChanged();
             }
 

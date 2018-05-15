@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/top_relativeLayout"
+        android:layout_width="match_parent"
+
+        android:layout_height="@dimen/titlebar"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/back"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dp40"
+                android:layout_height="@dimen/titlebar"
+                android:background="@null"
+                android:padding="@dimen/dp15"
+                android:scaleType="centerCrop"
+                android:src="@drawable/back" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/top_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/title_top_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="#2A2A2A" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/top_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="@dimen/dp81"
+            android:layout_height="@dimen/dp81"
+            android:gravity="center"
+            android:background="@drawable/shape_white_xiankuan"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/dp80"
+                android:id="@+id/photo"
+                android:layout_height="@dimen/dp40" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp10"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/shop_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="清风品牌特卖专场"
+                android:textColor="#2A2A2A" />
+
+            <TextView
+                android:id="@+id/child_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全场4折起"
+                android:layout_marginTop="@dimen/dp8"
+                android:textColor="#F02119" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#F4F4F4" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="@color/white"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
+
+
+    <LinearLayout
+        android:id="@+id/layout_loadMore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dp10"
+        android:paddingTop="@dimen/dp10">
+
+        <ProgressBar
+            android:layout_width="@dimen/dp20"
+            android:layout_height="@dimen/dp20" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp5"
+            android:text="加载中"
+            android:textSize="@dimen/sp12"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/xuanfu_go"
+        android:layout_width="@dimen/dp40"
+        android:background="@drawable/shape_black_radius"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dp50"
+        android:layout_marginRight="@dimen/dp10"
+        android:alpha="0.7"
+
+        android:visibility="gone"
+        android:gravity="center"
+        android:layout_height="@dimen/dp40">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/num_layout"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/num"
+                android:textColor="@color/white"
+                android:text="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="@dimen/dp25"
+                android:background="@color/white"
+                android:layout_height="@dimen/dp1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/num_total"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/go_top_img"
+            android:layout_width="@dimen/dp25"
+            android:layout_height="@dimen/dp25"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:background="@drawable/go_top_white"/>
+
+    </RelativeLayout>
+</RelativeLayout>

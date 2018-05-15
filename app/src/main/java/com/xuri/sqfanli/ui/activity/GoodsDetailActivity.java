@@ -2,10 +2,13 @@ package com.xuri.sqfanli.ui.activity;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
+import com.umeng.analytics.MobclickAgent;
 import com.xuri.sqfanli.R;
 import com.xuri.sqfanli.adapter.GoodsDetailV2Adapter;
 import com.xuri.sqfanli.api.GoodsApi;
@@ -65,8 +68,29 @@ public class GoodsDetailActivity extends BaseFragmentActivity {
 
 
     void getData() {
-        shop = (Shop) this.getSerializDataByKey("jsonText");
+        String jsonText = getIntent().getStringExtra("jsonText");
+        shop = TextUtils.isEmpty(jsonText) ? null : new Gson().fromJson(jsonText, Shop.class);
+        if (shop == null) {
+            Object object = this.getSerializDataByKey("jsonBean");
+            shop = object == null ? null : (Shop) object;
+        }
         if (shop == null) return;
+
+        String fromTag = getIntent().getStringExtra("fromTag");
+        if (fromTag != null) {
+            if (fromTag.equals("1")) {//来源是品牌
+                MobclickAgent.onEvent(context, "pinpaishopdet");
+            } else if (fromTag.equals("2")) {//来源是9块9
+                MobclickAgent.onEvent(context, "jiukuaijiushopdet");
+            } else if (fromTag.equals("3")) {//来源排行榜
+                MobclickAgent.onEvent(context, "laiyuanshopdet");
+            } else if (fromTag.equals("4")) {//来源商品详情推荐
+                MobclickAgent.onEvent(context, "xiangqingtuijian");
+            } else if (fromTag.equals("5")) {//来源横条商品详情页
+                MobclickAgent.onEvent(context, "hengtiaoshangpinxiangqingye");
+            }
+        }
+
         goodsDetailV2Adapter.setShopData(shop);
 
         goodsApi.getTuPingFromServer(shop.getItemid(), new CallBackListApi() {

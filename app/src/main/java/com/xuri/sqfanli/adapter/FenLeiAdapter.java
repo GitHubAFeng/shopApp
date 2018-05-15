@@ -25,6 +25,7 @@ import java.util.ArrayList;
 
 /**
  * Created by AFeng on 2018/5/14.
+ * 子分类页面
  */
 
 public class FenLeiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -32,12 +33,12 @@ public class FenLeiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     Context context;
     ArrayList<Shop> shoplistDatas;   //下拉列表里面的商品数据
 
+
     String fenlei;
     String shifouzifenlei = "false";
     boolean isNoMore = false;
     String fromTag = "";
 
-    private OnShaixuanBtnClickListener mOnShaixuanBtnClickListener;
     private OnLoadMoreListener onLoadMoreListener;
     private OnShaiXuanListener onShaiXuanListener;
 
@@ -47,10 +48,6 @@ public class FenLeiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             shoplistDatas = new ArrayList<Shop>();
         }
         this.context = context;
-    }
-
-    public void setOnShaixuanBtnClickListener(OnShaixuanBtnClickListener mOnShaixuanBtnClickListener) {
-        this.mOnShaixuanBtnClickListener = mOnShaixuanBtnClickListener;
     }
 
 
@@ -76,7 +73,6 @@ public class FenLeiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
-
     public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
         this.onLoadMoreListener = onLoadMoreListener;
     }
@@ -100,6 +96,7 @@ public class FenLeiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_shangpin_huaqian, parent, false);
         return new Holder(view);
+
     }
 
     @Override
@@ -111,6 +108,8 @@ public class FenLeiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 onLoadMoreListener.OnLoadMore();
             }
         }
+
+        //商品列表
 
         if (shoplistDatas == null || shoplistDatas.size() == 0) return;
         Shop shop = shoplistDatas.get(position);
@@ -157,7 +156,7 @@ public class FenLeiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 Intent intent = new Intent();
                 intent.setClass(context, GoodsDetailActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("jsonText", shoplistDatas.get(position));
+                bundle.putSerializable("jsonBean", shoplistDatas.get(position));
                 intent.putExtras(bundle);
                 context.startActivity(intent);
 
@@ -198,4 +197,5 @@ public class FenLeiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             baoyouIconIv = itemView.findViewById(R.id.baoyou_icon_iv);
         }
     }
+
 }

@@ -9,6 +9,21 @@
 
     <dimen name="titleBar_height">25dp</dimen>
     <dimen name="item_titlebar">50dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="titlebar">50dp</dimen>
+
+    <dimen name="umeng_fb_item_height">48.0dip</dimen>
+    <dimen name="umeng_fb_item_content_size">14.0sp</dimen>
+    <dimen name="umeng_fb_item_time_size">12.0sp</dimen>
+    <dimen name="umeng_fb_item_line_height">0.8000001dip</dimen>
+    <dimen name="umeng_fb_spinner_padding_left">12.0dip</dimen>
+    <dimen name="umeng_fb_record_btn_text_size">20.0sp</dimen>
+    <dimen name="umeng_fb_normal_size">13.0dip</dimen>
+    <dimen name="alphabet_size">12.0dip</dimen>
+    <dimen name="umeng_socialize_pad_window_height">350.0dip</dimen>
+    <dimen name="umeng_socialize_pad_window_width">580.0dip</dimen>
+
+
 
     <dimen name="dp1">1dp</dimen>
     <dimen name="dp2">2dp</dimen>

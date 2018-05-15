@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:id="@+id/view"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/src"
+            android:layout_width="@dimen/dp100"
+            android:layout_height="@dimen/dp100"
+             />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="爱仕达 少油烟 平底锅 26cm"
+                android:textColor="#001119"
+                android:textSize="@dimen/sp14"
+                android:singleLine="true"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:id="@+id/mid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="@dimen/dp5"
+                android:text="大品牌 京东同款 79元 仅此一天"
+                android:textColor="#D63837"
+                android:textSize="@dimen/sp12" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="bottom">
+
+                <TextView
+                    android:id="@+id/lijian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_yellow_radius"
+                    android:paddingBottom="@dimen/dp2"
+                    android:paddingLeft="@dimen/dp5"
+                    android:paddingRight="@dimen/dp5"
+                    android:paddingTop="@dimen/dp2"
+                    android:text="领券减200元"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp10"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textColor="#969696"
+                    android:text="今日特惠"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp11" />
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:textColor="#ED2202"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/sp16"
+                    android:text="￥299"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp5"
+        android:background="#F4F4F4"/>
+</LinearLayout>
+
+
+
+

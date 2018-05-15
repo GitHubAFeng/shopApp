@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:id="@+id/view"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/src"
+            android:layout_width="@dimen/dp100"
+            android:layout_height="@dimen/dp100"  />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp15"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="爱仕达 少油烟 平底锅 26cm"
+                android:textColor="#001119"
+                android:textSize="@dimen/sp14" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tianmao_price"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="wrap_content"
+                    android:textColor="#969696"
+                    android:text="天猫价 ￥123"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp11"/>
+
+                <TextView
+                    android:id="@+id/num"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:textColor="#969696"
+                    android:text="月销 5823"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp11" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/dp3"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/zhekou_text"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="折扣价"
+                    android:paddingTop="@dimen/dp2"
+                    android:paddingBottom="@dimen/dp2"
+                    android:paddingLeft="@dimen/dp5"
+                    android:paddingRight="@dimen/dp5"
+                    android:textSize="@dimen/sp10"
+                    android:background="@drawable/jianbian_zhekou"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dp5"
+                    android:text="￥299"
+                    android:textColor="#ED2202"
+                    android:textSize="@dimen/sp16"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/zhekou"
+                    android:layout_width="@dimen/dp75"
+                    android:textColor="@color/white"
+                    android:text="3.2折"
+                    android:gravity="center"
+                    android:background="@drawable/shangpinitem_youhuiquan"
+                    android:layout_height="@dimen/dp25" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp5"
+        android:background="#F4F4F4"/>
+</LinearLayout>
+
+
+
+

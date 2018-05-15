@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:id="@+id/llll"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:id="@+id/hs_view"
+        android:background="@drawable/pinpa__topbg"
+        android:layout_height="wrap_content" />
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+
+        android:layout_centerVertical="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:scrollbars="none"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingRight="@dimen/dp10"
+            android:orientation="vertical">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:scrollbars="none"
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dp5"
+        android:id="@+id/txt_mid"
+        android:layout_below="@+id/hs_view"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dp16"
+            android:background="@drawable/left_pinpa_mid"
+            android:layout_height="@dimen/dp5" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#222222"
+            android:textSize="@dimen/sp14"
+            android:layout_marginLeft="@dimen/dp10"
+            android:text="品牌优选"/>
+
+        <ImageView
+            android:layout_width="@dimen/dp16"
+            android:layout_marginLeft="@dimen/dp10"
+            android:background="@drawable/right_pinpa_mid"
+            android:layout_height="@dimen/dp5" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp1"
+        android:background="#F2F2F2"
+        android:layout_below="@+id/txt_mid"
+        android:orientation="horizontal"/>
+
+</RelativeLayout>

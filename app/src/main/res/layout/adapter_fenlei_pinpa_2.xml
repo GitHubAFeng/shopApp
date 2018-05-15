@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/p"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingRight="@dimen/dp10"
+        android:paddingTop="@dimen/dp20">
+
+        <TextView
+            android:id="@+id/top_title1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="曼秀雷顿品牌专场"
+            android:textColor="#001119"
+            android:textSize="@dimen/sp14"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/top_title2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp5"
+            android:text="全场低至3折起"
+            android:textColor="#D63837"
+            android:textSize="@dimen/sp14"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp10"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingRight="@dimen/dp10"
+        android:paddingTop="@dimen/dp10">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/src1"
+                android:layout_width="@dimen/dp100"
+                android:layout_height="@dimen/dp100" />
+
+            <TextView
+                android:id="@+id/lj1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:background="@drawable/shape_yellow_radius"
+                android:paddingBottom="@dimen/dp2"
+                android:paddingLeft="@dimen/dp5"
+                android:paddingRight="@dimen/dp5"
+                android:paddingTop="@dimen/dp2"
+                android:text="领券减200元"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp10" />
+
+            <TextView
+                android:id="@+id/name1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:maxLength="10"
+                android:text="小熊面包 烤鸡"
+                android:textColor="#001119"
+                android:textSize="@dimen/sp12" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="到手价"
+                    android:textColor="#969696"
+                    android:textSize="@dimen/sp10" />
+
+                <TextView
+                    android:id="@+id/price1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥299"
+                    android:textColor="#ED2202"
+                    android:textSize="@dimen/sp14"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/src2"
+                android:layout_width="@dimen/dp100"
+                android:layout_height="@dimen/dp100" />
+
+            <TextView
+                android:id="@+id/lj2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:background="@drawable/shape_yellow_radius"
+                android:paddingBottom="@dimen/dp2"
+                android:paddingLeft="@dimen/dp5"
+                android:paddingRight="@dimen/dp5"
+                android:paddingTop="@dimen/dp2"
+                android:text="领券减200元"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp10" />
+
+            <TextView
+                android:id="@+id/name2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:maxLength="10"
+                android:text="小熊面包 烤鸡"
+                android:textColor="#001119"
+                android:textSize="@dimen/sp12" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="到手价"
+                    android:textColor="#969696"
+                    android:textSize="@dimen/sp10" />
+
+                <TextView
+                    android:id="@+id/price2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥299"
+                    android:textColor="#ED2202"
+                    android:textSize="@dimen/sp14"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/src3"
+                android:layout_width="@dimen/dp100"
+                android:layout_height="@dimen/dp100" />
+
+            <TextView
+                android:id="@+id/lj3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:background="@drawable/shape_yellow_radius"
+                android:paddingBottom="@dimen/dp2"
+                android:paddingLeft="@dimen/dp5"
+                android:paddingRight="@dimen/dp5"
+                android:paddingTop="@dimen/dp2"
+                android:text="领券减200元"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp10" />
+
+            <TextView
+                android:id="@+id/name3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:maxLength="10"
+                android:text="小熊面包 烤鸡"
+                android:textColor="#001119"
+                android:textSize="@dimen/sp12" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="到手价"
+                    android:textColor="#969696"
+                    android:textSize="@dimen/sp10" />
+
+                <TextView
+                    android:id="@+id/price3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥299"
+                    android:textColor="#ED2202"
+                    android:textSize="@dimen/sp14"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp5"
+        android:background="#F4F4F4" />
+
+</LinearLayout>

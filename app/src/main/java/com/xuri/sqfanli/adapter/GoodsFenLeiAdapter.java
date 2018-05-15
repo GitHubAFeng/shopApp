@@ -520,7 +520,7 @@ public class GoodsFenLeiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     Intent intent = new Intent();
                     intent.setClass(context, GoodsDetailActivity.class);
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("jsonText", shoplistDatas.get(position - 1));
+                    bundle.putSerializable("jsonBean", shoplistDatas.get(position - 1));
                     intent.putExtras(bundle);
                     context.startActivity(intent);
                 }
